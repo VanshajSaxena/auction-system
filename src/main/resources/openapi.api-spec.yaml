@@ -1,0 +1,426 @@
+openapi: 3.0.3
+info:
+  title: Online Auction System
+  version: 0.1.0
+  description: |
+    This is an OpenAPI description of an **Online Auction System**.
+servers:
+  - url: http://localhost/api/v1
+tags:
+  - name: User Management
+  - name: Bids
+  - name: Current User
+  - name: Auction Listings
+paths:
+  /users/register:
+    post:
+      description: Register a new user.
+      operationId: signUpUser
+      tags:
+        - User Management
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserRegistrationRequest"
+      responses:
+        "201":
+          description: Created Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    $ref: "#/components/schemas/User"
+                  refreshToken:
+                    type: string
+                  accessToken:
+                    type: string
+        default:
+          $ref: "#/components/responses/DefaultError"
+  /users/login:
+    post:
+      description: Logs in an existing user.
+      operationId: logInUser
+      tags:
+        - User Management
+      requestBody:
+        description: The request must include a password and exactly one of either email or username.
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/UserLoginRequest"
+      responses:
+        "200":
+          description: Logged-in Successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        default:
+          $ref: "#/components/responses/DefaultError"
+  /auctions:
+    post:
+      description: Creates a new auction listing.
+      operationId: createAuctionListing
+      tags:
+        - Auction Listings
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuctionRequest"
+      responses:
+        "201":
+          description: Successfully created auction listing
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuctionResponse"
+        default:
+          $ref: "#/components/responses/DefaultError"
+    get:
+      description: Retrieves a list of all active auctions.
+      operationId: getAllAuctionListings
+      tags:
+        - Auction Listings
+      responses:
+        "200":
+          description: Successfully retrieved all active auctions.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AuctionResponse"
+        default:
+          $ref: "#/components/responses/DefaultError"
+  /auctions/{auctionId}:
+    parameters:
+      - name: auctionId
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+    put:
+      description: |
+        Updates an existing auction listing.
+        **Authorization Required:** Only the creator of the auction is allowed to update.
+      operationId: updateAuctionListing
+      tags:
+        - Auction Listings
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Successfully updated the auction.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuctionResponse"
+        default:
+          $ref: "#/components/responses/DefaultError"
+    get:
+      description: Retrieves details of a specific auction.
+      operationId: getAuctionListing
+      tags:
+        - Auction Listings
+      responses:
+        "200":
+          description: Successfully retrieved the auction.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuctionResponse"
+        default:
+          $ref: "#/components/responses/DefaultError"
+  /auctions/{auctionId}/bids:
+    parameters:
+      - name: auctionId
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+    post:
+      description: Places a bid on a specific auction.
+      operationId: placeBidOnAuction
+      tags:
+        - Bids
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BidRequest"
+      responses:
+        "201":
+          description: Successfully created bid on auction.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BidResponse"
+        default:
+          $ref: "#/components/responses/DefaultError"
+    get:
+      description: Retrieves the bidding history for an auction.
+      operationId: getAllBidsOfAuction
+      tags:
+        - Bids
+      responses:
+        "200":
+          description: Successfully retrieved bids on auction.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BidResponse"
+        default:
+          $ref: "#/components/responses/DefaultError"
+  /users/me:
+    get:
+      description: Retrieves the logged-in user's profile.
+      operationId: getCurrentUserProfile
+      tags:
+        - Current User
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Successfully retrieved user's profile.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserDetails"
+        default:
+          $ref: "#/components/responses/DefaultError"
+  /users/me/bids:
+    get:
+      description: Retrieves the logged-in user's past bids.
+      operationId: getCurrentUserPastBids
+      tags:
+        - Current User
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Successfully retrieved user's bids.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BidResponse"
+        default:
+          $ref: "#/components/responses/DefaultError"
+  /users/me/listings:
+    get:
+      description: Retrieves the logged-in user's current auction listings.
+      operationId: getCurrentUserAuctionListings
+      tags:
+        - Current User
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Successfully retrieved user's auctions.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AuctionResponse"
+        default:
+          $ref: "#/components/responses/DefaultError"
+components:
+  schemas:
+    UserRegistrationRequest:
+      allOf:
+        - $ref: "#/components/schemas/UserCredentials"
+        - $ref: "#/components/schemas/UserDetails"
+      required:
+        - firstName
+        - lastName
+        - username
+        - email
+        - password
+    UserLoginRequest:
+      allOf:
+        - $ref: "#/components/schemas/UserCredentials"
+      required:
+        - password
+    User:
+      allOf:
+        - type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+            roles:
+              type: array
+              items:
+                $ref: "#/components/schemas/UserRole"
+        - $ref: "#/components/schemas/UserDetails"
+        - $ref: "#/components/schemas/UserCredentials"
+    UserDetails:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        age:
+          type: integer
+        contactNumber:
+          type: string
+        shippingAddr:
+          $ref: "#/components/schemas/UserAddress"
+    UserCredentials:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+          format: password
+        username:
+          type: string
+          pattern: "^[A-Za-z0-9_-]+$"
+          maxLength: 16
+    UserAddress:
+      type: object
+      properties:
+        row1:
+          type: string
+        row2:
+          type: string
+        row3:
+          type: string
+    UserRole:
+      type: string
+      enum:
+        - Seller
+        - Bidder
+
+    AuctionRequest:
+      allOf:
+        - $ref: "#/components/schemas/AuctionDescription"
+        - type: object
+          properties:
+            auctionItem:
+              $ref: "#/components/schemas/AuctionItemDescription"
+
+    AuctionResponse:
+      allOf:
+        - $ref: "#/components/schemas/AuctionDescription"
+        - type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+            currentState:
+              type: string
+              enum:
+                - pending
+                - active
+                - closed
+                - cancelled
+                - completed
+            auctionItem:
+              allOf:
+                - $ref: "#/components/schemas/AuctionItemDescription"
+                - type: object
+                  properties:
+                    id:
+                      type: integer
+                      format: int64
+                    ownerId:
+                      type: integer
+                      format: int64
+    AuctionDescription:
+      type: object
+      properties:
+        description:
+          type: string
+        startingPrice:
+          type: number
+          format: double
+        reservePrice:
+          type: number
+          format: double
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+    AuctionItemDescription:
+      type: object
+      properties:
+        name:
+          type: string
+        category:
+          type: string
+        description:
+          type: string
+        condition:
+          type: string
+          enum:
+            - new
+            - used
+            - refurbished
+
+    BidRequest:
+      allOf:
+        - $ref: "#/components/schemas/BidDescription"
+    BidResponse:
+      allOf:
+        - $ref: "#/components/schemas/BidDescription"
+        - type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+            userId:
+              type: integer
+              format: int64
+    BidDescription:
+      type: object
+      properties:
+        bidAmount:
+          type: number
+          format: double
+        bidTime:
+          type: string
+          format: date-time
+        validity:
+          type: string
+          enum:
+            - valid
+            - invalid
+            - retracted
+
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+  responses:
+    DefaultError:
+      description: Unexpected Error
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
