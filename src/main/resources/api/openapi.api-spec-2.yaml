@@ -1,0 +1,453 @@
+openapi: 3.0.3
+info:
+  title: Online Auction System
+  version: 0.2.0
+  description: |
+    This is an OpenAPI description of an **Online Auction System**.
+servers:
+  - url: http://localhost/api/v1
+tags:
+  - name: Users
+  - name: Authentication and Authorization
+  - name: Auction Listings
+  - name: Bids
+paths:
+  /auth/login:
+    post:
+      description: |
+        Authenticates the credentials.
+      summary: Authenticates the credentials.
+      operationId: logInUser
+      tags:
+        - Authentication and Authorization
+      requestBody:
+        description: The request must include a password and exactly one of either email or username.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserLoginRequest"
+      responses:
+        "200":
+          description: Logged-in Successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserLoginResponse"
+        default:
+          $ref: "#/components/responses/DefaultError"
+  /users:
+    post:
+      description: |
+        Register a new user.
+      summary: Register a new user.
+      operationId: signUpUser
+      tags:
+        - Users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserRegistrationRequest"
+      responses:
+        "201":
+          description: Created Successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserRegistrationResponse"
+        default:
+          $ref: "#/components/responses/DefaultError"
+  /users/me:
+    get:
+      description: |
+        Retrieves the logged-in user's profile.
+      summary: Retrieves the logged-in user's profile.
+      operationId: getCurrentUserProfile
+      tags:
+        - Users
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Successfully retrieved user's profile.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        default:
+          $ref: "#/components/responses/DefaultError"
+  /users/me/bids:
+    get:
+      description: |
+        Retrieves the logged-in user's past bids.
+      summary: Retrieves the logged-in user's past bids.
+      operationId: getCurrentUserPastBids
+      tags:
+        - Users
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Successfully retrieved user's bids.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Bid"
+        default:
+          $ref: "#/components/responses/DefaultError"
+  /users/me/listings:
+    get:
+      description: |
+        Retrieves the logged-in user's current auction listings.
+      summary: Retrieves the logged-in user's current auction listings.
+      operationId: getCurrentUserAuctionListings
+      tags:
+        - Users
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Successfully retrieved user's auctions.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AuctionListing"
+        default:
+          $ref: "#/components/responses/DefaultError"
+  /auctions:
+    post:
+      description: |
+        Creates a new auction listing.
+      summary: Creates a new auction listing.
+      operationId: createAuctionListing
+      tags:
+        - Auction Listings
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuctionListing"
+      responses:
+        "201":
+          description: Successfully created auction listing
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuctionListing"
+        default:
+          $ref: "#/components/responses/DefaultError"
+    get:
+      description: |
+        Retrieves a list of all active auctions.
+      summary: Retrieves a list of all active auctions.
+      operationId: getAllAuctionListings
+      tags:
+        - Auction Listings
+      responses:
+        "200":
+          description: Successfully retrieved all active auctions.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AuctionListing"
+        default:
+          $ref: "#/components/responses/DefaultError"
+  /auctions/{auctionId}:
+    parameters:
+      - name: auctionId
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+    put:
+      description: |
+        Updates an existing auction listing.
+        **Authorization Required:** Only the creator of the auction is allowed to update.
+      summary: Updates an existing auction listing.
+      operationId: updateAuctionListing
+      tags:
+        - Auction Listings
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Successfully updated the auction.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuctionListing"
+        default:
+          $ref: "#/components/responses/DefaultError"
+    get:
+      description: |
+        Retrieves details of a specific auction.
+      summary: Retrieves details of a specific auction.
+      operationId: getAuctionListing
+      tags:
+        - Auction Listings
+      responses:
+        "200":
+          description: Successfully retrieved the auction.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuctionListing"
+        default:
+          $ref: "#/components/responses/DefaultError"
+  /auctions/{auctionId}/bids:
+    parameters:
+      - name: auctionId
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+    post:
+      description: |
+        Places a bid on a specific auction.
+      summary: Places a bid on a specific auction.
+      operationId: placeBidOnAuction
+      tags:
+        - Bids
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Bid"
+      responses:
+        "201":
+          description: Successfully created bid on auction.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Bid"
+        default:
+          $ref: "#/components/responses/DefaultError"
+    get:
+      description: |
+        Retrieves the bidding history for an auction.
+      summary: Retrieves the bidding history for an auction.
+      operationId: getAllBidsOfAuction
+      tags:
+        - Bids
+      responses:
+        "200":
+          description: Successfully retrieved bids on auction.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Bid"
+        default:
+          $ref: "#/components/responses/DefaultError"
+components:
+  schemas:
+    User:
+      description: Base User Model.
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          readOnly: true
+        firstName:
+          type: string
+        lastName:
+          type: string
+        username:
+          type: string
+          pattern: "^[A-Za-z0-9_-]+$"
+          maxLength: 16
+        email:
+          type: string
+        contactNumber:
+          type: string
+        shippingAddr:
+          $ref: "#/components/schemas/UserAddress"
+        roles:
+          type: array
+          items:
+            type: string
+            enum:
+              - Seller
+              - Bidder
+    UserAddress:
+      description: User's address.
+      type: object
+      properties:
+        row1:
+          type: string
+        row2:
+          type: string
+        row3:
+          type: string
+    UserLoginResponse:
+      description: User Login Response Object.
+      allOf:
+        - $ref: "#/components/schemas/User"
+        - type: object
+          properties:
+            tokens:
+              $ref: "#/components/schemas/Tokens"
+    UserLoginRequest:
+      description: User Login Request Object.
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+          format: password
+        username:
+          type: string
+          pattern: "^[A-Za-z0-9_-]+$"
+          maxLength: 16
+      required:
+        - password
+    UserRegistrationResponse:
+      description: User Registration Response Object.
+      allOf:
+        - $ref: "#/components/schemas/User"
+        - type: object
+          properties:
+            tokens:
+              $ref: "#/components/schemas/Tokens"
+    UserRegistrationRequest:
+      description: User Registration Request Object.
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        username:
+          type: string
+          pattern: "^[A-Za-z0-9_-]+$"
+          maxLength: 16
+        email:
+          type: string
+        password:
+          type: string
+          format: password
+      required:
+        - firstName
+        - lastName
+        - username
+        - email
+        - password
+    Tokens:
+      description: Tokens for Authentication and Authorization.
+      type: object
+      properties:
+        refreshToken:
+          type: string
+        accessToken:
+          type: string
+    Bid:
+      description: Bid created on an Auction Listing.
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          readOnly: true
+        userId:
+          type: integer
+          format: int64
+        bidAmount:
+          type: number
+          format: double
+        bidTime:
+          type: string
+          format: date-time
+        validity:
+          type: string
+          enum:
+            - valid
+            - invalid
+            - retracted
+    AuctionListing:
+      description: Auction Listing for an Auction Item.
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          readOnly: true
+        currentState:
+          type: string
+          enum:
+            - pending
+            - active
+            - closed
+            - cancelled
+            - completed
+        description:
+          type: string
+        startingPrice:
+          type: number
+          format: double
+        reservePrice:
+          type: number
+          format: double
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        auctionItem:
+          $ref: "#/components/schemas/AuctionItem"
+    AuctionItem:
+      description: Item listed for a specific Auction Listing.
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          readOnly: true
+        ownerId:
+          type: integer
+          format: int64
+        name:
+          type: string
+        category:
+          type: string
+        description:
+          type: string
+        condition:
+          type: string
+          enum:
+            - new
+            - used
+            - refurbished
+    Error:
+      description: Unexpected Error.
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+  responses:
+    DefaultError:
+      description: Unexpected Error
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
