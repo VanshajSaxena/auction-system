@@ -40,6 +40,6 @@ public class BidEntity {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "auction_listig_id", nullable = false)
-  private AuctionItemEntity auctionListing;
+  private AuctionListingEntity auctionListing;
 
 }

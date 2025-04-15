@@ -59,7 +59,7 @@ public class UserEntity {
   private List<AuctionListingEntity> auctionListings;
 
   @OneToMany(mappedBy = "owner", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-  private List<AuctionListingEntity> ownedItems;
+  private List<AuctionItemEntity> ownedItems;
 
   @OneToMany(mappedBy = "bidder", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
   private List<BidEntity> placedBids;

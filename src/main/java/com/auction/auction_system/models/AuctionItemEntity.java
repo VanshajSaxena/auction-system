@@ -33,7 +33,7 @@ public class AuctionItemEntity {
   private String description;
 
   @Enumerated(EnumType.STRING)
-  @Column(nullable = false, length = 20)
+  @Column(name = "item_condition", nullable = false, length = 20) // "condition" can't be used as column name for mysql.
   private AuctionItemCondition condition;
 
   @ManyToOne(fetch = FetchType.LAZY)
