@@ -1,4 +1,4 @@
-package com.auction.auction_system.models;
+package com.auction.auction_system.entities;
 
 import java.util.HashSet;
 import java.util.List;

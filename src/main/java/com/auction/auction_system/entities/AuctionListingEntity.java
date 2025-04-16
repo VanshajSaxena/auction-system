@@ -1,10 +1,10 @@
-package com.auction.auction_system.models;
+package com.auction.auction_system.entities;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.auction.auction_system.models.enums.AuctionListingStatus;
+import com.auction.auction_system.entities.enums.AuctionListingStatus;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

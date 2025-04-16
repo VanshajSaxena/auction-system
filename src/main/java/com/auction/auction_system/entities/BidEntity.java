@@ -1,9 +1,9 @@
-package com.auction.auction_system.models;
+package com.auction.auction_system.entities;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import com.auction.auction_system.models.enums.BidValidity;
+import com.auction.auction_system.entities.enums.BidValidity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

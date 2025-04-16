@@ -1,4 +1,4 @@
-package com.auction.auction_system.models;
+package com.auction.auction_system.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
