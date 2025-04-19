@@ -148,6 +148,9 @@
                 <delegatePattern>true</delegatePattern>
                 <useSpringBoot3>true</useSpringBoot3>
               </configOptions>
+              <typeMappings>
+                <typeMapping>DateTime=java.time.Instant</typeMapping>
+              </typeMappings>
             </configuration>
           </execution>
         </executions>
