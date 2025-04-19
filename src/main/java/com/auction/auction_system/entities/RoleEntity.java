@@ -2,7 +2,7 @@ package com.auction.auction_system.entities;
 
 import java.util.Set;
 
-import com.auction.auction_system.entities.enums.RoleName;
+import com.auction.auction_system.entities.enums.RoleNameEnum;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -34,7 +34,7 @@ public class RoleEntity {
 
   @Enumerated(EnumType.STRING)
   @Column(length = 20, unique = true, nullable = false)
-  private RoleName name;
+  private RoleNameEnum name;
 
   @ManyToMany(mappedBy = "roles")
   private Set<UserEntity> users;

@@ -1,5 +1,5 @@
 package com.auction.auction_system.entities.enums;
 
-public enum BidValidity {
+public enum BidValidityEnum {
   VALID, INVALID, RETRACTED
 }

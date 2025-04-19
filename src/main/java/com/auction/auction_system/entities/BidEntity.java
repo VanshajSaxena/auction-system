@@ -3,7 +3,7 @@ package com.auction.auction_system.entities;
 import java.math.BigDecimal;
 import java.time.Instant;
 
-import com.auction.auction_system.entities.enums.BidValidity;
+import com.auction.auction_system.entities.enums.BidValidityEnum;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -42,7 +42,7 @@ public class BidEntity {
 
   @Enumerated(EnumType.STRING)
   @Column(nullable = false, length = 20)
-  private BidValidity validity;
+  private BidValidityEnum validity;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "bidder_user_id", nullable = false)

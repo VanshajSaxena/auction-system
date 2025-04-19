@@ -1,6 +1,6 @@
 package com.auction.auction_system.entities.enums;
 
-public enum RoleName {
+public enum RoleNameEnum {
   SELLER,
   BIDDER,
 }

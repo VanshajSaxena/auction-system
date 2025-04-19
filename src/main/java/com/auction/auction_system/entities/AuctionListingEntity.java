@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 
-import com.auction.auction_system.entities.enums.AuctionListingState;
+import com.auction.auction_system.entities.enums.AuctionListingStateEnum;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -56,7 +56,7 @@ public class AuctionListingEntity {
 
   @Enumerated(EnumType.STRING)
   @Column(nullable = false, length = 20)
-  private AuctionListingState currentState;
+  private AuctionListingStateEnum currentState;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "creator_user_id", nullable = false)

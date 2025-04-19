@@ -1,5 +1,5 @@
 package com.auction.auction_system.entities.enums;
 
-public enum AuctionListingState {
+public enum AuctionListingStateEnum {
   PENDING, ACTIVE, CLOSED, CANCELLED, COMPLETED
 }
