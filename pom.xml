@@ -13,7 +13,7 @@
   <artifactId>auction-system</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>Auction System</name>
-  <description>Comprehensive Auction System based on REST APIs</description>
+  <description>An Auction System built with Spring Boot and Java.</description>
   <url />
   <licenses>
     <license />
@@ -29,6 +29,8 @@
   </scm>
   <properties>
     <java.version>21</java.version>
+    <org.mapstruct.version>1.6.3</org.mapstruct.version>
+    <lombok.version>1.18.36</lombok.version>
   </properties>
   <dependencies>
     <dependency>
@@ -37,13 +39,8 @@
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-security</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
-
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
@@ -55,24 +52,24 @@
       <scope>runtime</scope>
     </dependency>
     <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.security</groupId>
-      <artifactId>spring-security-test</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.openapitools</groupId>
       <artifactId>jackson-databind-nullable</artifactId>
       <version>0.2.6</version>
+    </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.mapstruct</groupId>
+      <artifactId>mapstruct</artifactId>
+      <version>${org.mapstruct.version}</version>
     </dependency>
     <dependency>
       <groupId>io.swagger.core.v3</groupId>
@@ -101,6 +98,16 @@
             <path>
               <groupId>org.projectlombok</groupId>
               <artifactId>lombok</artifactId>
+            </path>
+            <path>
+              <groupId>org.mapstruct</groupId>
+              <artifactId>mapstruct-processor</artifactId>
+              <version>${org.mapstruct.version}</version>
+            </path>
+            <path>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok-mapstruct-binding</artifactId>
+              <version>0.2.0</version>
             </path>
           </annotationProcessorPaths>
         </configuration>
