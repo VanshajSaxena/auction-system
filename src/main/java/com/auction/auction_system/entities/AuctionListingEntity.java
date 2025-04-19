@@ -1,10 +1,10 @@
 package com.auction.auction_system.entities;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.List;
 
-import com.auction.auction_system.entities.enums.AuctionListingStatus;
+import com.auction.auction_system.entities.enums.AuctionListingState;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -49,14 +49,14 @@ public class AuctionListingEntity {
   private BigDecimal reservePrice;
 
   @Column(nullable = false)
-  private LocalDateTime startTime;
+  private Instant startTime;
 
   @Column(nullable = false)
-  private LocalDateTime endTime;
+  private Instant endTime;
 
   @Enumerated(EnumType.STRING)
   @Column(nullable = false, length = 20)
-  private AuctionListingStatus currentStatus;
+  private AuctionListingState currentState;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "creator_user_id", nullable = false)

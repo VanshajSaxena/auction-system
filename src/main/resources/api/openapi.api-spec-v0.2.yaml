@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Online Auction System
-  version: 0.2.0
+  version: 0.3.1
   description: |
     This is an OpenAPI description of an **Online Auction System**.
 servers:
@@ -370,7 +370,7 @@ components:
         bidTime:
           type: string
           format: date-time
-        validity:
+        bidValidity:
           type: string
           enum:
             - valid
@@ -384,7 +384,7 @@ components:
           type: integer
           format: int64
           readOnly: true
-        currentState:
+        auctionListingState:
           type: string
           enum:
             - pending
@@ -425,10 +425,10 @@ components:
           type: string
         description:
           type: string
-        condition:
+        auctionItemCondition:
           type: string
           enum:
-            - new
+            - new_item
             - used
             - refurbished
     Error:

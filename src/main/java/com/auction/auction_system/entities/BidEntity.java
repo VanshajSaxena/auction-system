@@ -1,7 +1,7 @@
 package com.auction.auction_system.entities;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 import com.auction.auction_system.entities.enums.BidValidity;
 
@@ -38,7 +38,7 @@ public class BidEntity {
   @Column(nullable = false, precision = 10, scale = 2)
   private BigDecimal amount;
   @Column
-  private LocalDateTime timeCreated;
+  private Instant timeCreated;
 
   @Enumerated(EnumType.STRING)
   @Column(nullable = false, length = 20)
