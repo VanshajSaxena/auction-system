@@ -44,7 +44,7 @@ public class AuctionItemEntity {
 
   @Enumerated(EnumType.STRING)
   @Column(name = "item_condition", nullable = false, length = 20) // "condition" can't be used as column name for mysql.
-  private AuctionItemConditionEnum condition;
+  private AuctionItemConditionEnum auctionItemCondition;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "owner_user_id", nullable = false)

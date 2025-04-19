@@ -56,7 +56,7 @@ public class AuctionListingEntity {
 
   @Enumerated(EnumType.STRING)
   @Column(nullable = false, length = 20)
-  private AuctionListingStateEnum currentState;
+  private AuctionListingStateEnum auctionListingState;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "creator_user_id", nullable = false)
