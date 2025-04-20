@@ -153,7 +153,12 @@
               </configOptions>
               <typeMappings>
                 <typeMapping>DateTime=java.time.Instant</typeMapping>
+                <typeMapping>Double=java.math.BigDecimal</typeMapping>
               </typeMappings>
+              <importMappings>
+                <importMapping>BigDecimal=java.math.BigDecimal</importMapping>
+                <importMapping>Instant=java.time.Instant</importMapping>
+              </importMappings>
             </configuration>
           </execution>
         </executions>
