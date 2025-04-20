@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Online Auction System
-  version: 0.3.2
+  version: 0.3.3
   description: |
     This is an OpenAPI description of an **Online Auction System**.
 servers:
@@ -253,7 +253,7 @@ paths:
 components:
   schemas:
     User:
-      description: Base User Model.
+      description: User DTO
       type: object
       properties:
         id:
@@ -392,6 +392,11 @@ components:
             - closed
             - cancelled
             - completed
+          readOnly: true
+        creatorId:
+          type: integer
+          format: int64
+          readOnly: true
         description:
           type: string
         startingPrice:
