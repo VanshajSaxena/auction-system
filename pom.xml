@@ -147,6 +147,9 @@
               <configOptions>
                 <delegatePattern>true</delegatePattern>
                 <useSpringBoot3>true</useSpringBoot3>
+                <generateBuilders>true</generateBuilders>
+                <generateConstructorWithAllArgs>true</generateConstructorWithAllArgs>
+                <generateConstructorWithRequiredArgs>true</generateConstructorWithRequiredArgs>
               </configOptions>
               <typeMappings>
                 <typeMapping>DateTime=java.time.Instant</typeMapping>
