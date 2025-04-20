@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import com.auction.auction_system.entities.AuctionListingEntity;
-import com.auction.auction_system.entities.enums.AuctionListingStateEnum;
+import com.auction.auction_system.entities.AuctionListingEntity.AuctionListingStateEntityEnum;
 import com.auction.auction_system.generated.models.AuctionListingDto;
 
 public class AuctionListingTestDataFactory {
@@ -18,7 +18,7 @@ public class AuctionListingTestDataFactory {
     Instant now = Instant.now();
     return AuctionListingEntity.builder()
         .id(1L)
-        .auctionListingState(AuctionListingStateEnum.PENDING)
+        .auctionListingState(AuctionListingStateEntityEnum.PENDING)
         .startingPrice(new BigDecimal("1000.00"))
         .reservePrice(new BigDecimal("1000.00"))
         .startTime(now)

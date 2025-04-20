@@ -1,7 +1,5 @@
 package com.auction.auction_system.entities;
 
-import com.auction.auction_system.entities.enums.AuctionItemConditionEnum;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -44,7 +42,7 @@ public class AuctionItemEntity {
 
   @Enumerated(EnumType.STRING)
   @Column(name = "item_condition", nullable = false, length = 20) // "condition" can't be used as column name for mysql.
-  private AuctionItemConditionEnum auctionItemCondition;
+  private AuctionItemConditionEntityEnum auctionItemCondition;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "owner_user_id", nullable = false)
@@ -52,4 +50,8 @@ public class AuctionItemEntity {
 
   @OneToOne(mappedBy = "auctionItem", fetch = FetchType.LAZY)
   private AuctionListingEntity auctionListing;
+
+  public enum AuctionItemConditionEntityEnum {
+    NEW_ITEM, USED, REFURBISHED
+  }
 }
