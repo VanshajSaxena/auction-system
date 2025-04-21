@@ -11,7 +11,7 @@
   </parent>
   <groupId>com.auction</groupId>
   <artifactId>auction-system</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.1.0-SNAPSHOT</version>
   <name>Auction System</name>
   <description>An Auction System built with Spring Boot and Java.</description>
   <url />
