@@ -1,5 +1,6 @@
 package com.auction.auction_system.entities;
 
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -16,6 +17,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
@@ -61,6 +64,12 @@ public class UserEntity {
   @Embedded
   private UserAddressEntity shippingAddr;
 
+  @Column(nullable = false)
+  private Instant createdAt;
+
+  @Column(nullable = false)
+  private Instant updatedAt;
+
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
   @Builder.Default
@@ -75,4 +84,15 @@ public class UserEntity {
   @OneToMany(mappedBy = "bidder", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
   private List<BidEntity> placedBids;
 
+  @PrePersist
+  private void onCreate() {
+    Instant now = Instant.now();
+    this.createdAt = now;
+    this.updatedAt = now;
+  }
+
+  @PreUpdate
+  private void onUpdate() {
+    this.createdAt = Instant.now();
+  }
 }

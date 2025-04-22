@@ -13,6 +13,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,14 +31,22 @@ import lombok.Setter;
 @Builder
 public class BidEntity {
 
+  public enum BidValidityEntityEnum {
+    VALID, INVALID, RETRACTED
+  }
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @Column(nullable = false, precision = 10, scale = 2)
   private BigDecimal amount;
-  @Column
-  private Instant timeCreated;
+
+  @Column(nullable = false)
+  private Instant createdAt;
+
+  @Column(nullable = false)
+  private Instant updatedAt;
 
   @Enumerated(EnumType.STRING)
   @Column(nullable = false, length = 20)
@@ -50,7 +60,15 @@ public class BidEntity {
   @JoinColumn(name = "auction_listig_id", nullable = false)
   private AuctionListingEntity auctionListing;
 
-  public enum BidValidityEntityEnum {
-    VALID, INVALID, RETRACTED
+  @PrePersist
+  private void onCreate() {
+    Instant now = Instant.now();
+    this.createdAt = now;
+    this.updatedAt = now;
+  }
+
+  @PreUpdate
+  private void onUpdate() {
+    this.updatedAt = Instant.now();
   }
 }

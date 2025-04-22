@@ -17,6 +17,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,6 +34,10 @@ import lombok.Setter;
 @Setter
 @Builder
 public class AuctionListingEntity {
+
+  public enum AuctionListingStateEntityEnum {
+    PENDING, ACTIVE, CLOSED, CANCELLED, COMPLETED
+  }
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,6 +62,12 @@ public class AuctionListingEntity {
   @Column(nullable = false, length = 20)
   private AuctionListingStateEntityEnum auctionListingState;
 
+  @Column(nullable = false)
+  private Instant createdAt;
+
+  @Column(nullable = false)
+  private Instant updatedAt;
+
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "creator_user_id", nullable = false)
   private UserEntity creator;
@@ -67,7 +79,15 @@ public class AuctionListingEntity {
   @JoinColumn(name = "auction_item_id", unique = true, nullable = false)
   private AuctionItemEntity auctionItem;
 
-  public enum AuctionListingStateEntityEnum {
-    PENDING, ACTIVE, CLOSED, CANCELLED, COMPLETED
+  @PrePersist
+  private void onCreate() {
+    Instant now = Instant.now();
+    this.createdAt = now;
+    this.updatedAt = now;
+  }
+
+  @PreUpdate
+  private void onUpdate() {
+    this.updatedAt = Instant.now();
   }
 }
