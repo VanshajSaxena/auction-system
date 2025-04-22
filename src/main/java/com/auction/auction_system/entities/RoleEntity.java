@@ -1,6 +1,7 @@
 package com.auction.auction_system.entities;
 
 import java.time.Instant;
+import java.util.Objects;
 import java.util.Set;
 
 import jakarta.persistence.Column;
@@ -49,6 +50,24 @@ public class RoleEntity {
 
   @ManyToMany(mappedBy = "roles")
   private Set<UserEntity> users;
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, name, createdAt, updatedAt);
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (!(obj instanceof RoleEntity)) {
+      return false;
+    }
+    RoleEntity other = (RoleEntity) obj;
+    return Objects.equals(id, other.id) && name == other.name && Objects.equals(createdAt, other.createdAt)
+        && Objects.equals(updatedAt, other.updatedAt);
+  }
 
   @PrePersist
   private void onCreate() {

@@ -3,6 +3,7 @@ package com.auction.auction_system.entities;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
+import java.util.Objects;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -78,6 +79,28 @@ public class AuctionListingEntity {
   @OneToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.LAZY, orphanRemoval = true)
   @JoinColumn(name = "auction_item_id", unique = true, nullable = false)
   private AuctionItemEntity auctionItem;
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, description, startingPrice, reservePrice, startTime, endTime, auctionListingState,
+        createdAt, updatedAt);
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (!(obj instanceof AuctionListingEntity)) {
+      return false;
+    }
+    AuctionListingEntity other = (AuctionListingEntity) obj;
+    return Objects.equals(id, other.id) && Objects.equals(description, other.description)
+        && Objects.equals(startingPrice, other.startingPrice) && Objects.equals(reservePrice, other.reservePrice)
+        && Objects.equals(startTime, other.startTime) && Objects.equals(endTime, other.endTime)
+        && auctionListingState == other.auctionListingState && Objects.equals(createdAt, other.createdAt)
+        && Objects.equals(updatedAt, other.updatedAt);
+  }
 
   @PrePersist
   private void onCreate() {

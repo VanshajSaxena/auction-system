@@ -2,6 +2,7 @@ package com.auction.auction_system.entities;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -59,6 +60,25 @@ public class BidEntity {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "auction_listig_id", nullable = false)
   private AuctionListingEntity auctionListing;
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, amount, createdAt, updatedAt, validity);
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (!(obj instanceof BidEntity)) {
+      return false;
+    }
+    BidEntity other = (BidEntity) obj;
+    return Objects.equals(id, other.id) && Objects.equals(amount, other.amount)
+        && Objects.equals(createdAt, other.createdAt) && Objects.equals(updatedAt, other.updatedAt)
+        && validity == other.validity;
+  }
 
   @PrePersist
   private void onCreate() {

@@ -3,6 +3,7 @@ package com.auction.auction_system.entities;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import jakarta.persistence.CascadeType;
@@ -83,6 +84,28 @@ public class UserEntity {
 
   @OneToMany(mappedBy = "bidder", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
   private List<BidEntity> placedBids;
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, firstName, lastName, username, email, password, contactNumber, shippingAddr, createdAt,
+        updatedAt);
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (!(obj instanceof UserEntity)) {
+      return false;
+    }
+    UserEntity other = (UserEntity) obj;
+    return Objects.equals(id, other.id) && Objects.equals(firstName, other.firstName)
+        && Objects.equals(lastName, other.lastName) && Objects.equals(username, other.username)
+        && Objects.equals(email, other.email) && Objects.equals(password, other.password)
+        && Objects.equals(contactNumber, other.contactNumber) && Objects.equals(shippingAddr, other.shippingAddr)
+        && Objects.equals(createdAt, other.createdAt) && Objects.equals(updatedAt, other.updatedAt);
+  }
 
   @PrePersist
   private void onCreate() {

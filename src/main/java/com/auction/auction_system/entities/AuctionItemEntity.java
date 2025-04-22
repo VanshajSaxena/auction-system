@@ -1,6 +1,7 @@
 package com.auction.auction_system.entities;
 
 import java.time.Instant;
+import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -30,6 +31,10 @@ import lombok.Setter;
 @Setter
 @Builder
 public class AuctionItemEntity {
+
+  public enum AuctionItemConditionEntityEnum {
+    NEW_ITEM, USED, REFURBISHED
+  }
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -61,8 +66,23 @@ public class AuctionItemEntity {
   @OneToOne(mappedBy = "auctionItem", fetch = FetchType.LAZY)
   private AuctionListingEntity auctionListing;
 
-  public enum AuctionItemConditionEntityEnum {
-    NEW_ITEM, USED, REFURBISHED
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, name, category, description, auctionItemCondition, createdAt, updatedAt);
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (!(obj instanceof AuctionItemEntity)) {
+      return false;
+    }
+    AuctionItemEntity other = (AuctionItemEntity) obj;
+    return Objects.equals(id, other.id) && Objects.equals(name, other.name) && Objects.equals(category, other.category)
+        && Objects.equals(description, other.description) && auctionItemCondition == other.auctionItemCondition
+        && Objects.equals(createdAt, other.createdAt) && Objects.equals(updatedAt, other.updatedAt);
   }
 
   @PrePersist
