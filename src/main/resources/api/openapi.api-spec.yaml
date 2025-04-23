@@ -15,8 +15,8 @@ paths:
   /auth/login:
     post:
       description: |
-        Authenticates the credentials.
-      summary: Authenticates the credentials.
+        Authenticates the user.
+      summary: Authenticates the user.
       operationId: logInUser
       tags:
         - Authentication and Authorization
