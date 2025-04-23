@@ -19,7 +19,7 @@ import com.auction.auction_system.repositories.AuctionListingRepository;
 import com.auction.auction_system.testutils.AuctionListingTestDataFactory;
 
 @ExtendWith(MockitoExtension.class)
-public class AuctionListingServiceTest {
+public class AuctionListingServiceImplTest {
 
   @Mock
   private AuctionListingRepository auctionListingRepository;
