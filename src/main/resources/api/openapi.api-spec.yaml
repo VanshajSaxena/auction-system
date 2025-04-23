@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Online Auction System
-  version: 0.4.1
+  version: 0.5.0
   description: |
     This is an OpenAPI description of an **Online Auction System**.
 servers:
@@ -35,14 +35,14 @@ paths:
                 $ref: "#/components/schemas/UserLoginResponse"
         default:
           $ref: "#/components/responses/DefaultError"
-  /users:
+  /auth/register:
     post:
       description: |
         Register a new user.
       summary: Register a new user.
       operationId: signUpUser
       tags:
-        - Users
+        - Authentication and Authorization
       requestBody:
         content:
           application/json:
@@ -57,6 +57,23 @@ paths:
                 $ref: "#/components/schemas/UserRegistrationResponse"
         default:
           $ref: "#/components/responses/DefaultError"
+  /users:
+    get:
+      description: |
+        Get all users.
+      summary: Get all users.
+      operationId: getAllUsers
+      tags:
+        - Users
+      responses:
+        "200":
+          description: Successfully retrieved all users.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
   /users/me:
     get:
       description: |
