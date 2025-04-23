@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Online Auction System
-  version: 0.3.3
+  version: 0.4.0
   description: |
     This is an OpenAPI description of an **Online Auction System**.
 servers:
@@ -437,22 +437,32 @@ components:
             - new_item
             - used
             - refurbished
-    Error:
-      description: Unexpected Error.
+    ApiError:
+      description: |
+        Central error response object.
       type: object
       properties:
-        code:
+        status:
           type: integer
           format: int32
         message:
           type: string
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              message:
+                type: string
   responses:
     DefaultError:
       description: Unexpected Error
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/Error"
+            $ref: "#/components/schemas/ApiError"
   securitySchemes:
     bearerAuth:
       type: http
