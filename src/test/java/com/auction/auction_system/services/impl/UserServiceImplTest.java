@@ -18,10 +18,7 @@ import com.auction.auction_system.mappers.UserMapper;
 import com.auction.auction_system.repositories.UserRepository;
 import com.auction.auction_system.testutils.UserServiceTestDataFactory;
 
-import lombok.extern.slf4j.Slf4j;
-
 @ExtendWith(MockitoExtension.class)
-@Slf4j
 public class UserServiceImplTest {
 
   @Mock
@@ -35,6 +32,7 @@ public class UserServiceImplTest {
 
   @Test
   public void whenGetAllUsers_thenReturnAllUsers() {
+
     List<UserEntity> mockEntityList = UserServiceTestDataFactory.createUserEntityList(5);
     List<UserDto> mockDtoList = UserServiceTestDataFactory.createUserDtoList(5);
 
