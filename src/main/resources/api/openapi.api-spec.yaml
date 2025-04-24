@@ -17,7 +17,7 @@ paths:
       description: |
         Authenticates the user.
       summary: Authenticates the user.
-      operationId: logInUser
+      operationId: login
       tags:
         - Authentication and Authorization
       requestBody:
@@ -40,7 +40,7 @@ paths:
       description: |
         Register a new user.
       summary: Register a new user.
-      operationId: signUpUser
+      operationId: register
       tags:
         - Authentication and Authorization
       requestBody:
