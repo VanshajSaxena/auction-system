@@ -31,6 +31,7 @@ public class AuctionsApiDelegateImpl implements AuctionsApiDelegate {
   @Override
   @PostMapping("/auctions")
   public ResponseEntity<AuctionListingDto> createAuctionListing(AuctionListingDto auctionListingDto) {
+    // TODO: Implement after security configuration.
     return null;
   }
 
