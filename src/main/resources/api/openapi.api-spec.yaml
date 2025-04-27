@@ -312,13 +312,7 @@ components:
         row3:
           type: string
     UserLoginResponse:
-      description: User Login Response Object.
-      allOf:
-        - $ref: "#/components/schemas/User"
-        - type: object
-          properties:
-            tokens:
-              $ref: "#/components/schemas/Tokens"
+      $ref: "#/components/schemas/Tokens"
     UserLoginRequest:
       description: User Login Request Object.
       type: object
@@ -337,13 +331,13 @@ components:
       required:
         - password
     UserRegistrationResponse:
-      description: User Registration Response Object.
-      allOf:
-        - $ref: "#/components/schemas/User"
-        - type: object
-          properties:
-            tokens:
-              $ref: "#/components/schemas/Tokens"
+      type: object
+      properties:
+        message:
+          type: string
+        userId:
+          type: integer
+          format: int64
     UserRegistrationRequest:
       description: User Registration Request Object.
       type: object
