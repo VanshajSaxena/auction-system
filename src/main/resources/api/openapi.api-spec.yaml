@@ -324,6 +324,7 @@ components:
         password:
           type: string
           format: password
+          minLength: 8
         username:
           type: string
           pattern: "^[A-Za-z0-9_-]+$"
@@ -356,6 +357,7 @@ components:
         password:
           type: string
           format: password
+          minLength: 8
       required:
         - firstName
         - lastName
@@ -370,6 +372,9 @@ components:
           type: string
         accessToken:
           type: string
+        expiresIn:
+          type: integer
+          format: int32
     Bid:
       description: Bid created on an Auction Listing.
       type: object
