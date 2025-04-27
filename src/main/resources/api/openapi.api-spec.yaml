@@ -287,6 +287,7 @@ components:
           maxLength: 16
         email:
           type: string
+          format: email
         contactNumber:
           type: string
         shippingAddr:
@@ -324,6 +325,8 @@ components:
       properties:
         email:
           type: string
+          format: email
+          nullable: true
         password:
           type: string
           format: password
@@ -355,6 +358,7 @@ components:
           maxLength: 16
         email:
           type: string
+          format: email
         password:
           type: string
           format: password
