@@ -320,7 +320,6 @@ components:
         email:
           type: string
           format: email
-          nullable: true
         password:
           type: string
           format: password
