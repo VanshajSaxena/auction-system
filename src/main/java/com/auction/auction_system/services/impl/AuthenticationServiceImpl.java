@@ -79,12 +79,15 @@ public class AuthenticationServiceImpl implements AuthenticationService {
   }
 
   private String extractUsername(String token) {
-    Claims claims = Jwts.parser()
+    return extractAllClaims(token).getSubject();
+  }
+
+  private Claims extractAllClaims(String token) {
+    return Jwts.parser()
         .verifyWith(getSigningKey())
         .build()
         .parseSignedClaims(token)
         .getPayload();
-    return claims.getSubject();
   }
 
   private SecretKey getSigningKey() {
