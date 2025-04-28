@@ -52,4 +52,8 @@ public class AuctionSystemUserDetails implements UserDetails {
   public boolean isEnabled() {
     return true;
   }
+
+  public Long getId() {
+    return user.getId();
+  }
 }
