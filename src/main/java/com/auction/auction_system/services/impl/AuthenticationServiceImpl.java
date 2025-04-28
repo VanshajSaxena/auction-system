@@ -1,27 +1,95 @@
 package com.auction.auction_system.services.impl;
 
-import org.springframework.security.core.userdetails.UserDetails;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
+import javax.crypto.SecretKey;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+
+import com.auction.auction_system.entities.UserEntity;
+import com.auction.auction_system.repositories.UserRepository;
 import com.auction.auction_system.services.AuthenticationService;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
+import jakarta.validation.ValidationException;
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationService {
 
-  @Override
-  public UserDetails authenticateWithUsername(String username, String password) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'authenticateWithUsername'");
-  }
+  private final AuthenticationManager authenticationManager;
 
-  @Override
-  public UserDetails authenticateWithEmail(String email, String password) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'authenticateWithEmail'");
-  }
+  private final UserDetailsService userDetailsService;
+
+  private final UserRepository userRepository;
+
+  @Value("${jwt.secret}")
+  private String secretKey;
+
+  private Long jwtExpiryMs = 86400000L;
 
   @Override
   public String generateToken(UserDetails userDetails) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'generateToken'");
+    Map<String, Object> claims = new HashMap<>();
+    return Jwts.builder()
+        .claims(claims)
+        .subject(userDetails.getUsername())
+        .issuedAt(new Date(System.currentTimeMillis()))
+        .expiration(new Date(System.currentTimeMillis() + jwtExpiryMs))
+        .signWith(getSigningKey(), Jwts.SIG.HS256)
+        .compact();
+  }
+
+  @Override
+  public UserDetails authenticate(String username, String email, String password) {
+    boolean isUsernamePresent = username != null && !username.trim().isEmpty();
+    boolean isEmailPresent = email != null && !email.trim().isEmpty();
+
+    if (!isUsernamePresent && !isEmailPresent) {
+      throw new ValidationException("Either username or password must be provided.");
+    }
+
+    if (isUsernamePresent) {
+      authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+      return userDetailsService.loadUserByUsername(username);
+    }
+
+    UserEntity userEntity = userRepository.findByEmail(email)
+        .orElseThrow(() -> new UsernameNotFoundException("Email not found."));
+
+    authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userEntity.getEmail(), password));
+    return userDetailsService.loadUserByUsername(userEntity.getEmail());
+  }
+
+  @Override
+  public UserDetails validateToken(String token) {
+    String username = extractUsername(token);
+    return userDetailsService.loadUserByUsername(username);
+  }
+
+  private String extractUsername(String token) {
+    Claims claims = Jwts.parser()
+        .verifyWith(getSigningKey())
+        .build()
+        .parseSignedClaims(token)
+        .getPayload();
+    return claims.getSubject();
+  }
+
+  private SecretKey getSigningKey() {
+    byte[] keyBytes = secretKey.getBytes();
+    return Keys.hmacShaKeyFor(keyBytes);
   }
 
 }
