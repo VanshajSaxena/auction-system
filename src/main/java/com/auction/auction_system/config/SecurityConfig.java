@@ -11,6 +11,10 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import com.auction.auction_system.filters.JwtAuthenticationFilter;
+import com.auction.auction_system.services.AuthenticationService;
 
 @Configuration
 @EnableWebSecurity
@@ -22,18 +26,25 @@ public class SecurityConfig {
   }
 
   @Bean
+  public JwtAuthenticationFilter jwtAuthenticationFilter(AuthenticationService authenticationService) {
+    return new JwtAuthenticationFilter(authenticationService);
+  }
+
+  @Bean
   public PasswordEncoder passwordEncoder() {
     return PasswordEncoderFactories.createDelegatingPasswordEncoder();
   }
 
   @Bean
-  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+  public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter)
+      throws Exception {
     return http.authorizeHttpRequests(auth -> auth
         .requestMatchers(HttpMethod.GET, "/api/v1/users/**").permitAll()
         .requestMatchers(HttpMethod.GET, "/api/v1/auctions/**").permitAll()
         .requestMatchers(HttpMethod.GET, "/api/v1/bids/**").permitAll())
         .csrf(csrf -> csrf.disable())
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
         .build();
   }
 }
