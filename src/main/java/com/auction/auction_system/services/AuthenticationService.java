@@ -4,9 +4,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 public interface AuthenticationService {
 
-  UserDetails authenticateWithUsername(String username, String password);
-
-  UserDetails authenticateWithEmail(String email, String password);
+  UserDetails authenticate(String username, String email, String password);
 
   String generateToken(UserDetails userDetails);
+
+  UserDetails validateToken(String token);
 }
