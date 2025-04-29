@@ -23,10 +23,12 @@ public class AuthApiDelegateImpl implements AuthApiDelegate {
   private final AuthenticationService authenticationService;
 
   @Override
-  @PostMapping("/login")
+  @PostMapping("/auth/login")
   public ResponseEntity<TokensDto> login(UserLoginRequestDto userLoginRequestDto) {
-    UserDetails userDetails = authenticationService.authenticate(userLoginRequestDto.getUsername(),
-        userLoginRequestDto.getEmail(), userLoginRequestDto.getPassword());
+    UserDetails userDetails = authenticationService.authenticate(
+        userLoginRequestDto.getUsername(),
+        userLoginRequestDto.getEmail(),
+        userLoginRequestDto.getPassword());
 
     String accessToken = authenticationService.generateToken(userDetails);
 
@@ -34,7 +36,7 @@ public class AuthApiDelegateImpl implements AuthApiDelegate {
   }
 
   @Override
-  @PostMapping("/register")
+  @PostMapping("/auth/register")
   public ResponseEntity<UserRegistrationResponseDto> register(UserRegistrationRequestDto userRegistrationRequestDto) {
     // TODO: Implement after security configuration.
     return AuthApiDelegate.super.register(userRegistrationRequestDto);
