@@ -30,12 +30,14 @@ public class SecurityConfig {
         userRepository);
 
     String username = "testuser";
+    String rawPassword = "notverysecure";
     userRepository.findByUsername(username).orElseGet(() -> {
       UserEntity newUser = UserEntity.builder()
+          .username(username)
           .firstName("Test User")
           .lastName(" Test User's Last Name")
           .email("testuser@email.com")
-          .password(passwordEncoder().encode("notverysecure"))
+          .password(passwordEncoder().encode(rawPassword))
           .build();
       return userRepository.save(newUser);
     });
@@ -62,6 +64,7 @@ public class SecurityConfig {
   public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter)
       throws Exception {
     return http.authorizeHttpRequests(auth -> auth
+        .requestMatchers(HttpMethod.POST, "/api/v1/auth/**").permitAll()
         .requestMatchers(HttpMethod.GET, "/api/v1/users/**").permitAll()
         .requestMatchers(HttpMethod.GET, "/api/v1/auctions/**").permitAll()
         .requestMatchers(HttpMethod.GET, "/api/v1/bids/**").permitAll())
