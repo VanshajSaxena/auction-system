@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.access.intercept.AuthorizationFilter;
 
 import com.auction.auction_system.entities.UserEntity;
 import com.auction.auction_system.filters.JwtAuthenticationFilter;
@@ -70,7 +70,7 @@ public class SecurityConfig {
         .requestMatchers(HttpMethod.GET, "/api/v1/bids/**").permitAll())
         .csrf(csrf -> csrf.disable())
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-        .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+        .addFilterBefore(jwtAuthenticationFilter, AuthorizationFilter.class)
         .build();
   }
 }
