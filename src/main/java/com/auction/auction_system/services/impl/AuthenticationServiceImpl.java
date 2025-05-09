@@ -68,8 +68,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     UserEntity userEntity = userRepository.findByEmail(email)
         .orElseThrow(() -> new UsernameNotFoundException("Email not found."));
 
-    authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userEntity.getEmail(), password));
-    return userDetailsService.loadUserByUsername(userEntity.getEmail());
+    authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userEntity.getUsername(), password));
+    return userDetailsService.loadUserByUsername(userEntity.getUsername());
   }
 
   @Override
