@@ -333,6 +333,8 @@ components:
     UserRegistrationResponse:
       type: object
       properties:
+        success:
+          type: boolean
         message:
           type: string
         userId:
