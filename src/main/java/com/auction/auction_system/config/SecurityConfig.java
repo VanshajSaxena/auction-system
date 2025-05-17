@@ -8,28 +8,17 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.intercept.AuthorizationFilter;
 
 import com.auction.auction_system.filters.JwtAuthenticationFilter;
-import com.auction.auction_system.repositories.UserRepository;
 import com.auction.auction_system.services.AuthenticationService;
-import com.auction.auction_system.services.impl.AuctionSystemUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-
-  @Bean
-  public UserDetailsService userDetailsService(UserRepository userRepository) {
-    AuctionSystemUserDetailsService auctionSystemUserDetailsService = new AuctionSystemUserDetailsService(
-        userRepository);
-
-    return auctionSystemUserDetailsService;
-  }
 
   @Bean
   public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
