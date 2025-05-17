@@ -14,7 +14,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.intercept.AuthorizationFilter;
 
-import com.auction.auction_system.entities.UserEntity;
 import com.auction.auction_system.filters.JwtAuthenticationFilter;
 import com.auction.auction_system.repositories.UserRepository;
 import com.auction.auction_system.services.AuthenticationService;
@@ -28,19 +27,6 @@ public class SecurityConfig {
   public UserDetailsService userDetailsService(UserRepository userRepository) {
     AuctionSystemUserDetailsService auctionSystemUserDetailsService = new AuctionSystemUserDetailsService(
         userRepository);
-
-    String username = "testuser";
-    String rawPassword = "notverysecure";
-    userRepository.findByUsername(username).orElseGet(() -> {
-      UserEntity newUser = UserEntity.builder()
-          .username(username)
-          .firstName("Test User")
-          .lastName(" Test User's Last Name")
-          .email("testuser@email.com")
-          .password(passwordEncoder().encode(rawPassword))
-          .build();
-      return userRepository.save(newUser);
-    });
 
     return auctionSystemUserDetailsService;
   }
