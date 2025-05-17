@@ -25,10 +25,7 @@ public class AuthApiDelegateImpl implements AuthApiDelegate {
   @Override
   @PostMapping("/auth/login")
   public ResponseEntity<TokensDto> login(UserLoginRequestDto userLoginRequestDto) {
-    UserDetails userDetails = authenticationService.authenticate(
-        userLoginRequestDto.getUsername(),
-        userLoginRequestDto.getEmail(),
-        userLoginRequestDto.getPassword());
+    UserDetails userDetails = authenticationService.authenticate(userLoginRequestDto);
 
     String accessToken = authenticationService.generateToken(userDetails);
     Integer expiresIn = authenticationService.getJwtExpiryMs().intValue();

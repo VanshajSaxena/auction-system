@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.auction.auction_system.entities.UserEntity;
+import com.auction.auction_system.generated.models.UserLoginRequestDto;
 import com.auction.auction_system.repositories.UserRepository;
 import com.auction.auction_system.services.AuthenticationService;
 
@@ -52,7 +53,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
   }
 
   @Override
-  public UserDetails authenticate(String username, String email, String password) {
+  public UserDetails authenticate(UserLoginRequestDto userLoginRequestDto) {
+    String username = userLoginRequestDto.getUsername();
+    String email = userLoginRequestDto.getEmail();
+    String password = userLoginRequestDto.getPassword();
+
     boolean isUsernamePresent = username != null && !username.trim().isEmpty();
     boolean isEmailPresent = email != null && !email.trim().isEmpty();
 
