@@ -1,5 +1,7 @@
 package com.auction.auction_system.controllers;
 
+import java.net.URI;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +14,7 @@ import com.auction.auction_system.generated.models.UserLoginRequestDto;
 import com.auction.auction_system.generated.models.UserRegistrationRequestDto;
 import com.auction.auction_system.generated.models.UserRegistrationResponseDto;
 import com.auction.auction_system.services.AuthenticationService;
+import com.auction.auction_system.services.UserService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,6 +24,8 @@ import lombok.RequiredArgsConstructor;
 public class AuthApiDelegateImpl implements AuthApiDelegate {
 
   private final AuthenticationService authenticationService;
+
+  private final UserService userService;
 
   @Override
   @PostMapping("/auth/login")
@@ -39,8 +44,12 @@ public class AuthApiDelegateImpl implements AuthApiDelegate {
   @Override
   @PostMapping("/auth/register")
   public ResponseEntity<UserRegistrationResponseDto> register(UserRegistrationRequestDto userRegistrationRequestDto) {
-    // TODO: Implement after security configuration.
-    return AuthApiDelegate.super.register(userRegistrationRequestDto);
+    UserRegistrationResponseDto registrationResponse = userService.registerUser(userRegistrationRequestDto);
+    registrationResponse.setMessage("Registration successfull. Please proceed to login.");
+    registrationResponse.setSuccess(true);
+    var response = ResponseEntity.created(URI.create("/api/v1/users/" + registrationResponse.getUserId()))
+        .body(registrationResponse);
+    return response;
   }
 
 }
