@@ -46,13 +46,13 @@ public class UserServiceImpl implements UserService {
     Optional<UserEntity> optionalUserMatchingUsername = userRepository.findByUsername(username);
 
     if (optionalUserMatchingUsername.isPresent()) {
-      throw new UsernameAlreadyExistsException(username, "The username already exists.");
+      throw new UsernameAlreadyExistsException(username, "The username '%s' already exists.".formatted(username));
     }
 
     Optional<UserEntity> optionalUserMatchingEmail = userRepository.findByEmail(email);
 
     if (optionalUserMatchingEmail.isPresent()) {
-      throw new EmailAlreadyExistsException(email, "The email already registered.");
+      throw new EmailAlreadyExistsException(email, "The email '%s' already registered.".formatted(email));
     }
 
     UserEntity userEntity = UserEntity.builder()
