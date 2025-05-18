@@ -21,7 +21,7 @@ public class ErrorController {
     ApiErrorDto errorResponse = ApiErrorDto.builder()
         .status(HttpStatus.CONFLICT.value())
         .message(
-            "The username you have chosen is already taken. Please select a different username.")
+            "The username '%s' is already taken. Please select a different username.".formatted(ex.getUsername()))
         .build();
     return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
   }
@@ -32,7 +32,7 @@ public class ErrorController {
     ApiErrorDto errorResponse = ApiErrorDto.builder()
         .status(HttpStatus.CONFLICT.value())
         .message(
-            "The email you have entered is already registered. Please login to continue.")
+            "The email '%s' is already registered. Please login to continue.".formatted(ex.getEmail()))
         .build();
     return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
   }
