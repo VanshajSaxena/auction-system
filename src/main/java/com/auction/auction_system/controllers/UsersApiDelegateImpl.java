@@ -14,14 +14,14 @@ import com.auction.auction_system.services.UserService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("api/v1")
+@RequestMapping("api/v1/users")
 @RequiredArgsConstructor
 public class UsersApiDelegateImpl implements UsersApiDelegate {
 
   private final UserService userService;
 
   @Override
-  @GetMapping("/users")
+  @GetMapping()
   public ResponseEntity<List<UserDto>> getAllUsers() {
     return ResponseEntity.ok(userService.getAllUsers());
   }

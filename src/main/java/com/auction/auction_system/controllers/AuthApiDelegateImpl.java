@@ -19,7 +19,7 @@ import com.auction.auction_system.services.UserService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
 public class AuthApiDelegateImpl implements AuthApiDelegate {
 
@@ -28,7 +28,7 @@ public class AuthApiDelegateImpl implements AuthApiDelegate {
   private final UserService userService;
 
   @Override
-  @PostMapping("/auth/login")
+  @PostMapping("/login")
   public ResponseEntity<TokensDto> login(UserLoginRequestDto userLoginRequestDto) {
     UserDetails userDetails = authenticationService.authenticate(userLoginRequestDto);
 
@@ -42,7 +42,7 @@ public class AuthApiDelegateImpl implements AuthApiDelegate {
   }
 
   @Override
-  @PostMapping("/auth/register")
+  @PostMapping("/register")
   public ResponseEntity<UserRegistrationResponseDto> register(UserRegistrationRequestDto userRegistrationRequestDto) {
     UserRegistrationResponseDto registrationResponse = userService.registerUser(userRegistrationRequestDto);
     registrationResponse.setMessage("Registration successfull. Please proceed to login.");
