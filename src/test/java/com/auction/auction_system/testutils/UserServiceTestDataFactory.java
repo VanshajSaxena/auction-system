@@ -8,6 +8,7 @@ import com.auction.auction_system.entities.UserAddressEntity;
 import com.auction.auction_system.entities.UserEntity;
 import com.auction.auction_system.generated.models.UserAddressDto;
 import com.auction.auction_system.generated.models.UserDto;
+import com.auction.auction_system.generated.models.UserRegistrationRequestDto;
 
 public class UserServiceTestDataFactory {
   private UserServiceTestDataFactory() {
@@ -61,4 +62,30 @@ public class UserServiceTestDataFactory {
       return userDto;
     }).collect(Collectors.toList());
   }
+
+  public static UserRegistrationRequestDto createUserRegistrationRequestDto() {
+    return UserRegistrationRequestDto.builder()
+        .firstName("Ram")
+        .lastName("Dashrathi")
+        .username("dashratram")
+        .password("verysecure")
+        .email("contact@dashratram.com")
+        .build();
+  }
+
+  public static UserEntity createUserEntityFromUserRegistrationRequestDto(UserRegistrationRequestDto requestDto) {
+    return UserEntity.builder()
+        .firstName(requestDto.getFirstName())
+        .lastName(requestDto.getLastName())
+        .username(requestDto.getUsername())
+        .email(requestDto.getEmail())
+        .password("encodedPassword")
+        .build();
+  }
+
+  public static UserEntity createSavedUserEntityWithId(UserEntity userEntity) {
+    userEntity.setId(45L);
+    return userEntity;
+  }
+
 }
