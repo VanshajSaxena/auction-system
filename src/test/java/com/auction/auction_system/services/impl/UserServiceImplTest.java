@@ -18,6 +18,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.auction.auction_system.entities.UserEntity;
+import com.auction.auction_system.exception.EmailAlreadyExistsException;
 import com.auction.auction_system.exception.UsernameAlreadyExistsException;
 import com.auction.auction_system.generated.models.UserDto;
 import com.auction.auction_system.generated.models.UserRegistrationRequestDto;
@@ -101,6 +102,19 @@ public class UserServiceImplTest {
 
   @Test
   public void givenExistingEmail_whenRegisterUser_thenThrowEmailAlreadyExistsException() {
+    // Arrange
+    UserRegistrationRequestDto requestDto = UserServiceTestDataFactory.createUserRegistrationRequestDto();
+    UserEntity existingUserEntity = UserServiceTestDataFactory
+        .createUserEntityFromUserRegistrationRequestDto(requestDto);
 
+    when(userRepository.findByEmail(requestDto.getEmail())).thenReturn(Optional.of(existingUserEntity));
+
+    // Act & Assert
+    EmailAlreadyExistsException exception = assertThrows(EmailAlreadyExistsException.class, () -> {
+      underTest.registerUser(requestDto);
+    });
+
+    assertEquals("The email '%s' already registered.".formatted(requestDto.getEmail()), exception.getMessage());
+    verify(userRepository).findByEmail(requestDto.getEmail());
   }
 }
