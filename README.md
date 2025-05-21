@@ -22,7 +22,7 @@ A REST API Spring Boot Application for an Imaginative Auction System.
 
 _(A list of key features and functionalities of the auction system.)_
 
-## Project Structure
+## Project Layout
 
 _(A description of the main directories and files in the project, with a focus on the `src` directory and its sub-packages.)_
 
@@ -33,36 +33,36 @@ auction-system
 │   │   ├── java
 │   │   │   └── com
 │   │   │       └── auction
-│   │   │           └── auction_system  # Main application package
+│   │   │           └── auction_system     # Main application package
 │   │   │               ├── AuctionSystemApplication.java # Spring Boot main class
-│   │   │               ├── config # Spring Security configuration classes
-│   │   │               ├── controllers # API Controllers (delegates to generated interfaces)
-│   │   │               ├── entities # JPA entities
-│   │   │               ├── exception # Custom exception handling
+│   │   │               ├── config         # Spring Security configuration classes
+│   │   │               ├── controllers    # API Controllers (delegates to generated interfaces)
+│   │   │               ├── entities       # JPA entities
+│   │   │               ├── exception      # Custom exception handling
 │   │   │               │   └── handler
-│   │   │               ├── filters # Request filters (e.g. JWT authentication filter)
-│   │   │               ├── mappers # MapStruct mappers
-│   │   │               ├── repositories # Spring Data JPA repositories
-│   │   │               ├── security # Security related components
-│   │   │               └── services # Business logic interfaces
-│   │   │                   └── impl # Interface implementations
+│   │   │               ├── filters        # Request filters (e.g. JWT authentication filter)
+│   │   │               ├── mappers        # MapStruct mappers
+│   │   │               ├── repositories   # Spring Data JPA repositories
+│   │   │               ├── security       # Security related components
+│   │   │               └── services       # Business logic interfaces
+│   │   │                   └── impl       # Interface implementations
 │   │   └── resources
 │   │       ├── api
-│   │       │   └── openapi.api-spec.yaml # API description file
-│   │       ├── application.yaml # Application properties
+│   │       │   └── openapi.api-spec.yaml  # API description file
+│   │       ├── application.yaml           # Application properties
 │   │       ├── static
 │   │       └── templates
-│   └── test # Test sources
+│   └── test                               # Test sources
 │       └── java
 │           └── com
 │               └── auction
 │                   └── auction_system
 │                       ├── services
-│                       │   └── impl # Service related tests
-│                       └── testutils # Test utility classes
-├── mvnw # Maven wrapper executable (Linux/MacOS)
-├── mvnw.cmd # Maven wrapper executable (Windows)
-└── pom.xml # Maven Project Object Model
+│                       │   └── impl       # Service related tests
+│                       └── testutils      # Test utility classes
+├── mvnw                                   # Maven wrapper executable (Linux/MacOS)
+├── mvnw.cmd                               # Maven wrapper executable (Windows)
+└── pom.xml                                # Maven Project Object Model
 ```
 
 ## Prerequisites
