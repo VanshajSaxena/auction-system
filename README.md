@@ -48,7 +48,7 @@ auction-system
 │   │   │                   └── impl # Interface implementations
 │   │   └── resources
 │   │       ├── api
-    │       │   └── openapi.api-spec.yaml # API description file
+│   │       │   └── openapi.api-spec.yaml # API description file
 │   │       ├── application.yaml # Application properties
 │   │       ├── static
 │   │       └── templates
