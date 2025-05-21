@@ -34,7 +34,6 @@ auction-system/
 │   │   │   └── com/
 │   │   │       └── auction/
 │   │   │           └── auction_system/     # Main application package
-│   │   │               ├── AuctionSystemApplication.java # Spring Boot main class
 │   │   │               ├── config/         # Spring Security configuration classes
 │   │   │               ├── controllers/    # API Controllers (delegates to generated interfaces)
 │   │   │               ├── entities/       # JPA entities
@@ -44,14 +43,15 @@ auction-system/
 │   │   │               ├── mappers/        # MapStruct mappers
 │   │   │               ├── repositories/   # Spring Data JPA repositories
 │   │   │               ├── security/       # Security related components
-│   │   │               └── services/       # Business logic interfaces
-│   │   │                   └── impl/       # Interface implementations
+│   │   │               ├── services/       # Business logic interfaces
+│   │   │               │   └── impl/       # Interface implementations
+│   │   │               └── AuctionSystemApplication.java # Spring Boot main class
 │   │   └── resources/
 │   │       ├── api/
 │   │       │   └── openapi.api-spec.yaml   # API description file
-│   │       ├── application.yaml            # Application properties
 │   │       ├── static/
 │   │       └── templates/
+│   │       ├── application.yaml            # Application properties
 │   └── test/                               # Test sources
 │       └── java/
 │           └── com/
