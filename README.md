@@ -4,7 +4,6 @@ A REST API Spring Boot Application for an Imaginative Auction System.
 
 ## Table of Contents
 
-- [Introduction](#introduction)
 - [Features](#features)
 - [Project Structure](#project-structure)
 - [Prerequisites](#prerequisites)
@@ -18,10 +17,6 @@ A REST API Spring Boot Application for an Imaginative Auction System.
 - [Technologies Used](#technologies-used)
 - [Contributing](#contributing)
 - [License](#license)
-
-## Introduction
-
-_(A brief overview of the project, its purpose, and what problem it solves.)_
 
 ## Features
 
