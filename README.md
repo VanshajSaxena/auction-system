@@ -50,8 +50,8 @@ auction-system/
 │   │       ├── api/
 │   │       │   └── openapi.api-spec.yaml   # API description file
 │   │       ├── static/
-│   │       └── templates/
-│   │       ├── application.yaml            # Application properties
+│   │       ├── templates/
+│   │       └── application.yaml            # Application properties
 │   └── test/                               # Test sources
 │       └── java/
 │           └── com/
