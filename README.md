@@ -26,29 +26,43 @@ _(A list of key features and functionalities of the auction system.)_
 
 _(A description of the main directories and files in the project, with a focus on the `src` directory and its sub-packages.)_
 
-```
-auction-system/
-├── .mvn/
-├── src/
-│   ├── main/
-│   │   ├── java/
-│   │   │   └── com/example/auctionsystem/  // Adjust package name as needed
-│   │   │       ├── controller/             // API request handlers
-│   │   │       ├── service/                // Business logic
-│   │   │       ├── model/                  // Data entities/DTOs
-│   │   │       ├── repository/             // Data access layer
-│   │   │       └── AuctionSystemApplication.java // Main Spring Boot application class
-│   │   └── resources/
-│   │       ├── application.properties      // Application configuration
-│   │       └── static/                     // Static assets (if any)
-│   └── test/
-│       └── java/
-│           └── com/example/auctionsystem/  // Test classes
-├── .gitattributes
-├── .gitignore
-├── mvnw
-├── mvnw.cmd
-└── pom.xml                                 // Maven project configuration
+```sh
+auction-system
+├── src
+│   ├── main
+│   │   ├── java
+│   │   │   └── com
+│   │   │       └── auction
+│   │   │           └── auction_system  # Main application package
+│   │   │               ├── AuctionSystemApplication.java # Spring Boot main class
+│   │   │               ├── config # Spring Security configuration classes
+│   │   │               ├── controllers # API Controllers (delegates to generated interfaces)
+│   │   │               ├── entities # JPA entities
+│   │   │               ├── exception # Custom exception handling
+│   │   │               │   └── handler
+│   │   │               ├── filters # Request filters (e.g. JWT authentication filter)
+│   │   │               ├── mappers # MapStruct mappers
+│   │   │               ├── repositories # Spring Data JPA repositories
+│   │   │               ├── security # Security related components
+│   │   │               └── services # Business logic interfaces
+│   │   │                   └── impl # Interface implementations
+│   │   └── resources
+│   │       ├── api
+    │       │   └── openapi.api-spec.yaml # API description file
+│   │       ├── application.yaml # Application properties
+│   │       ├── static
+│   │       └── templates
+│   └── test # Test sources
+│       └── java
+│           └── com
+│               └── auction
+│                   └── auction_system
+│                       ├── services
+│                       │   └── impl # Service related tests
+│                       └── testutils # Test utility classes
+├── mvnw # Maven wrapper executable (Linux/MacOS)
+├── mvnw.cmd # Maven wrapper executable (Windows)
+└── pom.xml # Maven Project Object Model
 ```
 
 ## Prerequisites
@@ -65,16 +79,16 @@ _(List any software or tools that need to be installed before running the applic
 
 1. Clone the repository:
 
-    ```bash
-    git clone https://github.com/VanshajSaxena/auction-system.git
-    cd auction-system
-    ```
+   ```bash
+   git clone https://github.com/VanshajSaxena/auction-system.git
+   cd auction-system
+   ```
 
 2. Build the project:
 
-    ```bash
-    ./mvnw clean install
-    ```
+   ```bash
+   ./mvnw clean install
+   ```
 
 ### Configuration
 
@@ -96,6 +110,7 @@ _(A detailed list of the API endpoints, including HTTP methods, request/response
 
 - **GET /api/items**: Get a list of all auction items.
 - **POST /api/items**: Create a new auction item.
+
   - Request Body:
 
     ```json
@@ -108,6 +123,7 @@ _(A detailed list of the API endpoints, including HTTP methods, request/response
 
 - **GET /api/items/{id}**: Get details of a specific auction item.
 - **POST /api/bids**: Place a bid on an item.
+
   - Request Body:
 
     ```json
