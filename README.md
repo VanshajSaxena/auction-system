@@ -5,7 +5,7 @@ A REST API Spring Boot Application for an Imaginative Auction System.
 ## Table of Contents
 
 - [Features](#features)
-- [Project Structure](#project-structure)
+- [Project Structure](#project-layout)
 - [Prerequisites](#prerequisites)
 - [Getting Started](#getting-started)
   - [Installation](#installation)
@@ -38,7 +38,6 @@ auction-system/
 │   │   │               ├── controllers/    # API Controllers (delegates to generated interfaces)
 │   │   │               ├── entities/       # JPA entities
 │   │   │               ├── exception/      # Custom exception handling
-│   │   │               │   └── handler/
 │   │   │               ├── filters/        # Request filters (e.g. JWT authentication filter)
 │   │   │               ├── mappers/        # MapStruct mappers
 │   │   │               ├── repositories/   # Spring Data JPA repositories
