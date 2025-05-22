@@ -216,22 +216,15 @@ The application will be accessible at `http://localhost:8080` (or as configured)
 - **Validation:** Input data is validated server-side; errors are returned in a consistent format.
 - **OpenAPI:** For a complete list of endpoints, parameters, and models, refer to the OpenAPI spec or generate interactive documentation using Swagger tools.
 
-## Database
-
-_(Information about the database schema, migrations (if any), and how to set it up.)_
-
-## Authentication
-
-_(Details about how authentication and authorization are implemented, e.g., Spring Security, JWT, OAuth2.)_
-
 ## Technologies Used
 
 - **Framework**: Spring Boot
-- **Language**: Java
+- **Language**: Java 21
 - **Build Tool**: Apache Maven
-- **Database**: (Specify database, e.g., PostgreSQL, MySQL, H2)
-- (List other key libraries or frameworks)
+- **Database**: MySQL
+- **API Schema**: OpenAPI
 
 ## License
 
-This project is licensed under the (Specify License, e.g., MIT License) - see the [LICENSE.md](LICENSE.md) file for details.
+This project is licensed under the MIT License - see the
+[LICENSE.md](License.md) file for details.
