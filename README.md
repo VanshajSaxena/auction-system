@@ -73,7 +73,8 @@ implemented with a focus on adhering to best practices.
 
 ## Project Layout
 
-_(A description of the main directories and files in the project, with a focus on the `src` directory and its sub-packages.)_
+The project is cleanly organized by purpose—like handling security, data, and
+web requests—making it easy to follow and maintain.
 
 ```sh
 auction-system/
