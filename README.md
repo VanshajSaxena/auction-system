@@ -13,63 +13,91 @@ implemented with a focus on adhering to best practices.
   - [Configuration](#configuration)
   - [Running the Application](#running-the-application)
 - [API Endpoints](#api-endpoints)
-- [Database](#database)
-- [Authentication](#authentication)
 - [Technologies Used](#technologies-used)
-- [Contributing](#contributing)
 - [License](#license)
 
 ## Features
 
-- **User Registration & Authentication**
+<details>
+  <summary><strong>User Registration & Authentication</strong></summary>
+  <ul>
+    <li>Secure user registration and login using username or email.</li>
+    <li>JWT-based authentication for stateless and secure API access.</li>
+    <li>Spring Security integration for robust authentication and authorization.</li>
+  </ul>
+</details>
 
-  - Secure user registration and login using username or email.
-  - JWT-based authentication for stateless and secure API access.
-  - Spring Security integration for robust authentication and authorization.
+<details>
+  <summary><strong>Auction Item Management</strong></summary>
+  <ul>
+    <li>Create, read, update, and delete (CRUD) auction items.</li>
+    <li>Retrieve details for individual auction items.</li>
+    <li>List all available auction items.</li>
+  </ul>
+</details>
 
-- **Auction Item Management**
+<details>
+  <summary><strong>Bidding System</strong></summary>
+  <ul>
+    <li>Place bids on auction items.</li>
+    <li>Track and retrieve all bids for a given item.</li>
+    <li>Enforce business rules for bidding (e.g., only higher bids are accepted, auction deadlines).</li>
+  </ul>
+</details>
 
-  - Create, read, update, and delete (CRUD) auction items.
-  - Retrieve details for individual auction items.
-  - List all available auction items.
+<details>
+  <summary><strong>User Management</strong></summary>
+  <ul>
+    <li>Register new users and manage user profiles.</li>
+    <li>Retrieve a list of all registered users (admin feature).</li>
+  </ul>
+</details>
 
-- **Bidding System**
+<details>
+  <summary><strong>Exception Handling</strong></summary>
+  <ul>
+    <li>Custom exception handling for clear, user-friendly error messages.</li>
+  </ul>
+</details>
 
-  - Place bids on auction items.
-  - Track and retrieve all bids for a given item.
-  - Enforce business rules for bidding (e.g., only higher bids are accepted, auction deadlines).
+<details>
+  <summary><strong>API Documentation (OpenAPI)</strong></summary>
+  <ul>
+    <li>OpenAPI/Swagger specification provided for easy integration and testing.</li>
+  </ul>
+</details>
 
-- **User Management**
+<details>
+  <summary><strong>Security</strong></summary>
+  <ul>
+    <li>Password encoding and secure storage.</li>
+    <li>Role-based access control for sensitive endpoints.</li>
+    <li>JWT validation via request filters.</li>
+  </ul>
+</details>
 
-  - Register new users and manage user profiles.
-  - Retrieve a list of all registered users (admin feature).
+<details>
+  <summary><strong>Extensible Architecture</strong></summary>
+  <ul>
+    <li>Layered structure (Controllers, Services, Repositories) for maintainability.</li>
+    <li>Use of MapStruct for DTO/entity mapping.</li>
+  </ul>
+</details>
 
-- **Exception Handling**
+<details>
+  <summary><strong>Testing</strong></summary>
+  <ul>
+    <li>Unit and integration tests for core business logic and services.</li>
+  </ul>
+</details>
 
-  - Custom exception handling for clear, user-friendly error messages.
-
-- **API Documentation (OpenAPI)**
-
-  - OpenAPI/Swagger specification provided for easy integration and testing.
-
-- **Security**
-
-  - Password encoding and secure storage.
-  - Role-based access control for sensitive endpoints.
-  - JWT validation via request filters.
-
-- **Extensible Architecture**
-
-  - Layered structure (Controllers, Services, Repositories) for maintainability.
-  - Use of MapStruct for DTO/entity mapping.
-
-- **Testing**
-
-  - Unit and integration tests for core business logic and services.
-
-- **Configuration & Extensibility**
-  - Externalized configuration via `application.yaml`.
-  - Easily switchable database and security settings.
+<details>
+  <summary><strong>Configuration & Extensibility</strong></summary>
+  <ul>
+    <li>Externalized configuration via <code>application.yaml</code>.</li>
+    <li>Easily switchable database and security settings.</li>
+  </ul>
+</details>
 
 ## Project Layout
 
