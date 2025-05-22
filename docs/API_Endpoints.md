@@ -40,7 +40,7 @@ The request must include a `password` and exactly one of either `email` or `user
 
 **Error Response (default)**
 
-See [Default Error Response](https://www.google.com/search?q=%23default-error-response).
+See [Default Error Response](#default-error-response).
 
 #### Register New User
 
@@ -68,7 +68,7 @@ Registers a new user in the system.
 
 **Error Response (default)**
 
-See [Default Error Response](https://www.google.com/search?q=%23default-error-response).
+See [Default Error Response](#default-error-response).
 
 ### Users
 
@@ -118,7 +118,7 @@ A `User` object representing the logged-in user.
 
 **Error Response (default)**
 
-See [Default Error Response](https://www.google.com/search?q=%23default-error-response).
+See [Default Error Response](#default-error-response).
 
 #### Get Current User's Past Bids
 
@@ -142,7 +142,7 @@ An array of `Bid` objects.
 
 **Error Response (default)**
 
-See [Default Error Response](https://www.google.com/search?q=%23default-error-response).
+See [Default Error Response](#default-error-response).
 
 #### Get Current User's Auction Listings
 
@@ -170,7 +170,7 @@ An array of `AuctionListing` objects.
 
 **Error Response (default)**
 
-See [Default Error Response](https://www.google.com/search?q=%23default-error-response).
+See [Default Error Response](#default-error-response).
 
 ### Auction Listings
 
@@ -211,7 +211,7 @@ A `AuctionListing` object representing the newly created auction.
 
 **Error Response (default)**
 
-See [Default Error Response](https://www.google.com/search?q=%23default-error-response).
+See [Default Error Response](#default-error-response).
 
 #### Get All Auction Listings
 
@@ -237,7 +237,7 @@ An array of `AuctionListing` objects.
 
 **Error Response (default)**
 
-See [Default Error Response](https://www.google.com/search?q=%23default-error-response).
+See [Default Error Response](#default-error-response).
 
 #### Update Auction Listing
 
@@ -284,7 +284,7 @@ A `AuctionListing` object representing the updated auction.
 
 **Error Response (default)**
 
-See [Default Error Response](https://www.google.com/search?q=%23default-error-response).
+See [Default Error Response](#default-error-response).
 
 #### Get Specific Auction Listing
 
@@ -316,7 +316,7 @@ An `AuctionListing` object.
 
 **Error Response (default)**
 
-See [Default Error Response](https://www.google.com/search?q=%23default-error-response).
+See [Default Error Response](#default-error-response).
 
 ### Bids
 
@@ -354,7 +354,7 @@ A `Bid` object representing the newly placed bid.
 
 **Error Response (default)**
 
-See [Default Error Response](https://www.google.com/search?q=%23default-error-response).
+See [Default Error Response](#default-error-response).
 
 #### Get All Bids of Auction
 
@@ -387,7 +387,7 @@ An array of `Bid` objects.
 
 **Error Response (default)**
 
-See [Default Error Response](https://www.google.com/search?q=%23default-error-response).
+See [Default Error Response](#default-error-response).
 
 ### Schemas
 
