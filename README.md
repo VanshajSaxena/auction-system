@@ -136,6 +136,12 @@ auction-system/
    ./mvnw clean install
    ```
 
+3. Generate server stubs
+
+   ```bash
+   ./mvnw clean compile
+   ```
+
 ### Configuration
 
 Before running the application, you may need to configure certain settings to
@@ -151,7 +157,7 @@ src/main/resources/application.yaml
 - **Database Configuration**
 
   - By default, the application may use an H2 in-memory database for
-    development. You can set up and database server you like below:
+    development. You can set up a database server like this:
 
     ```yaml
     spring:
