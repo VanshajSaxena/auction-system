@@ -154,17 +154,14 @@ src/main/resources/application.yaml
     development. You can set up and database server you like below:
 
     ```yaml
-    # example
     spring:
       datasource:
-        url: jdbc:postgresql://localhost:5432/auctiondb
-        username: your_db_user
-        password: your_db_password
-        driver-class-name: org.postgresql.Driver
+        url: jdbc:mysql://localhost:3306/auction_system
+        username: test
+        password: password
       jpa:
         hibernate:
           ddl-auto: update
-        show-sql: true
     ```
 
   - Make sure the appropriate database driver is included in your `pom.xml` dependencies.
@@ -212,10 +209,10 @@ The Auction System exposes a set of RESTful endpoints for managing users, auctio
 
   ```json
   {
-    "firstname": "user1"
-    "lastname": "last1"
-    "username": "username1",
-    "email": "user1@example.com",
+    "firstname": "Elizabeth"
+    "lastname": "Gomez"
+    "username": "eligmz",
+    "email": "eliza@example.com",
     "password": "yourpassword"
   }
   ```
@@ -229,8 +226,8 @@ The Auction System exposes a set of RESTful endpoints for managing users, auctio
 
   ```json
   {
-    "username": "user1", // or email
-    "email": "user1@example.com",
+    "username": "eligmz",
+    "email": "eliza@example.com",
     "password": "yourpassword"
   }
   ```
@@ -240,7 +237,7 @@ The Auction System exposes a set of RESTful endpoints for managing users, auctio
   ```json
   {
     "token": "<JWT token>",
-    "expiresIn": 86400
+    "expiresIn": 86400000
   }
   ```
 
