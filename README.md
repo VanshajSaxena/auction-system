@@ -227,4 +227,4 @@ The application will be accessible at `http://localhost:8080` (or as configured)
 ## License
 
 This project is licensed under the MIT License - see the
-[LICENSE.md](License.md) file for details.
+[LICENSE.md](./LICENSE.md) file for details.
