@@ -202,35 +202,122 @@ The application will be accessible at `http://localhost:8080` (or as configured)
 
 ## API Endpoints
 
-_(A detailed list of the API endpoints, including HTTP methods, request/response formats, and example usage. This can be extensive, so consider linking to a separate API documentation file if needed.)_
+The Auction System exposes a set of RESTful endpoints for managing users, auctions, and bids. All endpoints accept and return JSON unless otherwise specified. For full details, refer to the included OpenAPI specification (`src/main/resources/api/openapi.api-spec.yaml`) or use tools like Swagger UI for interactive exploration.
 
-**Example:**
+### Authentication
 
-- **GET /api/items**: Get a list of all auction items.
-- **POST /api/items**: Create a new auction item.
+- `POST /api/v1/auth/register`  
+  Register a new user.  
+  **Request Body:**
 
-  - Request Body:
+  ```json
+  {
+    "firstname": "user1"
+    "lastname": "last1"
+    "username": "username1",
+    "email": "user1@example.com",
+    "password": "yourpassword"
+  }
+  ```
 
-    ```json
-    {
-      "name": "Vintage Watch",
-      "description": "A rare vintage watch from the 1950s.",
-      "startingPrice": 100.0
-    }
-    ```
+  **Response:**  
+  201 Created or error details.
 
-- **GET /api/items/{id}**: Get details of a specific auction item.
-- **POST /api/bids**: Place a bid on an item.
+- `POST /api/v1/auth/login`  
+  Authenticate a user and receive a JWT token.  
+  **Request Body:**
 
-  - Request Body:
+  ```json
+  {
+    "username": "user1", // or email
+    "email": "user1@example.com",
+    "password": "yourpassword"
+  }
+  ```
 
-    ```json
-    {
-      "itemId": 1,
-      "userId": 123,
-      "amount": 150.0
-    }
-    ```
+  **Response:**
+
+  ```json
+  {
+    "token": "<JWT token>",
+    "expiresIn": 86400
+  }
+  ```
+
+---
+
+### Users
+
+- `GET /api/v1/users`  
+  Retrieve a list of all registered users.  
+  **Authentication:** Required (Admin or elevated role).
+
+---
+
+### Auctions
+
+- `GET /api/v1/auctions`  
+  List all auction items.
+
+- `GET /api/v1/auctions/{auctionId}`  
+  Get details of a specific auction item.
+
+- `POST /api/v1/auctions`  
+  Create a new auction item.  
+  **Authentication:** Required
+  **Request Body:**
+
+  ```json
+  {
+    "title": "Vintage Watch",
+    "description": "A rare vintage watch from the 1950s.",
+    "startingPrice": 100.0,
+    "expirationTime": "2025-06-01T12:00:00Z"
+  }
+  ```
+
+- `PUT /api/v1/auctions/{auctionId}`  
+  Update an existing auction item.  
+  **Authentication:** Required (Owner or admin)
+
+- `DELETE /api/v1/auctions/{auctionId}`  
+  Delete an auction item.  
+  **Authentication:** Required (Owner or admin)
+
+---
+
+### Bids
+
+- `GET /api/v1/auctions/{auctionId}/bids`  
+  Retrieve all bids for a specific auction item.
+
+- `POST /api/v1/auctions/{auctionId}/bids`  
+  Place a bid on an auction item.  
+  **Authentication:** Required  
+  **Request Body:**
+
+  ```json
+  {
+    "amount": 150.0
+  }
+  ```
+
+  **Response:**  
+  201 Created if bid is valid; error if bid is lower than current or auction is closed.
+
+---
+
+### Error Handling
+
+- All unsuccessful requests return JSON error messages with appropriate HTTP status codes and details.
+
+---
+
+### Notes
+
+- **Authentication:** Most endpoints (except registration, login, and public auctions listing) require a valid JWT token in the `Authorization: Bearer <token>` header.
+- **Validation:** Input data is validated server-side; errors are returned in a consistent format.
+- **OpenAPI:** For a complete list of endpoints, parameters, and models, refer to the OpenAPI spec or generate interactive documentation using Swagger tools.
 
 ## Database
 
