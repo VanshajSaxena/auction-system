@@ -312,7 +312,31 @@ The Auction System exposes a set of RESTful endpoints for managing users, auctio
 
 ### Error Handling
 
-- All unsuccessful requests return JSON error messages with appropriate HTTP status codes and details.
+- All unsuccessful requests return JSON error messages with appropriate HTTP
+  status codes and details. The following schema is used to return consistent
+  error responses.
+
+  ```yaml
+  ApiError:
+    description: |
+      Central error response object.
+    type: object
+    properties:
+      status:
+        type: integer
+        format: int32
+      message:
+        type: string
+      fields:
+        type: array
+        items:
+          type: object
+          properties:
+            field:
+              type: string
+            message:
+              type: string
+  ```
 
 ---
 
@@ -337,12 +361,6 @@ _(Details about how authentication and authorization are implemented, e.g., Spri
 - **Build Tool**: Apache Maven
 - **Database**: (Specify database, e.g., PostgreSQL, MySQL, H2)
 - (List other key libraries or frameworks)
-
-## Contributing
-
-_(Guidelines for contributing to the project, if applicable.)_
-
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## License
 
