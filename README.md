@@ -1,6 +1,7 @@
 # Auction System API
 
-A REST API Spring Boot Application for an Imaginative Auction System.
+A Spring Boot REST API application designed for a fictional auction system,
+implemented with a focus on adhering to best practices.
 
 ## Table of Contents
 
