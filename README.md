@@ -21,7 +21,55 @@ implemented with a focus on adhering to best practices.
 
 ## Features
 
-_(A list of key features and functionalities of the auction system.)_
+- **User Registration & Authentication**
+
+  - Secure user registration and login using username or email.
+  - JWT-based authentication for stateless and secure API access.
+  - Spring Security integration for robust authentication and authorization.
+
+- **Auction Item Management**
+
+  - Create, read, update, and delete (CRUD) auction items.
+  - Retrieve details for individual auction items.
+  - List all available auction items.
+
+- **Bidding System**
+
+  - Place bids on auction items.
+  - Track and retrieve all bids for a given item.
+  - Enforce business rules for bidding (e.g., only higher bids are accepted, auction deadlines).
+
+- **User Management**
+
+  - Register new users and manage user profiles.
+  - Retrieve a list of all registered users (admin feature).
+
+- **Exception Handling**
+
+  - Custom exception handling for clear, user-friendly error messages.
+
+- **API Documentation (OpenAPI)**
+
+  - OpenAPI/Swagger specification provided for easy integration and testing.
+
+- **Security**
+
+  - Password encoding and secure storage.
+  - Role-based access control for sensitive endpoints.
+  - JWT validation via request filters.
+
+- **Extensible Architecture**
+
+  - Layered structure (Controllers, Services, Repositories) for maintainability.
+  - Use of MapStruct for DTO/entity mapping.
+
+- **Testing**
+
+  - Unit and integration tests for core business logic and services.
+
+- **Configuration & Extensibility**
+  - Externalized configuration via `application.yaml`.
+  - Easily switchable database and security settings.
 
 ## Project Layout
 
