@@ -179,6 +179,10 @@ src/main/resources/application.yaml
       expiryMs: 86400000 # 24 hours
     ```
 
+> **Note:** Do not commit sensitive information such as passwords or secret
+> keys to version control. Use environment variables or a secrets manager for
+> production deployments where possible.
+
 - **Other Properties**
 
   - You can further customize logging, actuator, mail, or any other Spring Boot
@@ -187,10 +191,6 @@ src/main/resources/application.yaml
 ```yaml
 logging.level.org.springframework.security: TRACE
 ```
-
-> **Note:** Do not commit sensitive information such as passwords or secret
-> keys to version control. Use environment variables or a secrets manager for
-> production deployments where possible.
 
 ### Running the Application
 
