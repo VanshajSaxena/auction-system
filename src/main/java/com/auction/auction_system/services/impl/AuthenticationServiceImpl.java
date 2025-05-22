@@ -38,7 +38,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
   @Value("${jwt.secret}")
   private String secretKey;
 
-  private Long jwtExpiryMs = 86400000L; // 24 hours
+  @Value("${jwt.expiryInMs:86400000L}")
+  private Long jwtExpiryMs;
 
   @Override
   public String generateToken(UserDetails userDetails) {
