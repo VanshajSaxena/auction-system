@@ -116,11 +116,8 @@ auction-system/
 
 ## Prerequisites
 
-_(List any software or tools that need to be installed before running the application, e.g., Java JDK, Maven, specific database.)_
-
-- Java JDK (version)
-- Apache Maven (version)
-- (Any other dependencies like a database server)
+- Java JDK (21)
+- Apache Maven (3.9.9)
 
 ## Getting Started
 
@@ -141,7 +138,59 @@ _(List any software or tools that need to be installed before running the applic
 
 ### Configuration
 
-_(Details on how to configure the application, e.g., database connection strings in `application.properties`.)_
+Before running the application, you may need to configure certain settings to
+match your environment and preferences. The main configuration file is located
+at:
+
+```
+src/main/resources/application.yaml
+```
+
+### Key Configuration Properties
+
+- **Database Configuration**
+
+  - By default, the application may use an H2 in-memory database for
+    development. You can set up and database server you like below:
+
+    ```yaml
+    # example
+    spring:
+      datasource:
+        url: jdbc:postgresql://localhost:5432/auctiondb
+        username: your_db_user
+        password: your_db_password
+        driver-class-name: org.postgresql.Driver
+      jpa:
+        hibernate:
+          ddl-auto: update
+        show-sql: true
+    ```
+
+  - Make sure the appropriate database driver is included in your `pom.xml` dependencies.
+
+- **JWT Secret and Expiry**
+
+  - Set your JWT secret key and token expiration (in milliseconds) for authentication:
+
+    ```yaml
+    jwt:
+      secret: your-very-secure-secret-key
+      expiryMs: 86400000 # 24 hours
+    ```
+
+- **Other Properties**
+
+  - You can further customize logging, actuator, mail, or any other Spring Boot
+    supported properties as required.
+
+```yaml
+logging.level.org.springframework.security: TRACE
+```
+
+> **Note:** Do not commit sensitive information such as passwords or secret
+> keys to version control. Use environment variables or a secrets manager for
+> production deployments where possible.
 
 ### Running the Application
 
