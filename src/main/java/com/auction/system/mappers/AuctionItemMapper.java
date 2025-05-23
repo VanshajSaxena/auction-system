@@ -7,7 +7,7 @@ import org.mapstruct.ReportingPolicy;
 import com.auction.system.entities.AuctionItemEntity;
 import com.auction.system.generated.models.AuctionItemDto;
 
-@Mapper(componentModel = "spring", unmappedSourcePolicy = ReportingPolicy.WARN)
+@Mapper(componentModel = "spring", unmappedSourcePolicy = ReportingPolicy.IGNORE)
 public interface AuctionItemMapper {
 
   @Mapping(target = "ownerId", source = "owner.id")

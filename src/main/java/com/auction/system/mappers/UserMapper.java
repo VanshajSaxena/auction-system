@@ -9,7 +9,7 @@ import org.mapstruct.ReportingPolicy;
 import com.auction.system.entities.UserEntity;
 import com.auction.system.generated.models.UserDto;
 
-@Mapper(componentModel = "spring", uses = { UserAddressMapper.class }, unmappedSourcePolicy = ReportingPolicy.WARN)
+@Mapper(componentModel = "spring", uses = { UserAddressMapper.class }, unmappedSourcePolicy = ReportingPolicy.IGNORE)
 public interface UserMapper {
 
   @Mapping(source = "shippingAddr", target = "shippingAddr") // Handled by UserAddressMapper via 'uses'
