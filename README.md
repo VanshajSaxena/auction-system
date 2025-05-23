@@ -1,7 +1,8 @@
 # Auction System API
 
-A Spring Boot REST API application designed for a fictional auction system,
-implemented with a focus on adhering to best practices.
+A REST API application for an auction platform, implemented in Spring Boot
+using an API-first development strategy to ensure consistent contract design,
+robust versioning, and clean separation of concerns.
 
 ## Table of Contents
 
