@@ -203,11 +203,11 @@ src/main/resources/application.yaml
 
 - **JWT Secret and Expiry**
 
-  - Set your JWT secret key and token expiration (in milliseconds) for authentication:
+  - Set your JWT token expiration (in milliseconds) for authentication:
 
     ```yaml
     jwt:
-      expiryMs: 86400000 # 24 hours
+      expiryMs: 900000 # 15 mins
     ```
 
 - **Other Properties**
