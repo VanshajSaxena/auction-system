@@ -207,13 +207,8 @@ src/main/resources/application.yaml
 
     ```yaml
     jwt:
-      secret: your-very-secure-secret-key
       expiryMs: 86400000 # 24 hours
     ```
-
-> **Note:** Do not commit sensitive information such as passwords or secret
-> keys to version control. Use environment variables or a secrets manager for
-> production deployments.
 
 - **Other Properties**
 
