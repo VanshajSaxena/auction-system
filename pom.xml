@@ -158,7 +158,7 @@
             <configuration>
               <!--
               https://github.com/OpenAPITools/openapi-generator/tree/master/modules/openapi-generator-maven-plugin#readme -->
-              <inputSpec>${project.basedir}/src/main/resources/api/openapi.api-spec.yaml</inputSpec>
+              <inputSpec>${project.basedir}/src/main/resources/api/openapi.api-description.yaml</inputSpec>
               <generatorName>spring</generatorName>
               <modelNameSuffix>Dto</modelNameSuffix>
               <cleanupOutput>true</cleanupOutput>

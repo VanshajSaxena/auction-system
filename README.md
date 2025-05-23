@@ -125,7 +125,7 @@ auction-system/
 │   │   │               └── AuctionSystemApplication.java # Spring Boot main class
 │   │   └── resources/
 │   │       ├── api/
-│   │       │   └── openapi.api-spec.yaml   # API description file
+│   │       │   └── openapi.api-description.yaml # API description file
 │   │       ├── static/
 │   │       ├── templates/
 │   │       └── application.yaml            # Application properties
@@ -234,7 +234,7 @@ The application will be accessible at `http://localhost:8080` (or as configured)
 ## API Endpoints
 
 - You can find an overview of the API [here](./docs/api/README.md).
-- You could directly check out the API description file [here](./src/main/resources/api/openapi.api-spec.yaml).
+- You could directly check out the API description file [here](./src/main/resources/api/openapi.api-description.yaml).
 
 ---
 
