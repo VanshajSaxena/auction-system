@@ -111,7 +111,7 @@ auction-system/
 │   │   ├── java/
 │   │   │   └── com/
 │   │   │       └── auction/
-│   │   │           └── auction_system/     # Main application package
+│   │   │           └── system/     # Main application package
 │   │   │               ├── config/         # Spring Security configuration classes
 │   │   │               ├── controllers/    # API Controllers (delegates to generated interfaces)
 │   │   │               ├── entities/       # JPA entities
@@ -133,7 +133,7 @@ auction-system/
 │       └── java/
 │           └── com/
 │               └── auction/
-│                   └── auction_system/
+│                   └── system/
 │                       ├── services/
 │                       │   └── impl/       # Service related tests
 │                       └── testutils/      # Test utility classes

@@ -137,7 +137,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
         <configuration>
-          <mainClass>com.auction.auction_system.AuctionSystemApplication</mainClass>
+          <mainClass>com.auction.system.AuctionSystemApplication</mainClass>
           <excludes>
             <exclude>
               <groupId>org.projectlombok</groupId>
@@ -162,9 +162,9 @@
               <generatorName>spring</generatorName>
               <modelNameSuffix>Dto</modelNameSuffix>
               <cleanupOutput>true</cleanupOutput>
-              <apiPackage>com.auction.auction_system.generated.controllers</apiPackage>
-              <modelPackage>com.auction.auction_system.generated.models</modelPackage>
-              <!-- <invokerPackage>com.auction.auction_system.generated</invokerPackage> -->
+              <apiPackage>com.auction.system.generated.controllers</apiPackage>
+              <modelPackage>com.auction.system.generated.models</modelPackage>
+              <!-- <invokerPackage>com.auction.system.generated</invokerPackage> -->
               <configOptions>
                 <delegatePattern>true</delegatePattern>
                 <useSpringBoot3>true</useSpringBoot3>
