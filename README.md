@@ -213,7 +213,7 @@ src/main/resources/application.yaml
 
 > **Note:** Do not commit sensitive information such as passwords or secret
 > keys to version control. Use environment variables or a secrets manager for
-> production deployments where possible.
+> production deployments.
 
 - **Other Properties**
 
