@@ -233,7 +233,7 @@ The application will be accessible at `http://localhost:8080` (or as configured)
 
 ## API Endpoints
 
-- You can find an overview of the API [here](./docs/API_Endpoints.md).
+- You can find an overview of the API [here](./docs/api/README.md).
 - You could directly check out the API description file [here](./src/main/resources/api/openapi.api-spec.yaml).
 
 ---
