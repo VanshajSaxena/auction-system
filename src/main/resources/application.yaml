@@ -1,15 +1,3 @@
 spring:
   application:
     name: Auction System
-  datasource:
-    url: jdbc:mysql://localhost:3306/auction_system
-    username: test
-    password: password
-  jpa:
-    hibernate:
-      ddl-auto: update
-
-jwt:
-  expiryInMs: 86400000
-
-logging.level.org.springframework.security: TRACE

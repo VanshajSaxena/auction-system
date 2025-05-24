@@ -35,7 +35,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
   private final UserRepository userRepository;
 
-  @Value("${APPLICATION_SECRET}")
+  @Value("${jwt.secret}")
   private String secretKey;
 
   @Value("${jwt.expiryInMs:900000L}")
