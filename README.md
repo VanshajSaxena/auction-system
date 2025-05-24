@@ -1,26 +1,15 @@
-# AuctionHub
+AuctionHub is a **REST API application for an auction platform**, built with
+**Spring Boot** and following an **API-first development strategy**. This
+approach ensures a consistent API contract, robust versioning, and a clear
+separation of concerns within the application.
 
-A REST API application for an auction platform, implemented in Spring Boot
-using an API-first development strategy to ensure consistent contract design,
-robust versioning, and clean separation of concerns.
+---
 
-## Table of Contents
+## Project Structure
 
-- [Project Structure](#project-layout)
-- [Features](#features)
-- [Prerequisites](#prerequisites)
-- [Getting Started](#getting-started)
-  - [Installation](#installation)
-  - [Configuration](#configuration)
-  - [Running the Application](#running-the-application)
-- [API Endpoints](#api-endpoints)
-- [Technologies Used](#technologies-used)
-- [License](#license)
-
-## Project Layout
-
-The project is cleanly organized by purpose—like handling security, data, and
-web requests—making it easy to follow and maintain.
+The project follows a well-organized structure, categorizing components by
+their purpose (e.g., security, data, web requests). This makes the codebase
+easy to navigate and maintain.
 
 ```sh
 auction-system/
@@ -29,12 +18,12 @@ auction-system/
 │   │   ├── java/
 │   │   │   └── com/
 │   │   │       └── auction/
-│   │   │           └── system/     # Main application package
+│   │   │           └── system/             # Main application package
 │   │   │               ├── config/         # Spring Security configuration classes
 │   │   │               ├── controllers/    # API Controllers (delegates to generated interfaces)
 │   │   │               ├── entities/       # JPA entities
 │   │   │               ├── exception/      # Custom exception handling
-│   │   │               ├── filters/        # Request filters (e.g. JWT authentication filter)
+│   │   │               ├── filters/        # Request filters (e.g., JWT authentication filter)
 │   │   │               ├── mappers/        # MapStruct mappers
 │   │   │               ├── repositories/   # Spring Data JPA repositories
 │   │   │               ├── security/       # Security related components
@@ -60,227 +49,158 @@ auction-system/
 └── pom.xml                                 # Maven Project Object Model
 ```
 
+---
+
 ## Features
 
-<details>
-  <summary>User Registration & Authentication</summary>
+AuctionHub offers a comprehensive set of features for managing an online
+auction platform:
 
-  <ul>
-    <li>Secure user registration and login using username or email.</li>
-    <li>JWT-based authentication for stateless and secure API access.</li>
-    <li>Spring Security integration for robust authentication and authorization.</li>
-  </ul>
-</details>
+- **User Registration & Authentication**: Secure user registration and login
+  using username or email, with **JWT-based authentication** and robust
+  **Spring Security integration** for stateless API access.
+- **Auction Item Management**: Full **CRUD** (Create, Read, Update, Delete)
+  functionality for auction items, including detailed retrieval and listing of
+  all available items.
+- **Bidding System**: Allows users to **place bids** on auction items, track
+  bids for a given item, and enforces business rules like accepting only higher
+  bids and respecting auction deadlines.
+- **User Management**: Supports registration of new users, management of user
+  profiles, and an admin feature to retrieve a list of all registered users.
+- **Exception Handling**: Features custom exception handling for clear,
+  user-friendly error messages.
+- **API Documentation (OpenAPI)**: Provides an OpenAPI/Swagger specification
+  for easy API integration and testing.
+- **Security**: Includes password encoding and secure storage, **role-based
+  access control** for sensitive endpoints, and JWT validation via request
+  filters.
+- **Extensible Architecture**: Utilizes a layered structure (Controllers,
+  Services, Repositories) for maintainability and uses **MapStruct** for
+  DTO/entity mapping.
+- **Testing**: Comprehensive **unit and integration tests** cover core
+  business logic and services.
+- **Configuration & Extensibility**: Externalized configuration via
+  `application.yaml` allows for easily switchable database and security
+  settings.
 
-<details>
-  <summary>Auction Item Management</summary>
-
-  <ul>
-    <li>Create, read, update, and delete (CRUD) auction items.</li>
-    <li>Retrieve details for individual auction items.</li>
-    <li>List all available auction items.</li>
-  </ul>
-</details>
-
-<details>
-  <summary>Bidding System</summary>
-
-  <ul>
-    <li>Place bids on auction items.</li>
-    <li>Track and retrieve all bids for a given item.</li>
-    <li>Enforce business rules for bidding (e.g., only higher bids are accepted, auction deadlines).</li>
-  </ul>
-</details>
-
-<details>
-  <summary>User Management</summary>
-
-  <ul>
-    <li>Register new users and manage user profiles.</li>
-    <li>Retrieve a list of all registered users (admin feature).</li>
-  </ul>
-</details>
-
-<details>
-  <summary>Exception Handling</summary>
-
-  <ul>
-    <li>Custom exception handling for clear, user-friendly error messages.</li>
-  </ul>
-</details>
-
-<details>
-  <summary>API Documentation (OpenAPI)</summary>
-
-  <ul>
-    <li>OpenAPI/Swagger specification provided for easy integration and testing.</li>
-  </ul>
-</details>
-
-<details>
-  <summary>Security</summary>
-
-  <ul>
-    <li>Password encoding and secure storage.</li>
-    <li>Role-based access control for sensitive endpoints.</li>
-    <li>JWT validation via request filters.</li>
-  </ul>
-</details>
-
-<details>
-  <summary>Extensible Architecture</summary>
-
-  <ul>
-    <li>Layered structure (Controllers, Services, Repositories) for maintainability.</li>
-    <li>Use of MapStruct for DTO/entity mapping.</li>
-  </ul>
-</details>
-
-<details>
-  <summary>Testing</summary>
-
-  <ul>
-    <li>Unit and integration tests for core business logic and services.</li>
-  </ul>
-</details>
-
-<details>
-  <summary>Configuration & Extensibility</summary>
-
-  <ul>
-    <li>Externalized configuration via <code>application.yaml</code>.</li>
-    <li>Easily switchable database and security settings.</li>
-  </ul>
-</details>
+---
 
 ## Prerequisites
 
-- Java JDK (21) or later
+To run AuctionHub, you'll need:
+
+- **Java JDK (21)** or later
+
+---
 
 ## Getting Started
 
+Follow these steps to set up and run the AuctionHub application.
+
 ### Initialization
 
-1. Clone the repository:
+1. **Clone the repository**:
 
    ```bash
    git clone https://github.com/VanshajSaxena/auction-system.git
    cd auction-system
    ```
 
-2. Build the project:
+2. **Build the project**:
 
    ```bash
    ./mvnw clean install
    ```
 
-   This command uses the [OpenAPI
-   Generator](https://github.com/OpenAPITools/openapi-generator) Maven plugin
-   to generate server stubs from the API description file located at
-   [`src/main/resources/api/openapi.api-description.yaml`](./src/main/resources/api/openapi.api-description.yaml).
-
-   After generating the stubs, it compiles both the main and test sources, and
-   installs the resulting artifacts.
-
-   The compiled outputs, including the generated sources and packaged
-   application files, will be available in the `target` directory.
+   This command leverages the **OpenAPI Generator Maven plugin** to generate
+   server stubs from the `openapi.api-description.yaml` file. After stub
+   generation, it compiles all sources and installs the artifacts into the
+   `target` directory.
 
 ### Configuration
 
-Before running the application, you may need to configure certain settings to
-match your environment and preferences. The main configuration file is located
-at:
+The primary configuration file is located at
+`src/main/resources/application.yaml`. However, the application uses Spring
+Profiles for more flexible configuration. You can create
+`application-{profile}.yaml` files for different environments (e.g.,
+`application-dev.yaml`, `application-prod.yaml`).
 
-```
-src/main/resources/application.yaml
-```
+To run with a specific profile:
 
-But, it provides simple defaults that help application run when no
-configuration is provided. The recommended way of running the application is
-using Spring Profiles.
-
-```
-src/main/resources/application-{profile}.yaml
-```
-
-and then,
-
-```sh
+```bash
 ./mvn spring-boot:run -Dspring-boot.run.profiles={profile}
 ```
 
-Look at the next section to know how to configure the application according to
-your needs.
+Here are some key configuration properties you might want to adjust:
 
-### Key Configuration Properties
+- **Database Configuration**: By default, an in-memory H2 database is used for
+  development. For production or persistent data, configure a database like
+  MySQL:
 
-- **Database Configuration**
+  ```yaml
+  # src/main/resources/application-dev.yaml
+  spring:
+    datasource:
+      url: jdbc:mysql://localhost:3306/auction_system
+      username: test
+      password: password
+    jpa:
+      hibernate:
+        ddl-auto: update
+  ```
 
-  - By default, the application may use in-memory H2 database for
-    development. You can set up a database server like this:
+  Remember to include the appropriate database driver in your `pom.xml`.
 
-    ```yaml
-    # src/main/resources/application-dev.yaml
-    spring:
-      datasource:
-        url: jdbc:mysql://localhost:3306/auction_system
-        username: test
-        password: password
-      jpa:
-        hibernate:
-          ddl-auto: update
-    ```
+- **JWT Secret and Expiry**: Set your JWT token secret and expiration time (in
+  milliseconds) for authentication:
 
-  - Make sure the appropriate database driver is included in your `pom.xml` dependencies.
+  ```yaml
+  # src/main/resources/application-prod.yaml
+  jwt:
+    secret: 3f8f4debeee3a93af3ee723b9af18ce9c4b57c88987f3040bf553db4a808cb8b
+    expiryMs: 900000 # 15 mins
+  ```
 
-- **JWT Secret and Expiry**
+- **Other Properties**: You can customize other Spring Boot properties as
+  needed, such as logging levels or actuator settings.
 
-  - Set your JWT token expiration (in milliseconds) for authentication:
-
-    ```yaml
-    # src/main/resources/application-prod.yaml
-    jwt:
-      secret: 3f8f4debeee3a93af3ee723b9af18ce9c4b57c88987f3040bf553db4a808cb8b
-      expiryMs: 900000 # 15 mins
-    ```
-
-- **Other Properties**
-
-  - You can further customize logging, actuator, mail, or any other Spring Boot
-    supported properties as required.
-
-    ```yaml
-    # src/main/resources/application-dev.yaml
-    logging.level.org.springframework.security: TRACE
-    ```
+  ```yaml
+  # src/main/resources/application-dev.yaml
+  logging.level.org.springframework.security: TRACE
+  ```
 
 ### Running the Application
+
+To start the application, simply run:
 
 ```bash
 ./mvnw spring-boot:run
 ```
 
-The application will be accessible at `http://localhost:8080` (or as configured).
+The application will be accessible at `http://localhost:8080` by default.
+
+---
 
 ## API Endpoints
 
-- You can find a detailed API overview, including endpoints, usage, and design
-  guidelines, [here](./docs/api/README.md).
-- Refer to the API description file at
-  [`src/main/resources/api/openapi.api-description.yaml`](./src/main/resources/api/openapi.api-description.yaml)
-  for the complete contract definition.
+- A detailed API overview, including usage and design guidelines, can be found
+  in the project's documentation.
+- For the complete contract definition, refer to the API description file:
+  `src/main/resources/api/openapi.api-description.yaml`.
 
 ---
 
 ### Notes
 
-- **Authentication:** Most endpoints (except registration, login, and public
-  auctions listing) require a valid JWT token in the `Authorization: Bearer
-<token>` header.
-- **Validation:** Input data is validated server-side; errors are returned in a
-  consistent format.
-- **OpenAPI:** For a complete list of endpoints, parameters, and models, refer
-  to the OpenAPI spec or generate interactive documentation using Swagger tools.
+- **Authentication**: Most endpoints require a valid **JWT token** in the
+  `Authorization: Bearer <token>` header, with exceptions for registration,
+  login, and public auction listings.
+- **Validation**: Input data is validated server-side, and errors are
+  consistently formatted.
+- **OpenAPI**: The OpenAPI specification can be used with Swagger tools to
+  generate interactive documentation.
+
+---
 
 ## Technologies Used
 
@@ -290,6 +210,9 @@ The application will be accessible at `http://localhost:8080` (or as configured)
 - **Database**: MySQL
 - **API Schema**: OpenAPI
 
+---
+
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
+This project is licensed under the **MIT License**. For more details, see the
+[LICENSE](LICENSE) file.
