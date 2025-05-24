@@ -159,45 +159,49 @@ auction-system/
    cd auction-system
    ```
 
-2. Build the project:
-
-   ```bash
-   ./mvnw clean install
-   ```
-
-3. Generate server stubs
-
-   ```bash
-   ./mvnw clean compile
-   ```
-
 ### Configuration
 
-Before running the application, you may need to configure certain settings to
-match your environment and preferences. The main configuration file is located
+Before running the application, you need to configure certain settings specific
+to your environment and preferences The main configuration file is located
 at:
 
-```
+```sh
 src/main/resources/application.yaml
 ```
+
+This is the default Spring profile file and provides minimal configuration.
+
+```sh
+src/main/resources/application-dev.yaml
+```
+
+This resource file configures the `dev` Spring Profile, and you can activate the `dev` profile at startup like this:
+
+```sh
+mvn spring-boot:run -Dspring-boot.run.profiles=dev
+```
+
+There are a few key properties that you need to configure before running the
+application. Have a look at the next section.
 
 ### Key Configuration Properties
 
 - **Database Configuration**
 
-  - By default, the application may use an H2 in-memory database for
-    development. You can set up a database server like this:
+  - By default, the application uses an H2 in-memory database for development.
 
-    ```yaml
-    spring:
-      datasource:
-        url: jdbc:mysql://localhost:3306/auction_system
-        username: test
-        password: password
-      jpa:
-        hibernate:
-          ddl-auto: update
-    ```
+  You can set up a database server like this:
+
+  ```yaml
+  spring:
+    datasource:
+      url: jdbc:mysql://localhost:3306/auction_system
+      username: test
+      password: password
+    jpa:
+      hibernate:
+        ddl-auto: update
+  ```
 
   - Make sure the appropriate database driver is included in your `pom.xml` dependencies.
 
