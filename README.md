@@ -254,8 +254,11 @@ The application will be accessible at `http://localhost:8080` (or as configured)
 
 ## API Endpoints
 
-- You can find an overview of the API [here](./docs/api/README.md).
-- You could directly check out the API description file [here](./src/main/resources/api/openapi.api-description.yaml).
+- You can find a detailed API overview, including endpoints, usage, and design
+  guidelines, [here](./docs/api/README.md).
+- Refer to the API description file at
+  [`src/main/resources/api/openapi.api-description.yaml`](./src/main/resources/api/openapi.api-description.yaml)
+  for the complete contract definition.
 
 ---
 
