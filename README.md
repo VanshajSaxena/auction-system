@@ -145,8 +145,7 @@ auction-system/
 
 ## Prerequisites
 
-- Java JDK (21)
-- Apache Maven (3.9.9)
+- Java JDK (21) or later
 
 ## Getting Started
 
@@ -186,14 +185,32 @@ at:
 src/main/resources/application.yaml
 ```
 
+But, it provides simple defaults that help application run when no
+configuration is provided. The recommended way of running the application is
+using Spring Profiles.
+
+```
+src/main/resources/application-{profile}.yaml
+```
+
+and then,
+
+```sh
+./mvn spring-boot:run -Dspring-boot.run.profiles={profile}
+```
+
+Look at the next section to know how to configure the application according to
+your needs.
+
 ### Key Configuration Properties
 
 - **Database Configuration**
 
-  - By default, the application may use an H2 in-memory database for
+  - By default, the application may use in-memory H2 database for
     development. You can set up a database server like this:
 
     ```yaml
+    # src/main/resources/application-dev.yaml
     spring:
       datasource:
         url: jdbc:mysql://localhost:3306/auction_system
@@ -211,7 +228,9 @@ src/main/resources/application.yaml
   - Set your JWT token expiration (in milliseconds) for authentication:
 
     ```yaml
+    # src/main/resources/application-prod.yaml
     jwt:
+      secret: 3f8f4debeee3a93af3ee723b9af18ce9c4b57c88987f3040bf553db4a808cb8b
       expiryMs: 900000 # 15 mins
     ```
 
@@ -220,9 +239,10 @@ src/main/resources/application.yaml
   - You can further customize logging, actuator, mail, or any other Spring Boot
     supported properties as required.
 
-```yaml
-logging.level.org.springframework.security: TRACE
-```
+    ```yaml
+    # src/main/resources/application-dev.yaml
+    logging.level.org.springframework.security: TRACE
+    ```
 
 ### Running the Application
 
@@ -241,9 +261,13 @@ The application will be accessible at `http://localhost:8080` (or as configured)
 
 ### Notes
 
-- **Authentication:** Most endpoints (except registration, login, and public auctions listing) require a valid JWT token in the `Authorization: Bearer <token>` header.
-- **Validation:** Input data is validated server-side; errors are returned in a consistent format.
-- **OpenAPI:** For a complete list of endpoints, parameters, and models, refer to the OpenAPI spec or generate interactive documentation using Swagger tools.
+- **Authentication:** Most endpoints (except registration, login, and public
+  auctions listing) require a valid JWT token in the `Authorization: Bearer
+<token>` header.
+- **Validation:** Input data is validated server-side; errors are returned in a
+  consistent format.
+- **OpenAPI:** For a complete list of endpoints, parameters, and models, refer
+  to the OpenAPI spec or generate interactive documentation using Swagger tools.
 
 ## Technologies Used
 
