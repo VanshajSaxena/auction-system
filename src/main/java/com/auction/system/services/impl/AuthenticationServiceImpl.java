@@ -38,7 +38,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
   @Value("${jwt.secret}")
   private String secretKey;
 
-  @Value("${jwt.expiryInMs:900000}") // default 15 min
+  @Value("${jwt.expiryInMs}")
   private Long jwtExpiryMs;
 
   @Override
