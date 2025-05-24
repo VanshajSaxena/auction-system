@@ -18,7 +18,7 @@ robust versioning, and clean separation of concerns.
 - [License](#license)
 
 <details>
-  <summary><h2>Features</h2></summary>
+  <summary>Features</summary>
 <details>
   <summary><strong>User Registration & Authentication</strong></summary>
   <ul>
@@ -100,7 +100,6 @@ robust versioning, and clean separation of concerns.
   </ul>
 </details>
 </details>
-
 ## Project Layout
 
 The project is cleanly organized by purpose—like handling security, data, and
