@@ -150,7 +150,7 @@ auction-system/
 
 ## Getting Started
 
-### Installation
+### Initialization
 
 1. Clone the repository:
 
@@ -165,11 +165,16 @@ auction-system/
    ./mvnw clean install
    ```
 
-3. Generate server stubs
+   This command uses the [OpenAPI
+   Generator](https://github.com/OpenAPITools/openapi-generator) Maven plugin
+   to generate server stubs from the API description file located at
+   [`src/main/resources/api/openapi.api-description.yaml`](./src/main/resources/api/openapi.api-description.yaml).
 
-   ```bash
-   ./mvnw clean compile
-   ```
+   After generating the stubs, it compiles both the main and test sources, and
+   installs the resulting artifacts.
+
+   The compiled outputs, including the generated sources and packaged
+   application files, will be available in the `target` directory.
 
 ### Configuration
 
