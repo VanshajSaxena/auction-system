@@ -17,8 +17,8 @@ robust versioning, and clean separation of concerns.
 - [Technologies Used](#technologies-used)
 - [License](#license)
 
-<details>
-  <summary>Features</summary>
+## Features
+
 <details>
   <summary><strong>User Registration & Authentication</strong></summary>
   <ul>
@@ -99,7 +99,7 @@ robust versioning, and clean separation of concerns.
     <li>Easily switchable database and security settings.</li>
   </ul>
 </details>
-</details>
+
 ## Project Layout
 
 The project is cleanly organized by purpose—like handling security, data, and
@@ -145,7 +145,7 @@ auction-system/
 
 ## Prerequisites
 
-- JDK (21) or later
+- Java JDK (21) or later
 
 ## Getting Started
 
