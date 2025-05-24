@@ -20,7 +20,7 @@ robust versioning, and clean separation of concerns.
 ## Features
 
 <details>
-  <summary><strong>User Registration & Authentication</strong></summary>
+  <summary>User Registration & Authentication</summary>
   <ul>
     <li>Secure user registration and login using username or email.</li>
     <li>JWT-based authentication for stateless and secure API access.</li>
@@ -29,7 +29,7 @@ robust versioning, and clean separation of concerns.
 </details>
 
 <details>
-  <summary><strong>Auction Item Management</strong></summary>
+  <summary>Auction Item Management</summary>
   <ul>
     <li>Create, read, update, and delete (CRUD) auction items.</li>
     <li>Retrieve details for individual auction items.</li>
@@ -38,7 +38,7 @@ robust versioning, and clean separation of concerns.
 </details>
 
 <details>
-  <summary><strong>Bidding System</strong></summary>
+  <summary>Bidding System</summary>
   <ul>
     <li>Place bids on auction items.</li>
     <li>Track and retrieve all bids for a given item.</li>
@@ -47,7 +47,7 @@ robust versioning, and clean separation of concerns.
 </details>
 
 <details>
-  <summary><strong>User Management</strong></summary>
+  <summary>User Management</summary>
   <ul>
     <li>Register new users and manage user profiles.</li>
     <li>Retrieve a list of all registered users (admin feature).</li>
@@ -55,21 +55,21 @@ robust versioning, and clean separation of concerns.
 </details>
 
 <details>
-  <summary><strong>Exception Handling</strong></summary>
+  <summary>Exception Handling</summary>
   <ul>
     <li>Custom exception handling for clear, user-friendly error messages.</li>
   </ul>
 </details>
 
 <details>
-  <summary><strong>API Documentation (OpenAPI)</strong></summary>
+  <summary>API Documentation (OpenAPI)</summary>
   <ul>
     <li>OpenAPI/Swagger specification provided for easy integration and testing.</li>
   </ul>
 </details>
 
 <details>
-  <summary><strong>Security</strong></summary>
+  <summary>Security</summary>
   <ul>
     <li>Password encoding and secure storage.</li>
     <li>Role-based access control for sensitive endpoints.</li>
@@ -78,7 +78,7 @@ robust versioning, and clean separation of concerns.
 </details>
 
 <details>
-  <summary><strong>Extensible Architecture</strong></summary>
+  <summary>Extensible Architecture</summary>
   <ul>
     <li>Layered structure (Controllers, Services, Repositories) for maintainability.</li>
     <li>Use of MapStruct for DTO/entity mapping.</li>
@@ -86,14 +86,14 @@ robust versioning, and clean separation of concerns.
 </details>
 
 <details>
-  <summary><strong>Testing</strong></summary>
+  <summary>Testing</summary>
   <ul>
     <li>Unit and integration tests for core business logic and services.</li>
   </ul>
 </details>
 
 <details>
-  <summary><strong>Configuration & Extensibility</strong></summary>
+  <summary>Configuration & Extensibility</summary>
   <ul>
     <li>Externalized configuration via <code>application.yaml</code>.</li>
     <li>Easily switchable database and security settings.</li>
