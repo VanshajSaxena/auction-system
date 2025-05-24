@@ -6,8 +6,8 @@ robust versioning, and clean separation of concerns.
 
 ## Table of Contents
 
-- [Features](#features)
 - [Project Structure](#project-layout)
+- [Features](#features)
 - [Prerequisites](#prerequisites)
 - [Getting Started](#getting-started)
   - [Installation](#installation)
@@ -16,89 +16,6 @@ robust versioning, and clean separation of concerns.
 - [API Endpoints](#api-endpoints)
 - [Technologies Used](#technologies-used)
 - [License](#license)
-
-## Features
-
-<details>
-  <summary>User Registration & Authentication</summary>
-  <ul>
-    <li>Secure user registration and login using username or email.</li>
-    <li>JWT-based authentication for stateless and secure API access.</li>
-    <li>Spring Security integration for robust authentication and authorization.</li>
-  </ul>
-</details>
-
-<details>
-  <summary>Auction Item Management</summary>
-  <ul>
-    <li>Create, read, update, and delete (CRUD) auction items.</li>
-    <li>Retrieve details for individual auction items.</li>
-    <li>List all available auction items.</li>
-  </ul>
-</details>
-
-<details>
-  <summary>Bidding System</summary>
-  <ul>
-    <li>Place bids on auction items.</li>
-    <li>Track and retrieve all bids for a given item.</li>
-    <li>Enforce business rules for bidding (e.g., only higher bids are accepted, auction deadlines).</li>
-  </ul>
-</details>
-
-<details>
-  <summary>User Management</summary>
-  <ul>
-    <li>Register new users and manage user profiles.</li>
-    <li>Retrieve a list of all registered users (admin feature).</li>
-  </ul>
-</details>
-
-<details>
-  <summary>Exception Handling</summary>
-  <ul>
-    <li>Custom exception handling for clear, user-friendly error messages.</li>
-  </ul>
-</details>
-
-<details>
-  <summary>API Documentation (OpenAPI)</summary>
-  <ul>
-    <li>OpenAPI/Swagger specification provided for easy integration and testing.</li>
-  </ul>
-</details>
-
-<details>
-  <summary>Security</summary>
-  <ul>
-    <li>Password encoding and secure storage.</li>
-    <li>Role-based access control for sensitive endpoints.</li>
-    <li>JWT validation via request filters.</li>
-  </ul>
-</details>
-
-<details>
-  <summary>Extensible Architecture</summary>
-  <ul>
-    <li>Layered structure (Controllers, Services, Repositories) for maintainability.</li>
-    <li>Use of MapStruct for DTO/entity mapping.</li>
-  </ul>
-</details>
-
-<details>
-  <summary>Testing</summary>
-  <ul>
-    <li>Unit and integration tests for core business logic and services.</li>
-  </ul>
-</details>
-
-<details>
-  <summary>Configuration & Extensibility</summary>
-  <ul>
-    <li>Externalized configuration via <code>application.yaml</code>.</li>
-    <li>Easily switchable database and security settings.</li>
-  </ul>
-</details>
 
 ## Project Layout
 
@@ -142,6 +59,99 @@ auction-system/
 ├── mvnw.cmd                                # Maven wrapper executable (Windows)
 └── pom.xml                                 # Maven Project Object Model
 ```
+
+## Features
+
+<details>
+  <summary>User Registration & Authentication</summary>
+
+  <ul>
+    <li>Secure user registration and login using username or email.</li>
+    <li>JWT-based authentication for stateless and secure API access.</li>
+    <li>Spring Security integration for robust authentication and authorization.</li>
+  </ul>
+</details>
+
+<details>
+  <summary>Auction Item Management</summary>
+
+  <ul>
+    <li>Create, read, update, and delete (CRUD) auction items.</li>
+    <li>Retrieve details for individual auction items.</li>
+    <li>List all available auction items.</li>
+  </ul>
+</details>
+
+<details>
+  <summary>Bidding System</summary>
+
+  <ul>
+    <li>Place bids on auction items.</li>
+    <li>Track and retrieve all bids for a given item.</li>
+    <li>Enforce business rules for bidding (e.g., only higher bids are accepted, auction deadlines).</li>
+  </ul>
+</details>
+
+<details>
+  <summary>User Management</summary>
+
+  <ul>
+    <li>Register new users and manage user profiles.</li>
+    <li>Retrieve a list of all registered users (admin feature).</li>
+  </ul>
+</details>
+
+<details>
+  <summary>Exception Handling</summary>
+
+  <ul>
+    <li>Custom exception handling for clear, user-friendly error messages.</li>
+  </ul>
+</details>
+
+<details>
+  <summary>API Documentation (OpenAPI)</summary>
+
+  <ul>
+    <li>OpenAPI/Swagger specification provided for easy integration and testing.</li>
+  </ul>
+</details>
+
+<details>
+  <summary>Security</summary>
+
+  <ul>
+    <li>Password encoding and secure storage.</li>
+    <li>Role-based access control for sensitive endpoints.</li>
+    <li>JWT validation via request filters.</li>
+  </ul>
+</details>
+
+<details>
+  <summary>Extensible Architecture</summary>
+
+  <ul>
+    <li>Layered structure (Controllers, Services, Repositories) for maintainability.</li>
+    <li>Use of MapStruct for DTO/entity mapping.</li>
+  </ul>
+</details>
+
+<details>
+  <summary>Testing</summary>
+
+  <ul>
+    <li>Unit and integration tests for core business logic and services.</li>
+  </ul>
+</details>
+
+<details>
+  <summary>Configuration & Extensibility</summary>
+
+  <ul>
+    <li>Externalized configuration via <code>application.yaml</code>.</li>
+    <li>Easily switchable database and security settings.</li>
+  </ul>
+</details>
 
 ## Prerequisites
 
