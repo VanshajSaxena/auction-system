@@ -82,8 +82,6 @@ paths:
       operationId: getCurrentUserProfile
       tags:
         - Users
-      security:
-        - bearerAuth: []
       responses:
         "200":
           description: Successfully retrieved user's profile.
@@ -101,8 +99,6 @@ paths:
       operationId: getCurrentUserPastBids
       tags:
         - Users
-      security:
-        - bearerAuth: []
       responses:
         "200":
           description: Successfully retrieved user's bids.
@@ -122,8 +118,6 @@ paths:
       operationId: getCurrentUserAuctionListings
       tags:
         - Users
-      security:
-        - bearerAuth: []
       responses:
         "200":
           description: Successfully retrieved user's auctions.
@@ -192,8 +186,6 @@ paths:
       operationId: updateAuctionListing
       tags:
         - Auction Listings
-      security:
-        - bearerAuth: []
       responses:
         "200":
           description: Successfully updated the auction.
@@ -490,3 +482,5 @@ components:
     bearerAuth:
       type: http
       scheme: bearer
+security:
+  - bearerAuth: []
