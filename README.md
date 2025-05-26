@@ -244,9 +244,9 @@ your needs.
       expiryMs: 900000 # 15 mins
     ```
 
-    > [!caution]
-    > Never commit secrets to version control, always inject them through
-    > environment variables or secret management solutions.
+> [!caution]
+> Never commit secrets to version control, always inject them through
+> environment variables or secret management solutions.
 
 - **Other Properties**
 
