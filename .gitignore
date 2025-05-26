@@ -32,3 +32,6 @@ build/
 ### VS Code ###
 .vscode/
 src/main/resources/application-dev.yaml
+client.id.txt
+client.secret.txt
+idtoken.txt
