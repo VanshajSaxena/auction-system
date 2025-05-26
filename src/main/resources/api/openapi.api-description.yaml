@@ -479,18 +479,8 @@ components:
           schema:
             $ref: "#/components/schemas/ApiError"
   securitySchemes:
-    oauth:
-      type: oauth2
-      flows:
-        authorizationCode:
-          authorizationUrl: https://accounts.google.com/o/oauth2/v2/auth
-          tokenUrl: https://oauth2.googleapis.com/token
-          scopes:
-            openid: OpenID Connect Scope
-            email: Access Email
-            profile: Access Basic Profile Info
+    bearerAuth:
+      type: http
+      scheme: bearer
 security:
-  - oauth:
-      - openid
-      - email
-      - profile
+  - bearerAuth: []

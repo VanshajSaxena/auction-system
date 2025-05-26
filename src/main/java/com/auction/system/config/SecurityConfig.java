@@ -11,7 +11,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.access.intercept.AuthorizationFilter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.auction.system.filters.JwtAuthenticationFilter;
 import com.auction.system.services.AuthenticationService;
@@ -43,10 +43,17 @@ public class SecurityConfig {
         .requestMatchers(HttpMethod.GET, "/api/v1/users/**").permitAll()
         .requestMatchers(HttpMethod.GET, "/api/v1/auctions/**").permitAll()
         .requestMatchers(HttpMethod.GET, "/api/v1/bids/**").permitAll()
-        .requestMatchers(HttpMethod.POST, "/error").permitAll())
+        .requestMatchers("/error").permitAll()
+
+        .requestMatchers("/swagger-ui.html").permitAll()
+        .requestMatchers("/swagger-ui/**").permitAll()
+        .requestMatchers("/v3/api-docs/**").permitAll()
+        .requestMatchers("/v3/api-docs.yaml").permitAll()
+        .requestMatchers("/v3/api-docs").permitAll())
+
         .csrf(csrf -> csrf.disable())
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-        .addFilterBefore(jwtAuthenticationFilter, AuthorizationFilter.class)
+        .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
         .build();
   }
 }
