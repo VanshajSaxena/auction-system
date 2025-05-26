@@ -83,7 +83,7 @@
     </dependency>
     <dependency>
       <groupId>org.springdoc</groupId>
-      <artifactId>springdoc-openapi-webmvc-core</artifactId>
+      <artifactId>springdoc-openapi-webmvc-ui</artifactId>
       <version>1.8.0</version>
     </dependency>
     <dependency>
