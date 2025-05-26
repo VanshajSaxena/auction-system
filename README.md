@@ -260,7 +260,9 @@ your needs.
 ./mvnw spring-boot:run
 ```
 
-The application will be accessible at `http://localhost:8080` (or as configured).
+The application will be accessible at `http://localhost:8080` and the
+interactive api-docs will be available at
+`http://localhost:8080/swagger-ui.html`
 
 ## API Endpoints
 
