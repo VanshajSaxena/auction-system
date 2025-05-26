@@ -422,6 +422,8 @@ components:
       properties:
         idToken:
           type: string
+      required:
+        - idToken
     Bid:
       description: Bid created on an Auction Listing.
       type: object
