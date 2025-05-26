@@ -57,6 +57,46 @@ paths:
                 $ref: "#/components/schemas/UserRegistrationResponse"
         default:
           $ref: "#/components/responses/DefaultError"
+  /auth/google/callback:
+    post:
+      security:
+        - oauth2google: []
+      description: |
+        Callback endpoint to exchage ID Token from the frontend
+      summary: Google ID Token callback endpoint
+      operationId: authenticateWithGoogle
+      tags:
+        - Authentication and Authorization
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/IdToken"
+      responses:
+        "200":
+          $ref: "#/components/responses/AuthenticationSuccessful"
+        default:
+          $ref: "#/components/responses/DefaultError"
+  /auth/apple/callback:
+    post:
+      security:
+        - oauth2apple: []
+      description: |
+        Callback endpoint to exchage ID Token from the frontend
+      summary: Apple ID Token callback endpoint
+      operationId: authenticateWithApple
+      tags:
+        - Authentication and Authorization
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/IdToken"
+      responses:
+        "200":
+          $ref: "#/components/responses/AuthenticationSuccessful"
+        default:
+          $ref: "#/components/responses/DefaultError"
   /users:
     get:
       description: |
@@ -368,6 +408,12 @@ components:
         expiresIn:
           type: integer
           format: int32
+    IdToken:
+      description: ID Token object
+      type: object
+      properties:
+        idToken:
+          type: string
     Bid:
       description: Bid created on an Auction Listing.
       type: object
@@ -478,9 +524,27 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/ApiError"
+    AuthenticationSuccessful:
+      description: Authentication Successful
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Tokens"
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
+      description: Authorization using JWT issued by the backend.
+      bearerFormat: JWT
+    oauth2google:
+      type: http
+      scheme: bearer
+      description: Authentication using ID Tokens from the Google Authorization Server.
+      bearerFormat: ID Token (Google)
+    oauth2apple:
+      type: http
+      scheme: bearer
+      description: Authentication using ID Tokens from the Apple Authorization Server.
+      bearerFormat: ID Token (Apple)
 security:
   - bearerAuth: []
