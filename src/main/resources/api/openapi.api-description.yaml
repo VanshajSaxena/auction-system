@@ -334,7 +334,7 @@ components:
           - Seller
           - Bidder
     UserAddress:
-      description: User's address.
+      description: User address.
       type: object
       properties:
         row1:
@@ -363,6 +363,7 @@ components:
       required:
         - password
     UserRegistrationResponse:
+      description: User Registration Response Object.
       type: object
       properties:
         success:
