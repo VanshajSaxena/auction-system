@@ -2,7 +2,7 @@ spring:
   application:
     name: Auction System
 jwt:
-  expiryInMs: 900000
+  expiryInMs: 900000 # 15 mins
   # Use a different & strong key for production
   secret: 3f8f4debeee3a93af3ee723b9af18ce9c4b57c88987f3040bf553db4a808cb8b
 # Spring Doc
