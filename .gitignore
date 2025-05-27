@@ -35,3 +35,4 @@ src/main/resources/application-dev.yaml
 client.id.txt
 client.secret.txt
 idtoken.txt
+src/main/resources/http/token-request.http
