@@ -166,8 +166,6 @@
               <modelPackage>com.auction.system.generated.models</modelPackage>
               <!-- <invokerPackage>com.auction.system.generated</invokerPackage> -->
               <configOptions>
-                <configPackage>com.auction.system.generated.configuration</configPackage>
-                <basePackage>com.auction.system.generated</basePackage>
                 <delegatePattern>true</delegatePattern>
                 <useSpringBoot3>true</useSpringBoot3>
                 <generateBuilders>true</generateBuilders>
