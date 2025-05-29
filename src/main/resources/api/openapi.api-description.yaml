@@ -67,11 +67,6 @@ paths:
       operationId: authenticateWithGoogle
       tags:
         - Authentication and Authorization
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/IdToken"
       responses:
         "200":
           $ref: "#/components/responses/AuthenticationSuccessful"
@@ -87,11 +82,6 @@ paths:
       operationId: authenticateWithApple
       tags:
         - Authentication and Authorization
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/IdToken"
       responses:
         "200":
           $ref: "#/components/responses/AuthenticationSuccessful"
