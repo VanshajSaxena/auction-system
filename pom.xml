@@ -9,6 +9,38 @@
     <version>3.4.4</version>
     <relativePath /> <!-- lookup parent from repository -->
   </parent>
+  <profiles>
+    <profile>
+      <id>dev</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <spring.profiles.active>dev</spring.profiles.active>
+      </properties>
+      <build>
+        <resources>
+          <resource>
+            <directory>src/main/resources</directory>
+            <filtering>true</filtering>
+            <includes>
+              <include>**/*.yaml</include>
+              <include>**/*.properties</include>
+            </includes>
+          </resource>
+        </resources>
+        <plugins>
+          <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+            <configuration>
+              <jvmArguments>-Dspring.profiles.active=${spring.profiles.active}</jvmArguments>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
   <groupId>com.auction</groupId>
   <artifactId>auction-system</artifactId>
   <version>0.1.0-SNAPSHOT</version>
