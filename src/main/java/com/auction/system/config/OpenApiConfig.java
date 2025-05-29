@@ -1,13 +1,37 @@
 package com.auction.system.config;
 
-import io.swagger.v3.oas.annotations.OpenAPIDefinition;
-import io.swagger.v3.oas.annotations.info.Contact;
-import io.swagger.v3.oas.annotations.info.Info;
-import io.swagger.v3.oas.annotations.info.License;
-import io.swagger.v3.oas.annotations.servers.Server;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@OpenAPIDefinition(info = @Info(title = "Auction System", version = "0.5.1", description = "This is an OpenAPI description of an **Online Auction System**.", contact = @Contact(name = "Vanshaj Saxena", email = "vanshajsaxena2005@gmail.com"), license = @License(name = "MIT License", url = "https://github.com/VanshajSaxena/auction-system?tab=MIT-1-ov-file#")), servers = @Server(url = "http://127.0.0.1:8080", description = "Localhost"))
+import io.swagger.v3.oas.models.Components;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.security.SecurityScheme;
+
 @Configuration
 public class OpenApiConfig {
+
+  @Bean(name = "org.openapitools.configuration.SpringDocConfiguration.apiInfo")
+  OpenAPI apiInfo() {
+    return new OpenAPI()
+        .info(
+            new Info()
+                .title("Online Auction System")
+                .description("This is an OpenAPI description of an **Online Auction System**. ")
+                .version("0.5.1"))
+        .components(
+            new Components()
+                .addSecuritySchemes("bearerAuth", new SecurityScheme()
+                    .type(SecurityScheme.Type.HTTP)
+                    .scheme("bearer")
+                    .bearerFormat("JWT"))
+                .addSecuritySchemes("oauth2google", new SecurityScheme()
+                    .type(SecurityScheme.Type.HTTP)
+                    .scheme("bearer")
+                    .bearerFormat("ID Token (Google)"))
+                .addSecuritySchemes("oauth2apple", new SecurityScheme()
+                    .type(SecurityScheme.Type.HTTP)
+                    .scheme("bearer")
+                    .bearerFormat("ID Token (Apple)")));
+  }
 }
