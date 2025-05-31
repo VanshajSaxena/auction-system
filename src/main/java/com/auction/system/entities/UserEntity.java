@@ -70,6 +70,9 @@ public class UserEntity {
   private ApplicationAuthProvider provider;
 
   @Column
+  private String googleSubId;
+
+  @Column
   private String contactNumber;
 
   @Embedded
