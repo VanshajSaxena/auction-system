@@ -2,6 +2,8 @@ package com.auction.system.exception.handler;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.oauth2.jwt.JwtException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -35,5 +37,25 @@ public class ErrorController {
             "The email '%s' is already registered. Please login to continue.".formatted(ex.getEmail()))
         .build();
     return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
+  }
+
+  @ExceptionHandler(JwtException.class)
+  public ResponseEntity<ApiErrorDto> handleJwtExceptionException(JwtException ex) {
+    log.warn("Failed to retrive principal from the JWT", ex);
+    ApiErrorDto errorResponse = ApiErrorDto.builder()
+        .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
+        .message(ex.getMessage())
+        .build();
+    return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+  }
+
+  @ExceptionHandler(UsernameNotFoundException.class)
+  public ResponseEntity<ApiErrorDto> handleUsernameNotFoundException(UsernameNotFoundException ex) {
+    log.warn("Failed resolution of username", ex);
+    ApiErrorDto errorResponse = ApiErrorDto.builder()
+        .status(HttpStatus.NOT_FOUND.value())
+        .message(ex.getMessage())
+        .build();
+    return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
   }
 }
