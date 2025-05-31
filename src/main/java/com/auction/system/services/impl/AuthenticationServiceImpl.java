@@ -3,6 +3,7 @@ package com.auction.system.services.impl;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.crypto.SecretKey;
 
@@ -12,9 +13,12 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
 import com.auction.system.entities.UserEntity;
+import com.auction.system.entities.UserEntity.ApplicationAuthProvider;
+import com.auction.system.generated.models.TokensDto;
 import com.auction.system.generated.models.UserLoginRequestDto;
 import com.auction.system.repositories.UserRepository;
 import com.auction.system.services.AuthenticationService;
@@ -42,9 +46,52 @@ public class AuthenticationServiceImpl implements AuthenticationService {
   private Long jwtExpiryMs;
 
   @Override
+  public TokensDto authenticateWithGoogle(Jwt jwt) {
+    String email = jwt.getClaimAsString("email");
+    String subject = jwt.getClaimAsString("sub");
+
+    Optional<UserEntity> optionalUserEntity = userRepository.findByGoogleSubId(subject);
+
+    if (optionalUserEntity.isPresent()) {
+      UserEntity userEntity = optionalUserEntity.get();
+      UserDetails userDetails = userDetailsService.loadUserByUsername(userEntity.getUsername());
+      String accessToken = generateToken(userDetails);
+
+      return TokensDto.builder()
+          .accessToken(accessToken)
+          .refreshToken(null)
+          .expiresIn(jwtExpiryMs.intValue())
+          .build();
+    } else {
+      String firstName = jwt.getClaimAsString("given_name");
+      String lastName = jwt.getClaimAsString("family_name");
+      UserEntity userEntity = UserEntity.builder()
+          .username(generateGoogleAuthUsername(email, subject))
+          .firstName(firstName)
+          .lastName(lastName)
+          .email(email)
+          .provider(ApplicationAuthProvider.GOOGLE)
+          .googleSubId(subject)
+          .password(null) // no password for auth provider google.
+          .build();
+
+      UserEntity savedUser = userRepository.save(userEntity);
+      UserDetails userDetails = userDetailsService.loadUserByUsername(savedUser.getUsername());
+      String accessToken = generateToken(userDetails);
+
+      return TokensDto.builder()
+          .accessToken(accessToken)
+          .refreshToken(null)
+          .expiresIn(jwtExpiryMs.intValue())
+          .build();
+    }
+  }
+
+  @Override
   public String generateToken(UserDetails userDetails) {
     Map<String, Object> claims = new HashMap<>();
     return Jwts.builder()
+        .issuer("https://github.com/VanshajSaxena")
         .claims(claims)
         .subject(userDetails.getUsername())
         .issuedAt(new Date(System.currentTimeMillis()))
@@ -72,7 +119,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     UserEntity userEntity = userRepository.findByEmail(email)
-        .orElseThrow(() -> new UsernameNotFoundException("Email not found."));
+        .orElseThrow(() -> new UsernameNotFoundException("Email '%s' not found.".formatted(email)));
 
     authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userEntity.getUsername(), password));
     return userDetailsService.loadUserByUsername(userEntity.getUsername());
@@ -87,6 +134,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
   @Override
   public Long getJwtExpiryMs() {
     return jwtExpiryMs;
+  }
+
+  private String generateGoogleAuthUsername(String email, String subject) {
+    return email.substring(0, email.indexOf('@')) +
+        subject.substring(subject.length() - 7);
   }
 
   private String extractUsername(String token) {
