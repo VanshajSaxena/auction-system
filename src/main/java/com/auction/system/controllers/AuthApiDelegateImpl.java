@@ -3,7 +3,10 @@ package com.auction.system.controllers;
 import java.net.URI;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +19,7 @@ import com.auction.system.generated.models.UserRegistrationResponseDto;
 import com.auction.system.services.AuthenticationService;
 import com.auction.system.services.UserService;
 
+import io.jsonwebtoken.JwtException;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -52,4 +56,16 @@ public class AuthApiDelegateImpl implements AuthApiDelegate {
     return response;
   }
 
+  @Override
+  public ResponseEntity<TokensDto> authenticateWithGoogle() {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    if (authentication != null && authentication.getPrincipal() instanceof Jwt) {
+      Jwt jwt = (Jwt) authentication.getPrincipal();
+      TokensDto tokensDto = authenticationService.authenticateWithGoogle(jwt);
+      return ResponseEntity.ok(tokensDto);
+    }
+    // This should not happen, if it does there's something wrong with
+    // oauth2ResourceServer filter.
+    throw new JwtException("Unauthorized: Invalid or missing JWT principal.");
+  }
 }
