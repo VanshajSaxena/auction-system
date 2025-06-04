@@ -16,6 +16,7 @@ import com.auction.system.generated.models.TokensDto;
 import com.auction.system.generated.models.UserLoginRequestDto;
 import com.auction.system.generated.models.UserRegistrationRequestDto;
 import com.auction.system.generated.models.UserRegistrationResponseDto;
+import com.auction.system.services.AuthenticationService;
 import com.auction.system.services.TokenService;
 import com.auction.system.services.UserService;
 
@@ -29,12 +30,14 @@ public class AuthApiDelegateImpl implements AuthApiDelegate {
 
   private final TokenService tokenService;
 
+  private final AuthenticationService authenticationService;
+
   private final UserService userService;
 
   @Override
   @PostMapping("/login")
   public ResponseEntity<TokensDto> login(UserLoginRequestDto userLoginRequestDto) {
-    UserDetails userDetails = tokenService.authenticate(userLoginRequestDto);
+    UserDetails userDetails = authenticationService.authenticate(userLoginRequestDto);
 
     String accessToken = tokenService.generateToken(userDetails);
     Integer expiresIn = tokenService.getJwtExpiryMs().intValue();
@@ -61,7 +64,7 @@ public class AuthApiDelegateImpl implements AuthApiDelegate {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     if (authentication != null && authentication.getPrincipal() instanceof Jwt) {
       Jwt jwt = (Jwt) authentication.getPrincipal();
-      TokensDto tokensDto = tokenService.authenticateWithGoogle(jwt);
+      TokensDto tokensDto = authenticationService.authenticateWithGoogle(jwt);
       return ResponseEntity.ok(tokensDto);
     }
     // This should not happen, if it does there's something wrong with
