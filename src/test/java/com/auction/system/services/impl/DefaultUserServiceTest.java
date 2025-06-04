@@ -28,7 +28,7 @@ import com.auction.system.repositories.UserRepository;
 import com.auction.system.testutils.UserServiceTestDataFactory;
 
 @ExtendWith(MockitoExtension.class)
-public class UserServiceImplTest {
+public class DefaultUserServiceTest {
 
   @Mock
   private UserRepository userRepository;
@@ -40,7 +40,7 @@ public class UserServiceImplTest {
   private PasswordEncoder passwordEncoder;
 
   @InjectMocks
-  UserServiceImpl underTest;
+  DefaultUserService underTest;
 
   @Test
   public void whenGetAllUsers_thenReturnAllUsers() {
