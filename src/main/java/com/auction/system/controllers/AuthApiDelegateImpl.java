@@ -16,7 +16,7 @@ import com.auction.system.generated.models.TokensDto;
 import com.auction.system.generated.models.UserLoginRequestDto;
 import com.auction.system.generated.models.UserRegistrationRequestDto;
 import com.auction.system.generated.models.UserRegistrationResponseDto;
-import com.auction.system.services.AuthenticationService;
+import com.auction.system.services.TokenService;
 import com.auction.system.services.UserService;
 
 import io.jsonwebtoken.JwtException;
@@ -27,17 +27,17 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AuthApiDelegateImpl implements AuthApiDelegate {
 
-  private final AuthenticationService authenticationService;
+  private final TokenService tokenService;
 
   private final UserService userService;
 
   @Override
   @PostMapping("/login")
   public ResponseEntity<TokensDto> login(UserLoginRequestDto userLoginRequestDto) {
-    UserDetails userDetails = authenticationService.authenticate(userLoginRequestDto);
+    UserDetails userDetails = tokenService.authenticate(userLoginRequestDto);
 
-    String accessToken = authenticationService.generateToken(userDetails);
-    Integer expiresIn = authenticationService.getJwtExpiryMs().intValue();
+    String accessToken = tokenService.generateToken(userDetails);
+    Integer expiresIn = tokenService.getJwtExpiryMs().intValue();
 
     return ResponseEntity.ok(TokensDto.builder()
         .accessToken(accessToken)
@@ -61,7 +61,7 @@ public class AuthApiDelegateImpl implements AuthApiDelegate {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     if (authentication != null && authentication.getPrincipal() instanceof Jwt) {
       Jwt jwt = (Jwt) authentication.getPrincipal();
-      TokensDto tokensDto = authenticationService.authenticateWithGoogle(jwt);
+      TokensDto tokensDto = tokenService.authenticateWithGoogle(jwt);
       return ResponseEntity.ok(tokensDto);
     }
     // This should not happen, if it does there's something wrong with

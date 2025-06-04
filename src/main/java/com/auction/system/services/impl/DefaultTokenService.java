@@ -21,7 +21,7 @@ import com.auction.system.entities.UserEntity.ApplicationAuthProvider;
 import com.auction.system.generated.models.TokensDto;
 import com.auction.system.generated.models.UserLoginRequestDto;
 import com.auction.system.repositories.UserRepository;
-import com.auction.system.services.AuthenticationService;
+import com.auction.system.services.TokenService;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -31,7 +31,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class AuthenticationServiceImpl implements AuthenticationService {
+public class DefaultTokenService implements TokenService {
 
   private final AuthenticationManager authenticationManager;
 

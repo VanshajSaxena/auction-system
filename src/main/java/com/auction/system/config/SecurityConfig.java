@@ -14,7 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.auction.system.filters.JwtAuthenticationFilter;
-import com.auction.system.services.AuthenticationService;
+import com.auction.system.services.TokenService;
 
 @Configuration
 @EnableWebSecurity
@@ -26,8 +26,8 @@ public class SecurityConfig {
   }
 
   @Bean
-  public JwtAuthenticationFilter jwtAuthenticationFilter(AuthenticationService authenticationService) {
-    return new JwtAuthenticationFilter(authenticationService);
+  public JwtAuthenticationFilter jwtAuthenticationFilter(TokenService tokenService) {
+    return new JwtAuthenticationFilter(tokenService);
   }
 
   @Bean

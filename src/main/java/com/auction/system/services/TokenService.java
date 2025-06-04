@@ -6,7 +6,7 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import com.auction.system.generated.models.TokensDto;
 import com.auction.system.generated.models.UserLoginRequestDto;
 
-public interface AuthenticationService {
+public interface TokenService {
 
   UserDetails authenticate(UserLoginRequestDto userLoginRequestDto);
 
