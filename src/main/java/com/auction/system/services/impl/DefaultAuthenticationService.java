@@ -60,44 +60,38 @@ public class DefaultAuthenticationService implements AuthenticationService {
 
   @Override
   public TokensDto authenticateWithGoogle(Jwt jwt) {
-    String email = jwt.getClaimAsString("email");
     String subject = jwt.getClaimAsString("sub");
+    String givenName = jwt.getClaimAsString("given_name");
+    String familyName = jwt.getClaimAsString("family_name");
+    String email = jwt.getClaimAsString("email");
 
     Optional<UserEntity> optionalUserEntity = userRepository.findByGoogleSubId(subject);
 
-    if (optionalUserEntity.isPresent()) {
-      UserEntity userEntity = optionalUserEntity.get();
-      UserDetails userDetails = userDetailsService.loadUserByUsername(userEntity.getUsername());
-      String accessToken = tokenService.generateToken(userDetails);
-
-      return TokensDto.builder()
-          .accessToken(accessToken)
-          .refreshToken(null)
-          .expiresIn(tokenService.getJwtExpiryMs().intValue())
-          .build();
-    } else {
-      String firstName = jwt.getClaimAsString("given_name");
-      String lastName = jwt.getClaimAsString("family_name");
-      UserEntity userEntity = UserEntity.builder()
+    UserDetails userDetails;
+    if (!optionalUserEntity.isPresent()) {
+      UserEntity entity = UserEntity.builder()
+          .firstName(givenName)
+          .lastName(familyName)
           .username(generateGoogleAuthUsername(email, subject))
-          .firstName(firstName)
-          .lastName(lastName)
+          .password(null)
           .email(email)
-          .provider(ApplicationAuthProvider.GOOGLE)
           .googleSubId(subject)
-          .password(null) // no password for auth provider google.
+          .provider(ApplicationAuthProvider.GOOGLE)
           .build();
 
-      UserEntity savedUser = userRepository.save(userEntity);
-      UserDetails userDetails = userDetailsService.loadUserByUsername(savedUser.getUsername());
-      String accessToken = tokenService.generateToken(userDetails);
-
-      return TokensDto.builder()
-          .accessToken(accessToken)
-          .refreshToken(null)
-          .expiresIn(tokenService.getJwtExpiryMs().intValue())
-          .build();
+      UserEntity savedUserEntity = userRepository.save(entity);
+      userDetails = userDetailsService.loadUserByUsername(savedUserEntity.getUsername());
+    } else {
+      userDetails = userDetailsService.loadUserByUsername(optionalUserEntity.get().getUsername());
     }
+
+    String accessToken = tokenService.generateToken(userDetails);
+
+    return TokensDto.builder()
+        .accessToken(accessToken)
+        .refreshToken(null)
+        .expiresIn(tokenService.getJwtExpiryMs().intValue())
+        .build();
   }
 
   private String generateGoogleAuthUsername(String email, String subject) {

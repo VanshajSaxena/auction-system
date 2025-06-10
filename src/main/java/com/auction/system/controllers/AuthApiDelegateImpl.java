@@ -68,7 +68,7 @@ public class AuthApiDelegateImpl implements AuthApiDelegate {
       return ResponseEntity.ok(tokensDto);
     }
     // This should not happen, if it does there's something wrong with
-    // oauth2ResourceServer filter.
+    // resource server filter configuration.
     throw new JwtException("Unauthorized: Invalid or missing JWT principal.");
   }
 }
