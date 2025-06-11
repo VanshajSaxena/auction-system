@@ -10,10 +10,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
+import com.auction.system.entities.AuthProviderEnity;
+import com.auction.system.entities.AuthProviderEnity.ProviderEnum;
 import com.auction.system.entities.UserEntity;
-import com.auction.system.entities.UserEntity.ApplicationAuthProvider;
 import com.auction.system.generated.models.TokensDto;
 import com.auction.system.generated.models.UserLoginRequestDto;
+import com.auction.system.repositories.AuthProviderRepository;
 import com.auction.system.repositories.UserRepository;
 import com.auction.system.services.AuthenticationService;
 import com.auction.system.services.TokenService;
@@ -32,6 +34,8 @@ public class DefaultAuthenticationService implements AuthenticationService {
   private final UserDetailsService userDetailsService;
 
   private final TokenService tokenService;
+
+  private final AuthProviderRepository authProviderRepository;
 
   @Override
   public UserDetails authenticate(UserLoginRequestDto userLoginRequestDto) {
@@ -65,25 +69,32 @@ public class DefaultAuthenticationService implements AuthenticationService {
     String familyName = jwt.getClaimAsString("family_name");
     String email = jwt.getClaimAsString("email");
 
-    Optional<UserEntity> optionalUserEntity = userRepository.findByGoogleSubId(subject);
+    Optional<AuthProviderEnity> optionalAuthProviderEntity = authProviderRepository.findByProviderAndSubId(
+        ProviderEnum.GOOGLE,
+        subject);
 
-    UserDetails userDetails;
-    if (!optionalUserEntity.isPresent()) {
+    UserEntity userEntity;
+    if (optionalAuthProviderEntity.isPresent()) {
+      userEntity = optionalAuthProviderEntity.get().getUser();
+    } else {
       UserEntity entity = UserEntity.builder()
           .firstName(givenName)
           .lastName(familyName)
           .username(generateGoogleAuthUsername(email, subject))
           .password(null)
           .email(email)
-          .googleSubId(subject)
-          .provider(ApplicationAuthProvider.GOOGLE)
           .build();
 
-      UserEntity savedUserEntity = userRepository.save(entity);
-      userDetails = userDetailsService.loadUserByUsername(savedUserEntity.getUsername());
-    } else {
-      userDetails = userDetailsService.loadUserByUsername(optionalUserEntity.get().getUsername());
+      AuthProviderEnity providerEntity = AuthProviderEnity.builder()
+          .provider(ProviderEnum.GOOGLE)
+          .subId(subject)
+          .build();
+
+      entity.addAuthProvider(providerEntity);
+      userEntity = userRepository.save(entity);
     }
+
+    UserDetails userDetails = userDetailsService.loadUserByUsername(userEntity.getUsername());
 
     String accessToken = tokenService.generateToken(userDetails);
 

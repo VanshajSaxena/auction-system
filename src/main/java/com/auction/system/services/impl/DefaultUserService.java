@@ -6,8 +6,9 @@ import java.util.Optional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.auction.system.entities.AuthProviderEnity;
+import com.auction.system.entities.AuthProviderEnity.ProviderEnum;
 import com.auction.system.entities.UserEntity;
-import com.auction.system.entities.UserEntity.ApplicationAuthProvider;
 import com.auction.system.exception.EmailAlreadyExistsException;
 import com.auction.system.exception.UsernameAlreadyExistsException;
 import com.auction.system.generated.models.UserDto;
@@ -61,9 +62,14 @@ public class DefaultUserService implements UserService {
         .firstName(firstName)
         .lastName(lastName)
         .email(email)
-        .provider(ApplicationAuthProvider.LOCAL)
         .password(passwordEncoder.encode(password))
         .build();
+
+    AuthProviderEnity authProvider = AuthProviderEnity.builder()
+        .provider(ProviderEnum.LOCAL)
+        .build();
+
+    userEntity.addAuthProvider(authProvider);
 
     UserEntity savedUser = userRepository.save(userEntity);
 

@@ -10,8 +10,6 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -42,10 +40,6 @@ import lombok.Setter;
 @Builder
 public class UserEntity {
 
-  public enum ApplicationAuthProvider {
-    GOOGLE, APPLE, LOCAL
-  }
-
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -64,13 +58,6 @@ public class UserEntity {
 
   @Column
   private String password;
-
-  @Enumerated(EnumType.STRING)
-  @Column
-  private ApplicationAuthProvider provider;
-
-  @Column
-  private String googleSubId;
 
   @Column
   private String contactNumber;
@@ -98,10 +85,14 @@ public class UserEntity {
   @OneToMany(mappedBy = "bidder", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
   private List<BidEntity> placedBids;
 
+  @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+  @Builder.Default
+  private Set<AuthProviderEnity> authProvider = new HashSet<>();
+
   @Override
   public int hashCode() {
     return Objects.hash(id, firstName, lastName, username, email,
-        provider, password, contactNumber, shippingAddr, createdAt, updatedAt);
+        password, contactNumber, shippingAddr, createdAt, updatedAt);
   }
 
   @Override
@@ -117,8 +108,12 @@ public class UserEntity {
         && Objects.equals(lastName, other.lastName) && Objects.equals(username, other.username)
         && Objects.equals(email, other.email) && Objects.equals(password, other.password)
         && Objects.equals(contactNumber, other.contactNumber) && Objects.equals(shippingAddr, other.shippingAddr)
-        && Objects.equals(createdAt, other.createdAt) && Objects.equals(updatedAt, other.updatedAt)
-        && Objects.equals(provider, other.provider);
+        && Objects.equals(createdAt, other.createdAt) && Objects.equals(updatedAt, other.updatedAt);
+  }
+
+  public void addAuthProvider(AuthProviderEnity authProviderEntity) {
+    this.authProvider.add(authProviderEntity);
+    authProviderEntity.setUser(this);
   }
 
   @PrePersist
