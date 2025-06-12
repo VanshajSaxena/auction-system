@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "auth_provider")
+@Table(name = "auth_providers")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
