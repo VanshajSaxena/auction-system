@@ -201,6 +201,7 @@
               <cleanupOutput>true</cleanupOutput>
               <apiPackage>com.auction.system.generated.controllers</apiPackage>
               <modelPackage>com.auction.system.generated.models</modelPackage>
+              <skipIfSpecIsUnchanged>true</skipIfSpecIsUnchanged>
               <!-- <invokerPackage>com.auction.system.generated</invokerPackage> -->
               <configOptions>
                 <delegatePattern>true</delegatePattern>
