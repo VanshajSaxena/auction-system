@@ -50,7 +50,7 @@ public class AuctionItemEntity {
   private String description;
 
   @Enumerated(EnumType.STRING)
-  @Column(name = "item_condition", nullable = false, length = 20) // "condition" can't be used as column name for mysql.
+  @Column(name = "item_condition", nullable = false, length = 20) // "condition" can't be used as column name for MySQL.
   private AuctionItemConditionEntityEnum auctionItemCondition;
 
   @Column(nullable = false)

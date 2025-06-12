@@ -2,6 +2,7 @@ package com.auction.system.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -13,6 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class OAuth2SecurityConfig {
 
   @Bean
+  @Order(1)
   public SecurityFilterChain oauth2SecurityFilterChain(HttpSecurity http)
       throws Exception {
     return http
