@@ -1,20 +1,23 @@
 package com.auction.system.services.impl;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.auction.system.entities.AuthProviderEnity;
 import com.auction.system.entities.AuthProviderEnity.ProviderEnum;
+import com.auction.system.entities.RoleEntity;
+import com.auction.system.entities.RoleEntity.RoleNameEntityEnum;
 import com.auction.system.entities.UserEntity;
+import com.auction.system.exception.DefaultRoleDoesNotExistException;
 import com.auction.system.exception.EmailAlreadyExistsException;
 import com.auction.system.exception.UsernameAlreadyExistsException;
 import com.auction.system.generated.models.UserDto;
 import com.auction.system.generated.models.UserRegistrationRequestDto;
 import com.auction.system.generated.models.UserRegistrationResponseDto;
 import com.auction.system.mappers.UserMapper;
+import com.auction.system.repositories.RoleRepository;
 import com.auction.system.repositories.UserRepository;
 import com.auction.system.services.UserService;
 
@@ -27,6 +30,8 @@ public class DefaultUserService implements UserService {
 
   private final UserRepository userRepository;
 
+  private final RoleRepository roleRepository;
+
   private final UserMapper userMapper;
 
   private final PasswordEncoder passwordEncoder;
@@ -38,38 +43,38 @@ public class DefaultUserService implements UserService {
 
   @Override
   @Transactional
-  public UserRegistrationResponseDto registerUser(UserRegistrationRequestDto userRegistrationRequestDto) {
-    String username = userRegistrationRequestDto.getUsername();
-    String email = userRegistrationRequestDto.getEmail();
-    String firstName = userRegistrationRequestDto.getFirstName();
-    String lastName = userRegistrationRequestDto.getLastName();
-    String password = userRegistrationRequestDto.getPassword();
+  public UserRegistrationResponseDto registerUser(UserRegistrationRequestDto req) {
+    String username = req.getUsername();
+    String email = req.getEmail();
 
-    Optional<UserEntity> optionalUserMatchingUsername = userRepository.findByUsername(username);
-
-    if (optionalUserMatchingUsername.isPresent()) {
+    // Separate queries for granular error messages
+    userRepository.findByUsername(username).ifPresent(user -> {
       throw new UsernameAlreadyExistsException(username, "The username '%s' already exists.".formatted(username));
-    }
+    });
 
-    Optional<UserEntity> optionalUserMatchingEmail = userRepository.findByEmail(email);
-
-    if (optionalUserMatchingEmail.isPresent()) {
+    // Separate queries for granular error messages
+    userRepository.findByEmail(email).ifPresent(user -> {
       throw new EmailAlreadyExistsException(email, "The email '%s' already registered.".formatted(email));
-    }
+    });
 
     UserEntity userEntity = UserEntity.builder()
         .username(username)
-        .firstName(firstName)
-        .lastName(lastName)
+        .firstName(req.getFirstName())
+        .lastName(req.getLastName())
         .email(email)
-        .password(passwordEncoder.encode(password))
+        .password(passwordEncoder.encode(req.getPassword()))
         .build();
 
     AuthProviderEnity authProvider = AuthProviderEnity.builder()
         .provider(ProviderEnum.LOCAL)
         .build();
 
+    RoleEntity defaultRole = roleRepository.findByName(RoleEntity.RoleNameEntityEnum.USER)
+        .orElseThrow(() -> new DefaultRoleDoesNotExistException(RoleNameEntityEnum.USER.toString(),
+            "Default %s role not found, Please initialize roles.".formatted(RoleNameEntityEnum.USER.toString())));
+
     userEntity.addAuthProvider(authProvider);
+    userEntity.addRole(defaultRole);
 
     UserEntity savedUser = userRepository.save(userEntity);
 

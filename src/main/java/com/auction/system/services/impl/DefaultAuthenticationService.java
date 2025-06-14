@@ -20,6 +20,7 @@ import com.auction.system.repositories.UserRepository;
 import com.auction.system.services.AuthenticationService;
 import com.auction.system.services.TokenService;
 
+import jakarta.transaction.Transactional;
 import jakarta.validation.ValidationException;
 import lombok.RequiredArgsConstructor;
 
@@ -63,6 +64,7 @@ public class DefaultAuthenticationService implements AuthenticationService {
   }
 
   @Override
+  @Transactional
   public TokensDto authenticateWithGoogle(Jwt jwt) {
     String subject = jwt.getClaimAsString("sub");
     String givenName = jwt.getClaimAsString("given_name");
@@ -77,21 +79,34 @@ public class DefaultAuthenticationService implements AuthenticationService {
     if (optionalAuthProviderEntity.isPresent()) {
       userEntity = optionalAuthProviderEntity.get().getUser();
     } else {
-      UserEntity entity = UserEntity.builder()
-          .firstName(givenName)
-          .lastName(familyName)
-          .username(generateGoogleAuthUsername(email, subject))
-          .password(null)
-          .email(email)
-          .build();
 
-      AuthProviderEnity providerEntity = AuthProviderEnity.builder()
-          .provider(ProviderEnum.GOOGLE)
-          .subId(subject)
-          .build();
+      Optional<UserEntity> optionalUserEntity = userRepository.findByEmail(email);
 
-      entity.addAuthProvider(providerEntity);
-      userEntity = userRepository.save(entity);
+      if (optionalUserEntity.isPresent()) {
+        userEntity = optionalUserEntity.get();
+        AuthProviderEnity localProvider = AuthProviderEnity.builder()
+            .provider(ProviderEnum.GOOGLE)
+            .subId(subject)
+            .build();
+        userEntity.addAuthProvider(localProvider);
+      } else {
+
+        userEntity = UserEntity.builder()
+            .firstName(givenName)
+            .lastName(familyName)
+            .username(generateGoogleAuthUsername(email, subject))
+            .password(null)
+            .email(email)
+            .build();
+
+        AuthProviderEnity providerEntity = AuthProviderEnity.builder()
+            .provider(ProviderEnum.GOOGLE)
+            .subId(subject)
+            .build();
+
+        userEntity.addAuthProvider(providerEntity);
+        userRepository.save(userEntity);
+      }
     }
 
     UserDetails userDetails = userDetailsService.loadUserByUsername(userEntity.getUsername());

@@ -86,8 +86,7 @@ public class UserEntity {
   private List<BidEntity> placedBids;
 
   @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-  @Builder.Default
-  private Set<AuthProviderEnity> authProvider = new HashSet<>();
+  private Set<AuthProviderEnity> authProvider;
 
   @Override
   public int hashCode() {
@@ -112,8 +111,15 @@ public class UserEntity {
   }
 
   public void addAuthProvider(AuthProviderEnity authProviderEntity) {
+    if (this.authProvider == null) {
+      authProvider = new HashSet<>();
+    }
     this.authProvider.add(authProviderEntity);
     authProviderEntity.setUser(this);
+  }
+
+  public void addRole(RoleEntity roleEntity) {
+    this.roles.add(roleEntity);
   }
 
   @PrePersist

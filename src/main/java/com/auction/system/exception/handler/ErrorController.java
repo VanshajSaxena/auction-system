@@ -7,6 +7,7 @@ import org.springframework.security.oauth2.jwt.JwtException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.auction.system.exception.DefaultRoleDoesNotExistException;
 import com.auction.system.exception.EmailAlreadyExistsException;
 import com.auction.system.exception.UsernameAlreadyExistsException;
 import com.auction.system.generated.models.ApiErrorDto;
@@ -57,5 +58,18 @@ public class ErrorController {
         .message(ex.getMessage())
         .build();
     return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+  }
+
+  @ExceptionHandler(DefaultRoleDoesNotExistException.class)
+  public ResponseEntity<ApiErrorDto> handleDefaultRoleDoesNotExistException(DefaultRoleDoesNotExistException ex) {
+    log.warn(
+        "The default role '%s' was not found in the database when the application context loaded"
+            .formatted(ex.getRole()),
+        ex);
+    ApiErrorDto errorResponse = ApiErrorDto.builder()
+        .status(HttpStatus.NOT_FOUND.value())
+        .message("Something went wrong... Please try again later")
+        .build();
+    return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
   }
 }

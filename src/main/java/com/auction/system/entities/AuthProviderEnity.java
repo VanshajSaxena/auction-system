@@ -1,5 +1,7 @@
 package com.auction.system.entities;
 
+import java.util.Objects;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -44,4 +46,42 @@ public class AuthProviderEnity {
 
   @Column
   String subId;
+
+  // Custom equals and hashCode
+  @Override
+  public boolean equals(Object o) {
+    if (this == o)
+      return true;
+    if (o == null || getClass() != o.getClass())
+      return false;
+
+    AuthProviderEnity that = (AuthProviderEnity) o;
+
+    // For new entities, compare based on provider and subId
+    // For persisted entities, compare based on id (if it exists)
+    if (id != null && that.id != null) {
+      return id.equals(that.id);
+    }
+
+    // Ensure provider and subId are not null before comparison
+    if (provider == null || that.provider == null || subId == null || that.subId == null) {
+      return false; // Or handle as per your logic if nulls are expected in specific cases
+    }
+
+    return provider == that.provider && subId.equals(that.subId);
+  }
+
+  @Override
+  public int hashCode() {
+    // For new entities, use provider and subId. For persisted, use id.
+    if (id != null) {
+      return id.hashCode();
+    }
+
+    if (provider == null || subId == null) {
+      return super.hashCode(); // Fallback for uninitialized or problematic cases
+    }
+
+    return Objects.hash(provider, subId);
+  }
 }
