@@ -1,10 +1,12 @@
+app:
+  jwt:
+    issuer: https://github.com/VanshajSaxena
+    expiryMs: 3600000 # 1 hour
+    # Use a different & strong key for production
+    secret: 3f8f4debeee3a93af3ee723b9af18ce9c4b57c88987f3040bf553db4a808cb8b
 spring:
   application:
     name: Auction System
-jwt:
-  expiryInMs: 900000 # 15 mins
-  # Use a different & strong key for production
-  secret: 3f8f4debeee3a93af3ee723b9af18ce9c4b57c88987f3040bf553db4a808cb8b
 # Spring Doc
 springdoc.packages-to-exclude: com.auction.system.controllers
 # springdoc.swagger-ui.path: /swagger-ui.html

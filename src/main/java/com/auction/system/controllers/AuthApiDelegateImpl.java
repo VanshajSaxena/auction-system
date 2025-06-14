@@ -40,7 +40,7 @@ public class AuthApiDelegateImpl implements AuthApiDelegate {
     UserDetails userDetails = authenticationService.authenticate(userLoginRequestDto);
 
     String accessToken = tokenService.generateToken(userDetails);
-    Integer expiresIn = tokenService.getJwtExpiryMs().intValue();
+    Integer expiresIn = tokenService.getJwtExpiryMs();
 
     return ResponseEntity.ok(TokensDto.builder()
         .accessToken(accessToken)

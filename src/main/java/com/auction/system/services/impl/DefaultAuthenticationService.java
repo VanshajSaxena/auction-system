@@ -116,7 +116,7 @@ public class DefaultAuthenticationService implements AuthenticationService {
     return TokensDto.builder()
         .accessToken(accessToken)
         .refreshToken(null)
-        .expiresIn(tokenService.getJwtExpiryMs().intValue())
+        .expiresIn(tokenService.getJwtExpiryMs())
         .build();
   }
 

@@ -6,7 +6,11 @@ public interface TokenService {
 
   String generateToken(UserDetails userDetails);
 
-  UserDetails validateToken(String token);
+  Boolean validateToken(String token);
 
-  Long getJwtExpiryMs();
+  Integer getJwtExpiryMs();
+
+  String extractUsername(String token);
+
+  boolean validateToken(String token, UserDetails userDetails);
 }

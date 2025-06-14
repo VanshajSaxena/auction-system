@@ -3,12 +3,12 @@ package com.auction.system.services.impl;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 import javax.crypto.SecretKey;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import com.auction.system.services.TokenService;
@@ -22,19 +22,20 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class DefaultTokenService implements TokenService {
 
-  private final UserDetailsService userDetailsService;
-
-  @Value("${jwt.secret}")
+  @Value("${app.jwt.secret}")
   private String secretKey;
 
-  @Value("${jwt.expiryInMs}")
-  private Long jwtExpiryMs;
+  @Value("${app.jwt.expiryMs}")
+  private Integer jwtExpiryMs;
+
+  @Value("${app.jwt.issuer}")
+  private String jwtIssuer;
 
   @Override
   public String generateToken(UserDetails userDetails) {
     Map<String, Object> claims = new HashMap<>();
     return Jwts.builder()
-        .issuer("https://github.com/VanshajSaxena")
+        .issuer(jwtIssuer)
         .claims(claims)
         .subject(userDetails.getUsername())
         .issuedAt(new Date(System.currentTimeMillis()))
@@ -44,18 +45,38 @@ public class DefaultTokenService implements TokenService {
   }
 
   @Override
-  public UserDetails validateToken(String token) {
-    String username = extractUsername(token);
-    return userDetailsService.loadUserByUsername(username);
+  public boolean validateToken(String token, UserDetails userDetails) {
+    return extractIssuer(token).equals(jwtIssuer)
+        && extractUsername(token).equals(userDetails.getUsername())
+        && !isTokenExpired(token);
   }
 
   @Override
-  public Long getJwtExpiryMs() {
+  public Boolean validateToken(String token) {
+    return extractIssuer(token).equals(jwtIssuer)
+        && !isTokenExpired(token);
+  }
+
+  @Override
+  public String extractUsername(String token) {
+    return extractClaim(token, Claims::getSubject);
+  }
+
+  @Override
+  public Integer getJwtExpiryMs() {
     return jwtExpiryMs;
   }
 
-  private String extractUsername(String token) {
-    return extractAllClaims(token).getSubject();
+  public Date extractIssuedAt(String token) {
+    return extractClaim(token, Claims::getIssuedAt);
+  }
+
+  public Date extractExpiration(String token) {
+    return extractClaim(token, Claims::getExpiration);
+  }
+
+  public String extractIssuer(String token) {
+    return extractClaim(token, Claims::getIssuer);
   }
 
   private Claims extractAllClaims(String token) {
@@ -66,9 +87,18 @@ public class DefaultTokenService implements TokenService {
         .getPayload();
   }
 
+  private <T> T extractClaim(String token, Function<Claims, T> claimResolver) {
+    Claims claims = extractAllClaims(token);
+    return claimResolver.apply(claims);
+  }
+
+  private Boolean isTokenExpired(String token) {
+    return extractClaim(token, Claims::getExpiration).before(new Date());
+  }
+
   private SecretKey getSigningKey() {
-    byte[] keyBytes = secretKey.getBytes();
-    return Keys.hmacShaKeyFor(keyBytes);
+    byte[] secretBytes = secretKey.getBytes();
+    return Keys.hmacShaKeyFor(secretBytes);
   }
 
 }
