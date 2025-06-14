@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class AuctionListingServiceImpl implements AuctionListingService {
+public class DefaultAuctionListingService implements AuctionListingService {
 
   private final AuctionListingRepository auctionListingRepository;
 
@@ -26,6 +26,7 @@ public class AuctionListingServiceImpl implements AuctionListingService {
 
   @Override
   public AuctionListingDto createNewAuctionListing(AuctionListingDto auctionListingDto) {
+    // TODO: needs implementation
     return null;
   }
 

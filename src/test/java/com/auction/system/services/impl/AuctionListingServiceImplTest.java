@@ -28,7 +28,7 @@ public class AuctionListingServiceImplTest {
   private AuctionListingMapper auctionListingMapper;
 
   @InjectMocks
-  private AuctionListingServiceImpl underTest;
+  private DefaultAuctionListingService underTest;
 
   @Test
   public void whenGetAllAuctionListings_thenReturnAllAuctionListings() {
