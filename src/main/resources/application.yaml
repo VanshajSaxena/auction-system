@@ -5,6 +5,8 @@ app:
     # Use a different & strong key for production
     secret: 3f8f4debeee3a93af3ee723b9af18ce9c4b57c88987f3040bf553db4a808cb8b
 spring:
+  jpa:
+    open-in-view: false
   application:
     name: Auction System
 # Spring Doc
