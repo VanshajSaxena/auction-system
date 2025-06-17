@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.auction.system.exception.DefaultRoleDoesNotExistException;
 import com.auction.system.exception.EmailAlreadyExistsException;
+import com.auction.system.exception.InternalJwtException;
 import com.auction.system.exception.UsernameAlreadyExistsException;
 import com.auction.system.generated.models.ApiErrorDto;
 
@@ -70,6 +71,20 @@ public class ErrorController {
         .status(HttpStatus.NOT_FOUND.value())
         .message("Something went wrong... Please try again later")
         .build();
+    return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+  }
+
+  @ExceptionHandler(InternalJwtException.class)
+  public ResponseEntity<ApiErrorDto> handleInternalJwtException(InternalJwtException ex) {
+    log.warn("""
+        There is something wrong with the OAuth2ResourceServer configuration,
+        this warning should not be happening.
+                """, ex);
+    ApiErrorDto errorResponse = ApiErrorDto.builder()
+        .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
+        .message("Check your bearer JWT for malformation")
+        .build();
+
     return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
   }
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.auction.system.exception.InternalJwtException;
 import com.auction.system.generated.controllers.AuthApiDelegate;
 import com.auction.system.generated.models.TokensDto;
 import com.auction.system.generated.models.UserLoginRequestDto;
@@ -18,7 +19,6 @@ import com.auction.system.generated.models.UserRegistrationResponseDto;
 import com.auction.system.services.AuthenticationService;
 import com.auction.system.services.UserService;
 
-import io.jsonwebtoken.JwtException;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -59,6 +59,6 @@ public class AuthApiDelegateImpl implements AuthApiDelegate {
     }
     // This should not happen, if it does there's something wrong with
     // resource server filter configuration.
-    throw new JwtException("Unauthorized: Invalid or missing JWT principal.");
+    throw new InternalJwtException("Unauthorized: Invalid or missing JWT principal.");
   }
 }
