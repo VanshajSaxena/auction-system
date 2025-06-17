@@ -20,7 +20,7 @@ public class DefaultUserDetailsService implements UserDetailsService {
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     UserEntity userEntity = userRepository.findByUsername(username)
-        .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
+        .orElseThrow(() -> new UsernameNotFoundException("User with username '%s' not found.".formatted(username)));
     return new AuctionSystemUserDetails(userEntity);
   }
 
