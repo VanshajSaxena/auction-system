@@ -16,7 +16,6 @@ import com.auction.system.generated.models.UserLoginRequestDto;
 import com.auction.system.generated.models.UserRegistrationRequestDto;
 import com.auction.system.generated.models.UserRegistrationResponseDto;
 import com.auction.system.services.AuthenticationService;
-import com.auction.system.services.TokenService;
 import com.auction.system.services.UserService;
 
 import io.jsonwebtoken.JwtException;
@@ -26,8 +25,6 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
 public class AuthApiDelegateImpl implements AuthApiDelegate {
-
-  private final TokenService tokenService;
 
   private final AuthenticationService authenticationService;
 
