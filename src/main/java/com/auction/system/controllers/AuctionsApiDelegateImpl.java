@@ -22,14 +22,14 @@ public class AuctionsApiDelegateImpl implements AuctionsApiDelegate {
   private final AuctionListingService auctionListingService;
 
   @Override
-  @GetMapping()
+  @GetMapping
   public ResponseEntity<List<AuctionListingDto>> getAllAuctionListings() {
     List<AuctionListingDto> dtoList = auctionListingService.getAllAuctionListings();
     return ResponseEntity.ok(dtoList);
   }
 
   @Override
-  @PostMapping()
+  @PostMapping
   public ResponseEntity<AuctionListingDto> createAuctionListing(AuctionListingDto auctionListingDto) {
     // TODO: Implement after security configuration.
     return null;
