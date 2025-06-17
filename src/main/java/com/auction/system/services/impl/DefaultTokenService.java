@@ -1,13 +1,14 @@
 package com.auction.system.services.impl;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import javax.crypto.SecretKey;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -33,10 +34,13 @@ public class DefaultTokenService implements TokenService {
 
   @Override
   public String generateToken(UserDetails userDetails) {
-    Map<String, Object> claims = new HashMap<>();
+    List<Object> authorities = userDetails.getAuthorities()
+        .stream()
+        .map(GrantedAuthority::getAuthority)
+        .collect(Collectors.toList());
     return Jwts.builder()
         .issuer(jwtIssuer)
-        .claims(claims)
+        .claim("roles", authorities)
         .subject(userDetails.getUsername())
         .issuedAt(new Date(System.currentTimeMillis()))
         .expiration(new Date(System.currentTimeMillis() + jwtExpiryMs))

@@ -18,17 +18,17 @@ public class DataLoader implements CommandLineRunner {
   @Override
   public void run(String... args) throws Exception {
 
-    if (roleRepository.findByName(RoleNameEntityEnum.USER).isEmpty()) {
+    if (roleRepository.findByName(RoleNameEntityEnum.ROLE_USER).isEmpty()) {
       RoleEntity userRole = RoleEntity.builder()
-          .name(RoleNameEntityEnum.USER)
+          .name(RoleNameEntityEnum.ROLE_USER)
           .build();
 
       roleRepository.save(userRole);
     }
 
-    if (roleRepository.findByName(RoleNameEntityEnum.ADMIN).isEmpty()) {
+    if (roleRepository.findByName(RoleNameEntityEnum.ROLE_ADMIN).isEmpty()) {
       RoleEntity adminRole = RoleEntity.builder()
-          .name(RoleNameEntityEnum.ADMIN)
+          .name(RoleNameEntityEnum.ROLE_ADMIN)
           .build();
 
       roleRepository.save(adminRole);

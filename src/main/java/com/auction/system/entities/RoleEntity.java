@@ -31,7 +31,7 @@ import lombok.Setter;
 public class RoleEntity {
 
   public enum RoleNameEntityEnum {
-    USER, ADMIN
+    ROLE_USER, ROLE_ADMIN
   }
 
   @Id
