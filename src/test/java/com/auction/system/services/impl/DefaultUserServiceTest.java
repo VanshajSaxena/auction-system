@@ -1,4 +1,4 @@
-package com.auction.system.services.impl;
+package com.auction.system.service.impl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -17,14 +17,14 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.auction.system.entities.UserEntity;
+import com.auction.system.entity.UserEntity;
 import com.auction.system.exception.EmailAlreadyExistsException;
 import com.auction.system.exception.UsernameAlreadyExistsException;
 import com.auction.system.generated.models.UserDto;
 import com.auction.system.generated.models.UserRegistrationRequestDto;
 import com.auction.system.generated.models.UserRegistrationResponseDto;
-import com.auction.system.mappers.UserMapper;
-import com.auction.system.repositories.UserRepository;
+import com.auction.system.mapper.UserMapper;
+import com.auction.system.repository.UserRepository;
 import com.auction.system.testutils.UserServiceTestDataFactory;
 
 @ExtendWith(MockitoExtension.class)

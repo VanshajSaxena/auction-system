@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import com.auction.system.entities.AuctionListingEntity;
-import com.auction.system.entities.AuctionListingEntity.AuctionListingStateEntityEnum;
+import com.auction.system.entity.AuctionListingEntity;
+import com.auction.system.entity.AuctionListingEntity.AuctionListingStateEntityEnum;
 import com.auction.system.generated.models.AuctionListingDto;
 
 public class AuctionListingTestDataFactory {

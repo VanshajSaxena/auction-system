@@ -1,4 +1,4 @@
-package com.auction.system.services.impl;
+package com.auction.system.service.impl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
@@ -12,10 +12,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.auction.system.entities.AuctionListingEntity;
+import com.auction.system.entity.AuctionListingEntity;
 import com.auction.system.generated.models.AuctionListingDto;
-import com.auction.system.mappers.AuctionListingMapper;
-import com.auction.system.repositories.AuctionListingRepository;
+import com.auction.system.mapper.AuctionListingMapper;
+import com.auction.system.repository.AuctionListingRepository;
 import com.auction.system.testutils.AuctionListingTestDataFactory;
 
 @ExtendWith(MockitoExtension.class)

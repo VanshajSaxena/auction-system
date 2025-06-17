@@ -7,7 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.auction.system.entities.UserEntity;
+import com.auction.system.entity.UserEntity;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

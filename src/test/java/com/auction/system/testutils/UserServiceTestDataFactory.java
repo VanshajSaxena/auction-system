@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import com.auction.system.entities.UserAddressEntity;
-import com.auction.system.entities.UserEntity;
+import com.auction.system.entity.UserAddressEntity;
+import com.auction.system.entity.UserEntity;
 import com.auction.system.generated.models.UserAddressDto;
 import com.auction.system.generated.models.UserDto;
 import com.auction.system.generated.models.UserRegistrationRequestDto;

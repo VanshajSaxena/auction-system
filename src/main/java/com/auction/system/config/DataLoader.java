@@ -3,9 +3,9 @@ package com.auction.system.config;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import com.auction.system.entities.RoleEntity;
-import com.auction.system.entities.RoleEntity.RoleNameEntityEnum;
-import com.auction.system.repositories.RoleRepository;
+import com.auction.system.entity.RoleEntity;
+import com.auction.system.entity.RoleEntity.RoleNameEntityEnum;
+import com.auction.system.repository.RoleRepository;
 
 import lombok.RequiredArgsConstructor;
 
