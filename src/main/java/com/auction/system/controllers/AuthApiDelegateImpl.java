@@ -5,7 +5,6 @@ import java.net.URI;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,15 +36,9 @@ public class AuthApiDelegateImpl implements AuthApiDelegate {
   @Override
   @PostMapping("/login")
   public ResponseEntity<TokensDto> login(UserLoginRequestDto userLoginRequestDto) {
-    UserDetails userDetails = authenticationService.authenticate(userLoginRequestDto);
+    TokensDto tokensDto = authenticationService.authenticate(userLoginRequestDto);
 
-    String accessToken = tokenService.generateToken(userDetails);
-    Integer expiresIn = tokenService.getJwtExpiryMs();
-
-    return ResponseEntity.ok(TokensDto.builder()
-        .accessToken(accessToken)
-        .expiresIn(expiresIn)
-        .build());
+    return ResponseEntity.ok(tokensDto);
   }
 
   @Override

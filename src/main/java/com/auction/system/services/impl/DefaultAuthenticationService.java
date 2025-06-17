@@ -39,7 +39,8 @@ public class DefaultAuthenticationService implements AuthenticationService {
   private final AuthProviderRepository authProviderRepository;
 
   @Override
-  public UserDetails authenticate(UserLoginRequestDto userLoginRequestDto) {
+  @Transactional
+  public TokensDto authenticate(UserLoginRequestDto userLoginRequestDto) {
     String username = userLoginRequestDto.getUsername();
     String email = userLoginRequestDto.getEmail();
     String password = userLoginRequestDto.getPassword();
@@ -48,19 +49,24 @@ public class DefaultAuthenticationService implements AuthenticationService {
     boolean isEmailPresent = email != null && !email.trim().isEmpty();
 
     if (!isUsernamePresent && !isEmailPresent) {
-      throw new ValidationException("Either username or password must be provided.");
+      throw new ValidationException("Either username or email must be provided.");
     }
 
-    if (isUsernamePresent) {
-      authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-      return userDetailsService.loadUserByUsername(username);
+    if (!isUsernamePresent) {
+      UserEntity userEntity = userRepository.findByEmail(email)
+          .orElseThrow(() -> new UsernameNotFoundException("Email '%s' not found.".formatted(email)));
+      username = userEntity.getUsername();
     }
 
-    UserEntity userEntity = userRepository.findByEmail(email)
-        .orElseThrow(() -> new UsernameNotFoundException("Email '%s' not found.".formatted(email)));
+    authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+    UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-    authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userEntity.getUsername(), password));
-    return userDetailsService.loadUserByUsername(userEntity.getUsername());
+    String accessToken = tokenService.generateToken(userDetails);
+
+    return TokensDto.builder()
+        .accessToken(accessToken)
+        .expiresIn(tokenService.getJwtExpiryMs())
+        .build();
   }
 
   @Override
