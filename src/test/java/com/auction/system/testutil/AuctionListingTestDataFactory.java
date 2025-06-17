@@ -1,4 +1,4 @@
-package com.auction.system.testutils;
+package com.auction.system.testutil;
 
 import java.math.BigDecimal;
 import java.time.Instant;
