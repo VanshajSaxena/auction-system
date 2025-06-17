@@ -31,14 +31,14 @@ auction-system/
 │   │   │       └── auction/
 │   │   │           └── system/     # Main application package
 │   │   │               ├── config/         # Spring Security configuration classes
-│   │   │               ├── controllers/    # API Controllers (delegates to generated interfaces)
-│   │   │               ├── entities/       # JPA entities
+│   │   │               ├── controller/     # API Controllers (delegates to generated interfaces)
+│   │   │               ├── entity/         # JPA entities
 │   │   │               ├── exception/      # Custom exception handling
-│   │   │               ├── filters/        # Request filters (e.g. JWT authentication filter)
-│   │   │               ├── mappers/        # MapStruct mappers
-│   │   │               ├── repositories/   # Spring Data JPA repositories
+│   │   │               ├── filter/         # Request filters (e.g. JWT authentication filter)
+│   │   │               ├── mapper/         # MapStruct mappers
+│   │   │               ├── repository/     # Spring Data JPA repositories
 │   │   │               ├── security/       # Security related components
-│   │   │               ├── services/       # Business logic interfaces
+│   │   │               ├── service/        # Business logic interfaces
 │   │   │               │   └── impl/       # Interface implementations
 │   │   │               └── AuctionSystemApplication.java # Spring Boot main class
 │   │   └── resources/
@@ -52,9 +52,9 @@ auction-system/
 │           └── com/
 │               └── auction/
 │                   └── system/
-│                       ├── services/
+│                       ├── service/
 │                       │   └── impl/       # Service related tests
-│                       └── testutils/      # Test utility classes
+│                       └── testutil/       # Test utility classes
 ├── mvnw                                    # Maven wrapper executable (Linux/MacOS)
 ├── mvnw.cmd                                # Maven wrapper executable (Windows)
 └── pom.xml                                 # Maven Project Object Model
