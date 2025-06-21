@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,7 +21,6 @@ public class UsersApiDelegateImpl implements UsersApiDelegate {
   private final UserService userService;
 
   @Override
-  @GetMapping
   @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<List<UserDto>> getAllUsers() {
     return ResponseEntity.ok(userService.getAllUsers());

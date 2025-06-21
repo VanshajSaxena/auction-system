@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,7 +30,6 @@ public class AuthApiDelegateImpl implements AuthApiDelegate {
   private final UserService userService;
 
   @Override
-  @PostMapping("/login")
   public ResponseEntity<TokensDto> login(UserLoginRequestDto userLoginRequestDto) {
     TokensDto tokensDto = authenticationService.authenticate(userLoginRequestDto);
 
@@ -39,7 +37,6 @@ public class AuthApiDelegateImpl implements AuthApiDelegate {
   }
 
   @Override
-  @PostMapping("/register")
   public ResponseEntity<UserRegistrationResponseDto> register(UserRegistrationRequestDto userRegistrationRequestDto) {
     UserRegistrationResponseDto registrationResponse = userService.registerUser(userRegistrationRequestDto);
     registrationResponse.setMessage("Registration successfull. Please proceed to login.");
