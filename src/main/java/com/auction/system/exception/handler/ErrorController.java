@@ -2,6 +2,7 @@ package com.auction.system.exception.handler;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.jwt.JwtException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -87,4 +88,16 @@ public class ErrorController {
 
     return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
   }
+
+  @ExceptionHandler(AuthorizationDeniedException.class)
+  public ResponseEntity<ApiErrorDto> handleAuthorizationDeniedException(AuthorizationDeniedException ex) {
+    log.info("Authorization Denied: ", ex.getStackTrace().toString());
+    ApiErrorDto errorResponse = ApiErrorDto.builder()
+        .status(HttpStatus.FORBIDDEN.value())
+        .message("You do not have the permission to access the resource.")
+        .build();
+
+    return new ResponseEntity<>(errorResponse, HttpStatus.FORBIDDEN);
+  }
+
 }
