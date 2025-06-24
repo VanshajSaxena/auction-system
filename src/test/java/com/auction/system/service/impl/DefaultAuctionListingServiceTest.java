@@ -16,7 +16,7 @@ import com.auction.system.entity.AuctionListingEntity;
 import com.auction.system.generated.models.AuctionListingDto;
 import com.auction.system.mapper.AuctionListingMapper;
 import com.auction.system.repository.AuctionListingRepository;
-import com.auction.system.testutils.AuctionListingTestDataFactory;
+import com.auction.system.testutil.AuctionListingTestDataFactory;
 
 @ExtendWith(MockitoExtension.class)
 public class DefaultAuctionListingServiceTest {

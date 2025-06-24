@@ -25,7 +25,7 @@ import com.auction.system.generated.models.UserRegistrationRequestDto;
 import com.auction.system.generated.models.UserRegistrationResponseDto;
 import com.auction.system.mapper.UserMapper;
 import com.auction.system.repository.UserRepository;
-import com.auction.system.testutils.UserServiceTestDataFactory;
+import com.auction.system.testutil.UserServiceTestDataFactory;
 
 @ExtendWith(MockitoExtension.class)
 public class DefaultUserServiceTest {
