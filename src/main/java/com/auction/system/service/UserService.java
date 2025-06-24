@@ -10,4 +10,6 @@ public interface UserService {
   List<UserDto> getAllUsers();
 
   UserRegistrationResponseDto registerUser(UserRegistrationRequestDto userRegistrationRequestDto);
+
+  UserDto getProfile();
 }

@@ -21,6 +21,11 @@ public class UsersApiDelegateImpl implements UsersApiDelegate {
   private final UserService userService;
 
   @Override
+  public ResponseEntity<UserDto> getCurrentUserProfile() {
+    return ResponseEntity.ok(userService.getProfile());
+  }
+
+  @Override
   @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<List<UserDto>> getAllUsers() {
     return ResponseEntity.ok(userService.getAllUsers());

@@ -314,15 +314,6 @@ components:
           type: string
         shippingAddr:
           $ref: "#/components/schemas/UserAddress"
-        roles:
-          $ref: "#/components/schemas/Roles"
-    Roles:
-      type: array
-      items:
-        type: string
-        enum:
-          - Seller
-          - Bidder
     UserAddress:
       description: User address.
       type: object

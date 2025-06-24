@@ -20,6 +20,8 @@ import com.auction.system.generated.models.UserRegistrationResponseDto;
 import com.auction.system.mapper.UserMapper;
 import com.auction.system.repository.RoleRepository;
 import com.auction.system.repository.UserRepository;
+import com.auction.system.security.AuctionSystemUserDetails;
+import com.auction.system.service.CurrentUserService;
 import com.auction.system.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -27,6 +29,8 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class DefaultUserService implements UserService {
+
+  private final CurrentUserService currentUserService;
 
   private final UserRepository userRepository;
 
@@ -81,5 +85,11 @@ public class DefaultUserService implements UserService {
     UserEntity savedUser = userRepository.save(userEntity);
 
     return UserRegistrationResponseDto.builder().userId(savedUser.getId()).build();
+  }
+
+  @Override
+  public UserDto getProfile() {
+    AuctionSystemUserDetails userDetails = currentUserService.getUserDetails();
+    return userMapper.toDto(userDetails.getUser());
   }
 }
