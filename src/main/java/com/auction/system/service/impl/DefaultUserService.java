@@ -49,12 +49,12 @@ public class DefaultUserService implements UserService {
 
     // Separate queries for granular error messages
     userRepository.findByUsername(username).ifPresent(user -> {
-      throw new UsernameAlreadyExistsException(username, "The username '%s' already exists.".formatted(username));
+      throw new UsernameAlreadyExistsException("The username '%s' already exists.".formatted(username), username);
     });
 
     // Separate queries for granular error messages
     userRepository.findByEmail(email).ifPresent(user -> {
-      throw new EmailAlreadyExistsException(email, "The email '%s' already registered.".formatted(email));
+      throw new EmailAlreadyExistsException("The email '%s' already registered.".formatted(email), email);
     });
 
     UserEntity userEntity = UserEntity.builder()
@@ -70,8 +70,10 @@ public class DefaultUserService implements UserService {
         .build();
 
     RoleEntity defaultRole = roleRepository.findByName(RoleEntity.RoleNameEntityEnum.ROLE_USER)
-        .orElseThrow(() -> new DefaultRoleDoesNotExistException(RoleNameEntityEnum.ROLE_USER.name(),
-            "Default %s role not found, Please initialize roles.".formatted(RoleNameEntityEnum.ROLE_USER)));
+        .orElseThrow(() -> new DefaultRoleDoesNotExistException(
+            "Default %s role not found in the database, Please initialize roles."
+                .formatted(RoleNameEntityEnum.ROLE_USER),
+            RoleNameEntityEnum.ROLE_USER.name()));
 
     userEntity.addAuthProvider(authProvider);
     userEntity.addRole(defaultRole);

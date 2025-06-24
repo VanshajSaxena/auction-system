@@ -4,7 +4,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.oauth2.jwt.JwtException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -23,7 +22,7 @@ public class ErrorController {
 
   @ExceptionHandler(UsernameAlreadyExistsException.class)
   public ResponseEntity<ApiErrorDto> handleUsernameAlreadyExistsException(UsernameAlreadyExistsException ex) {
-    log.warn("The username already exists", ex);
+    log.warn(ex.getMessage(), ex);
     ApiErrorDto errorResponse = ApiErrorDto.builder()
         .status(HttpStatus.CONFLICT.value())
         .message(
@@ -34,7 +33,7 @@ public class ErrorController {
 
   @ExceptionHandler(EmailAlreadyExistsException.class)
   public ResponseEntity<ApiErrorDto> handleUsernameAlreadyExistsException(EmailAlreadyExistsException ex) {
-    log.warn("The email already exists", ex);
+    log.warn(ex.getMessage(), ex);
     ApiErrorDto errorResponse = ApiErrorDto.builder()
         .status(HttpStatus.CONFLICT.value())
         .message(
@@ -43,19 +42,9 @@ public class ErrorController {
     return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
   }
 
-  @ExceptionHandler(JwtException.class)
-  public ResponseEntity<ApiErrorDto> handleJwtExceptionException(JwtException ex) {
-    log.warn("Failed to retrive principal from the JWT", ex);
-    ApiErrorDto errorResponse = ApiErrorDto.builder()
-        .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
-        .message(ex.getMessage())
-        .build();
-    return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
-  }
-
   @ExceptionHandler(UsernameNotFoundException.class)
   public ResponseEntity<ApiErrorDto> handleUsernameNotFoundException(UsernameNotFoundException ex) {
-    log.warn("Failed resolution of username", ex);
+    log.warn(ex.getMessage(), ex);
     ApiErrorDto errorResponse = ApiErrorDto.builder()
         .status(HttpStatus.NOT_FOUND.value())
         .message(ex.getMessage())
@@ -65,10 +54,7 @@ public class ErrorController {
 
   @ExceptionHandler(DefaultRoleDoesNotExistException.class)
   public ResponseEntity<ApiErrorDto> handleDefaultRoleDoesNotExistException(DefaultRoleDoesNotExistException ex) {
-    log.warn(
-        "The default role '%s' was not found in the database when the application context loaded"
-            .formatted(ex.getRole()),
-        ex);
+    log.warn(ex.getMessage(), ex);
     ApiErrorDto errorResponse = ApiErrorDto.builder()
         .status(HttpStatus.NOT_FOUND.value())
         .message("Something went wrong... Please try again later")
@@ -78,10 +64,7 @@ public class ErrorController {
 
   @ExceptionHandler(InternalJwtException.class)
   public ResponseEntity<ApiErrorDto> handleInternalJwtException(InternalJwtException ex) {
-    log.warn("""
-        There is something wrong with the OAuth2ResourceServer configuration,
-        this warning should not be happening.
-                """, ex);
+    log.warn(ex.getMessage(), ex);
     ApiErrorDto errorResponse = ApiErrorDto.builder()
         .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
         .message("Check your bearer JWT for malformation")
@@ -92,7 +75,7 @@ public class ErrorController {
 
   @ExceptionHandler(AuthorizationDeniedException.class)
   public ResponseEntity<ApiErrorDto> handleAuthorizationDeniedException(AuthorizationDeniedException ex) {
-    log.info("Access Denied: ", ex.getStackTrace().toString());
+    log.info(ex.getMessage(), ex);
     ApiErrorDto errorResponse = ApiErrorDto.builder()
         .status(HttpStatus.FORBIDDEN.value())
         .message("You do not have the permission to access the resource.")
@@ -103,7 +86,7 @@ public class ErrorController {
 
   @ExceptionHandler(UserNotAuthenticatedException.class)
   public ResponseEntity<ApiErrorDto> handleAuthorizationDeniedException(UserNotAuthenticatedException ex) {
-    log.warn("Unauthorized Exception: ", ex.getMessage());
+    log.warn(ex.getMessage(), ex);
     ApiErrorDto errorResponse = ApiErrorDto.builder()
         .status(HttpStatus.UNAUTHORIZED.value())
         .message("The user is not authenticated.")
@@ -114,7 +97,7 @@ public class ErrorController {
 
   @ExceptionHandler(IllegalStateException.class)
   public ResponseEntity<ApiErrorDto> handleAuthorizationDeniedException(IllegalStateException ex) {
-    log.warn("Illegal State Exception: ", ex.getMessage());
+    log.warn(ex.getMessage(), ex);
     ApiErrorDto errorResponse = ApiErrorDto.builder()
         .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
         .message("Something went wrong.")

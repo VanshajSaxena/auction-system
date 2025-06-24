@@ -7,12 +7,11 @@ public class DefaultRoleDoesNotExistException extends AuctionApplicationExceptio
 
   private String role;
 
-  public DefaultRoleDoesNotExistException(String role) {
-    super();
-    this.role = role;
+  public DefaultRoleDoesNotExistException(String message) {
+    super(message);
   }
 
-  public DefaultRoleDoesNotExistException(String role, String message) {
+  public DefaultRoleDoesNotExistException(String message, String role) {
     super(message);
     this.role = role;
   }

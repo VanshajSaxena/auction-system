@@ -7,12 +7,11 @@ public class EmailAlreadyExistsException extends AuctionApplicationException {
 
   private String email;
 
-  public EmailAlreadyExistsException(String email) {
-    super();
-    this.email = email;
+  public EmailAlreadyExistsException(String message) {
+    super(message);
   }
 
-  public EmailAlreadyExistsException(String email, String message) {
+  public EmailAlreadyExistsException(String message, String email) {
     super(message);
     this.email = email;
   }
