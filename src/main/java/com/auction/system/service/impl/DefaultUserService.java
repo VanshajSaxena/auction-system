@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.auction.system.entity.AuthProviderEnity;
 import com.auction.system.entity.AuthProviderEnity.ProviderEnum;
@@ -21,7 +22,6 @@ import com.auction.system.repository.RoleRepository;
 import com.auction.system.repository.UserRepository;
 import com.auction.system.service.UserService;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service

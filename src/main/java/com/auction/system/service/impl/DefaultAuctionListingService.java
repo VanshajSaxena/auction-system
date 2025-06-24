@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.auction.system.entity.AuctionListingEntity;
 import com.auction.system.entity.UserEntity;
@@ -18,7 +19,6 @@ import com.auction.system.repository.UserRepository;
 import com.auction.system.security.AuctionSystemUserDetails;
 import com.auction.system.service.AuctionListingService;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -32,6 +32,7 @@ public class DefaultAuctionListingService implements AuctionListingService {
   private final AuctionListingMapper auctionListingMapper;
 
   @Override
+  @Transactional(readOnly = true)
   public List<AuctionListingDto> getAllAuctionListings() {
     return auctionListingMapper.toDtoList(auctionListingRepository.findAll());
   }
@@ -53,6 +54,8 @@ public class DefaultAuctionListingService implements AuctionListingService {
     // Get user details
     if (principal instanceof AuctionSystemUserDetails) {
       AuctionSystemUserDetails userDetails = (AuctionSystemUserDetails) principal;
+      // PERF: There is no need to query the database again as the principal already
+      // contains the `UserEntity` object.
       userEntity = userRepository.findById(userDetails.getId()).orElseThrow(() -> new UserNotAuthenticatedException(
           "User with ID '%s' not found in database.".formatted(userDetails.getId())));
       auctionListingDto.setAuctionListingState(AuctionListingStateEnum.PENDING);
