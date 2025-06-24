@@ -20,6 +20,7 @@ public interface UserMapper {
   @Mapping(source = "roles", target = "roles", ignore = true) // Don't map roles from DTO
   @Mapping(target = "id", source = "id", ignore = true) // Never map ID from DTO
   @Mapping(target = "password", ignore = true) // Password is not in DTO
+  @Mapping(target = "authProvider", ignore = true) // Managed at service layer
   @Mapping(target = "createdAt", ignore = true) // Managed by @PrePersist
   @Mapping(target = "updatedAt", ignore = true) // Managed by @PrePersist/@PreUpdate
   @Mapping(target = "auctionListings", ignore = true) // Don't map collections from simple DTO

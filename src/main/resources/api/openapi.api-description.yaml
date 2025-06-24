@@ -469,6 +469,11 @@ components:
           format: date-time
         auctionItem:
           $ref: "#/components/schemas/AuctionItem"
+      required:
+        - title
+        - description
+        - startingPrice
+        - auctionItem
     AuctionItem:
       description: Item listed for a specific Auction Listing.
       type: object
@@ -493,6 +498,11 @@ components:
             - new_item
             - used
             - refurbished
+      required:
+        - name
+        - category
+        - description
+        - auctionItemCondition
     ApiError:
       description: |
         Central error response object.

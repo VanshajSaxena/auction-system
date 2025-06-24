@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import com.auction.system.exception.DefaultRoleDoesNotExistException;
 import com.auction.system.exception.EmailAlreadyExistsException;
 import com.auction.system.exception.InternalJwtException;
+import com.auction.system.exception.UserNotAuthenticatedException;
 import com.auction.system.exception.UsernameAlreadyExistsException;
 import com.auction.system.generated.models.ApiErrorDto;
 
@@ -91,7 +92,7 @@ public class ErrorController {
 
   @ExceptionHandler(AuthorizationDeniedException.class)
   public ResponseEntity<ApiErrorDto> handleAuthorizationDeniedException(AuthorizationDeniedException ex) {
-    log.info("Authorization Denied: ", ex.getStackTrace().toString());
+    log.info("Access Denied: ", ex.getStackTrace().toString());
     ApiErrorDto errorResponse = ApiErrorDto.builder()
         .status(HttpStatus.FORBIDDEN.value())
         .message("You do not have the permission to access the resource.")
@@ -100,4 +101,25 @@ public class ErrorController {
     return new ResponseEntity<>(errorResponse, HttpStatus.FORBIDDEN);
   }
 
+  @ExceptionHandler(UserNotAuthenticatedException.class)
+  public ResponseEntity<ApiErrorDto> handleAuthorizationDeniedException(UserNotAuthenticatedException ex) {
+    log.warn("Unauthorized Exception: ", ex.getMessage());
+    ApiErrorDto errorResponse = ApiErrorDto.builder()
+        .status(HttpStatus.UNAUTHORIZED.value())
+        .message("The user is not authenticated.")
+        .build();
+
+    return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
+  }
+
+  @ExceptionHandler(IllegalStateException.class)
+  public ResponseEntity<ApiErrorDto> handleAuthorizationDeniedException(IllegalStateException ex) {
+    log.warn("Illegal State Exception: ", ex.getMessage());
+    ApiErrorDto errorResponse = ApiErrorDto.builder()
+        .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
+        .message("Something went wrong.")
+        .build();
+
+    return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+  }
 }

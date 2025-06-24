@@ -1,5 +1,6 @@
 package com.auction.system.controller;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -27,8 +28,8 @@ public class AuctionsApiDelegateImpl implements AuctionsApiDelegate {
 
   @Override
   public ResponseEntity<AuctionListingDto> createAuctionListing(AuctionListingDto auctionListingDto) {
-    // TODO: Implement after security configuration.
-    return null;
+    AuctionListingDto response = auctionListingService.createNewAuctionListing(auctionListingDto);
+    return ResponseEntity.created(URI.create("/api/v1/auctions/" + response.getId())).body(response);
   }
 
 }

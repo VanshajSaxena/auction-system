@@ -13,4 +13,10 @@ public interface AuctionItemMapper {
   @Mapping(target = "ownerId", source = "owner.id")
   AuctionItemDto toDto(AuctionItemEntity auctionItemEntity);
 
+  @Mapping(target = "createdAt", ignore = true)
+  @Mapping(target = "updatedAt", ignore = true)
+  @Mapping(target = "owner", ignore = true)
+  @Mapping(target = "auctionListing", ignore = true)
+  AuctionItemEntity toEntity(AuctionItemDto auctionItemDto);
+
 }
