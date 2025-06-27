@@ -1,301 +1,219 @@
-# AuctionHub
+# Auction System API
 
-A REST API application for an auction platform, implemented in Spring Boot
-using an API-first development strategy to ensure consistent contract design,
-robust versioning, and clean separation of concerns.
+An auction platform REST API built with Spring Boot, featuring an API-first
+design approach for consistent contracts and clean versioning. The system is
+secured using JWT and OAuth2.
 
 ## Table of Contents
 
-- [Project Structure](#project-layout)
-- [Features](#features)
-- [Prerequisites](#prerequisites)
-- [Getting Started](#getting-started)
-  - [Installation](#installation)
-  - [Configuration](#configuration)
-  - [Running the Application](#running-the-application)
-- [API Endpoints](#api-endpoints)
+- [Overview](#overview)
+- [Key Features](#key-features)
+- [Architecture](#architecture)
+  - [API-First Design](#api-first-design)
+  - [Application Layers](#application-layers)
 - [Technologies Used](#technologies-used)
+- [Project Structure](#project-structure)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation & Running](#installation--running)
+- [API Documentation](#api-documentation)
+- [Security](#security)
+- [Configuration](#configuration)
 - [License](#license)
 
-## Project Layout
+## Overview
 
-The project is cleanly organized by purpose—like handling security, data, and
-web requests—making it easy to follow and maintain.
+This project provides a robust backend for an auction platform. It exposes a
+RESTful API for managing users, items, bids, and auctions. The core philosophy
+is "API-first," where the API contract is formally defined before any code is
+written, ensuring consistency between the API documentation and its
+implementation.
 
-```sh
-auction-system/
-├── src/
-│   ├── main/
-│   │   ├── java/
-│   │   │   └── com/
-│   │   │       └── auction/
-│   │   │           └── system/     # Main application package
-│   │   │               ├── config/         # Spring Security configuration classes
-│   │   │               ├── controller/     # API Controllers (delegates to generated interfaces)
-│   │   │               ├── entity/         # JPA entities
-│   │   │               ├── exception/      # Custom exception handling
-│   │   │               ├── filter/         # Request filters (e.g. JWT authentication filter)
-│   │   │               ├── mapper/         # MapStruct mappers
-│   │   │               ├── repository/     # Spring Data JPA repositories
-│   │   │               ├── security/       # Security related components
-│   │   │               ├── service/        # Business logic interfaces
-│   │   │               │   └── impl/       # Interface implementations
-│   │   │               └── AuctionSystemApplication.java # Spring Boot main class
-│   │   └── resources/
-│   │       ├── api/
-│   │       │   └── openapi.api-description.yaml # API description file
-│   │       ├── static/
-│   │       ├── templates/
-│   │       └── application.yaml            # Application properties
-│   └── test/                               # Test sources
-│       └── java/
-│           └── com/
-│               └── auction/
-│                   └── system/
-│                       ├── service/
-│                       │   └── impl/       # Service related tests
-│                       └── testutil/       # Test utility classes
-├── mvnw                                    # Maven wrapper executable (Linux/MacOS)
-├── mvnw.cmd                                # Maven wrapper executable (Windows)
-└── pom.xml                                 # Maven Project Object Model
+## Key Features
+
+- **RESTful API**: A comprehensive set of endpoints for auction-related
+  operations.
+- **API-First Design**: Uses OpenAPI 3 to define the API contract,
+  automatically generating server-side code stubs.
+- **Secure**: Authentication and authorization are handled using Spring
+  Security with OAuth2 and JSON Web Tokens (JWT).
+- **Data Persistence**: Uses Spring Data JPA with Hibernate for
+  object-relational mapping.
+- **Database Support**: Configured for both H2 (for development/testing) and
+  MySQL (for production).
+- **DTO Layer**: Utilizes Data Transfer Objects (DTOs) with MapStruct for clean
+  data mapping between layers.
+- **Built-in API Docs**: Integrated Swagger UI for interactive API
+  documentation and testing.
+
+## Architecture
+
+The application follows a classic layered architecture, common in Spring Boot
+applications, with a strong emphasis on the API contract.
+
+### API-First Design
+
+This project is built using an "API-first" approach. The source of truth for
+the API is the OpenAPI specification file located at
+`src/main/resources/api/openapi.api-description.yaml`.
+
+The build process uses the `openapi-generator-maven-plugin` to:
+
+1. **Generate DTOs**: All model classes (suffixed with `Dto`) are generated
+   from the `schemas` defined in the OpenAPI spec.
+2. **Generate API Interfaces**: It generates Spring controller interfaces
+   (e.g., `UsersApi`) with all the endpoint mappings defined in the `paths`
+   section of the spec.
+
+The custom controllers implement these generated interfaces using the
+`delegatePattern`. This ensures that the implementation always conforms to the
+defined contract. Any changes to the API must be made in the
+`openapi.api-description.yaml` file first.
+
+### Application Layers
+
+1. **Controller Layer (`com.auction.system.controller`)**: These classes
+   implement the generated `...Api` interfaces. Their primary role is to handle
+   incoming HTTP requests, perform validation, and delegate the business logic to
+   the service layer.
+
+2. **Service Layer (`com.auction.system.service`)**: This layer contains the
+   core business logic of the application. It orchestrates operations,
+   interacts with the repository layer, and handles transactions.
+
+3. **Repository Layer (`com.auction.system.repository`)**: This layer is
+   responsible for data access. It consists of Spring Data JPA interfaces that
+   provide CRUD operations on the database entities.
+
+4. **Domain/Entity Layer (`com.auction.system.entity`)**: These are the JPA
+   entities that map to the database tables. They represent the core domain
+   objects of the application.
+
+5. **Mappers (`com.auction.system.mapper`)**: These are MapStruct interfaces
+   responsible for converting between JPA entities and generated DTOs. This
+   decouples the API layer from the data layer.
+
+6. **Exception Handling (`com.auction.system.exception`)**: These are exception
+   classes that extend a single centralized `AuctionApplicationException` class
+   which itself extends `RuntimeException` class.
+
+   The `com.auction.system.exception.handler.ErrorController` is responsible
+   for handling all custom exceptions of the application.
+
+## Technologies Used
+
+- **Framework**: Spring Boot 3
+- **Language**: Java 21
+- **Build Tool**: Maven
+- **Data Persistence**:
+  - Spring Data JPA
+  - Hibernate
+  - H2 Database (for dev)
+  - MySQL (for production)
+- **API & Documentation**:
+  - OpenAPI 3
+  - Springdoc (for Swagger UI)
+  - OpenAPI Generator
+- **Security**:
+  - Spring Security
+  - OAuth2 Resource Server
+  - JSON Web Tokens (JWT)
+- **Utilities**:
+  - Lombok
+  - MapStruct
+
+## Project Structure
+
 ```
-
-## Features
-
-<details>
-  <summary>User Registration & Authentication</summary>
-
-  <ul>
-    <li>Secure user registration and login using username or email.</li>
-    <li>JWT-based authentication for stateless and secure API access.</li>
-    <li>Spring Security integration for robust authentication and authorization.</li>
-  </ul>
-</details>
-
-<details>
-  <summary>Auction Item Management</summary>
-
-  <ul>
-    <li>Create, read, update, and delete (CRUD) auction items.</li>
-    <li>Retrieve details for individual auction items.</li>
-    <li>List all available auction items.</li>
-  </ul>
-</details>
-
-<details>
-  <summary>Bidding System</summary>
-
-  <ul>
-    <li>Place bids on auction items.</li>
-    <li>Track and retrieve all bids for a given item.</li>
-    <li>Enforce business rules for bidding (e.g., only higher bids are accepted, auction deadlines).</li>
-  </ul>
-</details>
-
-<details>
-  <summary>User Management</summary>
-
-  <ul>
-    <li>Register new users and manage user profiles.</li>
-    <li>Retrieve a list of all registered users (admin feature).</li>
-  </ul>
-</details>
-
-<details>
-  <summary>Exception Handling</summary>
-
-  <ul>
-    <li>Custom exception handling for clear, user-friendly error messages.</li>
-  </ul>
-</details>
-
-<details>
-  <summary>API Documentation (OpenAPI)</summary>
-
-  <ul>
-    <li>OpenAPI/Swagger specification provided for easy integration and testing.</li>
-  </ul>
-</details>
-
-<details>
-  <summary>Security</summary>
-
-  <ul>
-    <li>Password encoding and secure storage.</li>
-    <li>Role-based access control for sensitive endpoints.</li>
-    <li>JWT validation via request filters.</li>
-  </ul>
-</details>
-
-<details>
-  <summary>Extensible Architecture</summary>
-
-  <ul>
-    <li>Layered structure (Controllers, Services, Repositories) for maintainability.</li>
-    <li>Use of MapStruct for DTO/entity mapping.</li>
-  </ul>
-</details>
-
-<details>
-  <summary>Testing</summary>
-
-  <ul>
-    <li>Unit and integration tests for core business logic and services.</li>
-  </ul>
-</details>
-
-<details>
-  <summary>Configuration & Extensibility</summary>
-
-  <ul>
-    <li>Externalized configuration via <code>application.yaml</code>.</li>
-    <li>Easily switchable database and security settings.</li>
-  </ul>
-</details>
-
-## Prerequisites
-
-- Java JDK (21) or later
+.
+├── .mvn/
+├── docs/
+├── src
+│   ├── main
+│   │   ├── java/com/auction/system
+│   │   │   ├── controller/       # API implementation (delegates)
+│   │   │   ├── mapper/           # MapStruct mappers (DTO <-> Entity)
+│   │   │   ├── entity/           # JPA Entities
+│   │   │   ├── repositorie/      # Spring Data JPA repositories
+│   │   │   ├── security/         # Security configuration, JWT utils
+│   │   │   └── service/          # Business logic
+│   │   └── resources
+│   │       ├── api
+│   │       │   └── openapi.api-description.yaml # The API contract
+│   │       └── application.yml   # Application configuration
+│   └── test/                     # Unit and integration tests
+├── pom.xml                       # Maven build configuration
+└── README.md                     # This file
+```
 
 ## Getting Started
 
-### Initialization
+Follow these instructions to get the project up and running on your local machine.
 
-1. Clone the repository:
+### Prerequisites
 
-   ```bash
+- **Java Development Kit (JDK)**: Version 21 or later.
+- **Maven**: Version 3.8 or later.
+- **MySQL Server** (Optional): For running with the production profile.
+
+### Installation & Running
+
+1. **Clone the repository:**
+
+   ```sh
    git clone https://github.com/VanshajSaxena/auction-system.git
    cd auction-system
    ```
 
-2. Build the project:
+2. **Build the project:**
+   This command will also trigger the `openapi-generator` to create API interfaces and DTOs.
 
-   ```bash
-   ./mvnw clean install
+   ```sh
+   mvn clean install
    ```
 
-   This command uses the [OpenAPI
-   Generator](https://github.com/OpenAPITools/openapi-generator) Maven plugin
-   to generate server stubs from the API description file located at
-   [`src/main/resources/api/openapi.api-description.yaml`](./src/main/resources/api/openapi.api-description.yaml).
+3. **Run the application:**
+   The application will start using the default `dev` profile, which is configured to use an in-memory H2 database.
 
-   After generating the stubs, it compiles both the main and test sources, and
-   installs the resulting artifacts.
+   ```sh
+   mvn spring-boot:run
+   ```
 
-   The compiled outputs, including the generated sources and packaged
-   application files, will be available in the `target` directory.
+   The API server will be running at `http://localhost:8080`.
 
-### Configuration
+## API Documentation
 
-Before running the application, you may need to configure certain settings to
-match your environment and preferences. The main configuration file is located
-at:
+Once the application is running, you can access the interactive Swagger UI to view the API documentation and test the endpoints.
 
-```
-src/main/resources/application.yaml
-```
+- **Swagger UI**: [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
+- **OpenAPI Spec (JSON)**: [http://localhost:8080/v3/api-docs](http://localhost:8080/v3/api-docs)
 
-But, it provides simple defaults that help application run when no
-configuration is provided. The recommended way of running the application is
-using Spring Profiles.
+## Security
 
-```
-src/main/resources/application-{profile}.yaml
-```
+The API is secured using Spring Security and OAuth2. Endpoints require a valid
+JWT Bearer token in the `Authorization` header for access. The security
+configuration is located in the `com.auction.system.config` package. The
+`com.auction.system.filter.JwtAuthenticationFilter` validates the JWT token
+signature and extracts user roles and permissions to
+enforce access control on different endpoints.
 
-and then,
+## Configuration
+
+Application settings can be configured in `src/main/resources/application.yml`.
+The project is set up with profiles to manage different environments.
+
+- **`dev` (default)**: Uses an in-memory H2 database. The database is reset on
+  every application restart.
+- **`prod`**: Can be configured to connect to a persistent database like MySQL.
+  You can activate it by setting the `spring.profiles.active=prod` property and
+  providing the necessary database connection details in `application-prod.yml`.
+
+To run with a specific profile:
 
 ```sh
-./mvn spring-boot:run -Dspring-boot.run.profiles={profile}
+mvn spring-boot:run -Dspring-boot.run.profiles=prod
 ```
-
-Look at the next section to know how to configure the application according to
-your needs.
-
-### Key Configuration Properties
-
-- **Database Configuration**
-
-  - By default, the application may use in-memory H2 database for
-    development. You can set up a database server like this:
-
-    ```yaml
-    # src/main/resources/application-dev.yaml
-    spring:
-      datasource:
-        url: jdbc:mysql://localhost:3306/auction_system
-        username: test
-        password: password
-      jpa:
-        hibernate:
-          ddl-auto: update
-    ```
-
-  - Make sure the appropriate database driver is included in your `pom.xml` dependencies.
-
-- **JWT Secret and Expiry**
-
-  - Set your JWT token expiration (in milliseconds) for authentication:
-
-    ```yaml
-    # src/main/resources/application-prod.yaml
-    jwt:
-      secret: 3f8f4debeee3a93af3ee723b9af18ce9c4b57c88987f3040bf553db4a808cb8b
-      expiryMs: 900000 # 15 mins
-    ```
-
-> [!caution]
-> Never commit secrets to version control, always inject them through
-> environment variables or secret management solutions.
-
-- **Other Properties**
-
-  - You can further customize logging, actuator, mail, or any other Spring Boot
-    supported properties as required.
-
-    ```yaml
-    # src/main/resources/application-dev.yaml
-    logging.level.org.springframework.security: TRACE
-    ```
-
-### Running the Application
-
-```bash
-./mvnw spring-boot:run
-```
-
-The application will be accessible at `http://localhost:8080` and the
-interactive api-docs will be available at
-`http://localhost:8080/swagger-ui.html`
-
-## API Endpoints
-
-- You can find a detailed API overview, including endpoints, usage, and design
-  guidelines, [here](./docs/api/README.md).
-- Refer to the API description file at
-  [`src/main/resources/api/openapi.api-description.yaml`](./src/main/resources/api/openapi.api-description.yaml)
-  for the complete contract definition.
-
----
-
-### Notes
-
-- **Authentication:** Most endpoints (except registration, login, and public
-  auctions listing) require a valid JWT token in the `Authorization: Bearer
-<token>` header.
-- **Validation:** Input data is validated server-side; errors are returned in a
-  consistent format.
-- **OpenAPI:** For a complete list of endpoints, parameters, and models, refer
-  to the OpenAPI spec or generate interactive documentation using Swagger tools.
-
-## Technologies Used
-
-- **Framework**: Spring Boot
-- **Language**: Java 21
-- **Build Tool**: Apache Maven
-- **Database**: MySQL
-- **API Schema**: OpenAPI
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
