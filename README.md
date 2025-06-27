@@ -124,7 +124,7 @@ defined contract. Any changes to the API must be made in the
 
 ## Project Structure
 
-```
+```sh
 .
 ├── .mvn/
 ├── docs/
@@ -166,14 +166,16 @@ Follow these instructions to get the project up and running on your local machin
    ```
 
 2. **Build the project:**
-   This command will also trigger the `openapi-generator` to create API interfaces and DTOs.
+   This command will also trigger the `openapi-generator` to create API
+   interfaces and DTOs.
 
    ```sh
    mvn clean install
    ```
 
 3. **Run the application:**
-   The application will start using the default `dev` profile, which is configured to use an in-memory H2 database.
+   The application will start using the default `dev` profile, which is
+   configured to use an in-memory H2 database.
 
    ```sh
    mvn spring-boot:run
@@ -183,7 +185,8 @@ Follow these instructions to get the project up and running on your local machin
 
 ## API Documentation
 
-Once the application is running, you can access the interactive Swagger UI to view the API documentation and test the endpoints.
+Once the application is running, you can access the interactive Swagger UI to
+view the API documentation and test the endpoints.
 
 - **Swagger UI**: [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
 - **OpenAPI Spec (JSON)**: [http://localhost:8080/v3/api-docs](http://localhost:8080/v3/api-docs)
@@ -216,4 +219,5 @@ mvn spring-boot:run -Dspring-boot.run.profiles=prod
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file
+for details.
