@@ -1,4 +1,4 @@
-# Auction System API
+# Auction Hub
 
 An auction platform REST API built with Spring Boot, featuring an API-first
 design approach for consistent contracts and clean versioning. The system is
