@@ -23,7 +23,7 @@ secured using JWT and OAuth2.
 
 ## Overview
 
-This project provides a robust backend for an auction platform. It exposes a
+The project provides a robust backend for an auction platform. It exposes a
 RESTful API for managing users, items, bids, and auctions. The core philosophy
 is "API-first," where the API contract is formally defined before any code is
 written, ensuring consistency between the API documentation and its
@@ -53,7 +53,7 @@ applications, with a strong emphasis on the API contract.
 
 ### API-First Design
 
-This project is built using an "API-first" approach. The source of truth for
+The project is built using an "API-first" approach. The source of truth for
 the API is the OpenAPI specification file located at
 `src/main/resources/api/openapi.api-description.yaml`.
 
@@ -134,7 +134,7 @@ defined contract. Any changes to the API must be made in the
 │   │   │   ├── controller/       # API implementation (delegates)
 │   │   │   ├── mapper/           # MapStruct mappers (DTO <-> Entity)
 │   │   │   ├── entity/           # JPA Entities
-│   │   │   ├── repositorie/      # Spring Data JPA repositories
+│   │   │   ├── repository/      # Spring Data JPA repositories
 │   │   │   ├── security/         # Security configuration, JWT utils
 │   │   │   └── service/          # Business logic
 │   │   └── resources
@@ -219,5 +219,5 @@ mvn spring-boot:run -Dspring-boot.run.profiles=prod
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file
+The project is licensed under the MIT License. See the [LICENSE](LICENSE) file
 for details.
