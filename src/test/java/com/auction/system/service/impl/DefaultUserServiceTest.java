@@ -17,6 +17,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.auction.system.entity.RoleEntity;
+import com.auction.system.entity.RoleEntity.RoleNameEntityEnum;
 import com.auction.system.entity.UserEntity;
 import com.auction.system.exception.EmailAlreadyExistsException;
 import com.auction.system.exception.UsernameAlreadyExistsException;
@@ -24,6 +26,7 @@ import com.auction.system.generated.models.UserDto;
 import com.auction.system.generated.models.UserRegistrationRequestDto;
 import com.auction.system.generated.models.UserRegistrationResponseDto;
 import com.auction.system.mapper.UserMapper;
+import com.auction.system.repository.RoleRepository;
 import com.auction.system.repository.UserRepository;
 import com.auction.system.testutil.UserServiceTestDataFactory;
 
@@ -38,6 +41,9 @@ public class DefaultUserServiceTest {
 
   @Mock
   private PasswordEncoder passwordEncoder;
+
+  @Mock
+  private RoleRepository roleRepository;
 
   @InjectMocks
   DefaultUserService underTest;
@@ -64,7 +70,9 @@ public class DefaultUserServiceTest {
     UserRegistrationRequestDto requestDto = UserServiceTestDataFactory.createUserRegistrationRequestDto();
     UserEntity userEntity = UserServiceTestDataFactory.createUserEntityFromUserRegistrationRequestDto(requestDto);
     UserEntity savedUserEntity = UserServiceTestDataFactory.createSavedUserEntityWithId(userEntity);
+    RoleEntity userRole = RoleEntity.builder().name(RoleNameEntityEnum.ROLE_USER).build();
 
+    when(roleRepository.findByName(RoleNameEntityEnum.ROLE_USER)).thenReturn(Optional.of(userRole));
     when(userRepository.findByUsername(requestDto.getUsername())).thenReturn(Optional.empty());
     when(userRepository.findByEmail(requestDto.getEmail())).thenReturn(Optional.empty());
     when(passwordEncoder.encode(requestDto.getPassword())).thenReturn("encodedPassword");

@@ -73,7 +73,7 @@ public class DefaultUserService implements UserService {
         .provider(ProviderEnum.LOCAL)
         .build();
 
-    RoleEntity defaultRole = roleRepository.findByName(RoleEntity.RoleNameEntityEnum.ROLE_USER)
+    RoleEntity defaultRole = roleRepository.findByName(RoleEntity.RoleNameEntityEnum.ROLE_USER) // line 76
         .orElseThrow(() -> new DefaultRoleDoesNotExistException(
             "Default %s role not found in the database, Please initialize roles."
                 .formatted(RoleNameEntityEnum.ROLE_USER),
